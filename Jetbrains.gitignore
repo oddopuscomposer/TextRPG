@@ -1,21 +1,3 @@
-Skip to content
- 
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- @ChresSSB Sign out
-2,580
-69,105 31,745 githubgitignore
- Code  Pull requests 154  Projects 0  Insights
-gitignoreGlobalJetBrains.gitignore
-4a70ab0  11 days ago
-@shiftkey shiftkey Merge branch 'master' into master
-@thunsaker @samskiter @LazarusX @arcresu @akelsch @victorhaggqvist @DKroot @shiftkey @twhitbeck @tsteinholz @ssinss @rocketraman @RobertoNovelo @Cantido @petermorlion @Omarasifshaikh @nfcopier @meyerlasse @koppor @KenjiOhtsuka @jturmel @Nihlus @yatskevich @ikemo3 @GingerGeek @Fuhrmann
-     
-53 lines (40 sloc)  1.02 KB
 # Covers JetBrains IDEs IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference httpsintellij-support.jetbrains.comhcen-usarticles206544839
 
@@ -25,6 +7,7 @@ gitignoreGlobalJetBrains.gitignore
 .ideausage.statistics.xml
 .ideadictionaries
 .ideashelf
+.pyc
 
 # Sensitive or high-churn files
 .ideadataSources
