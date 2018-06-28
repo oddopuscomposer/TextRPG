@@ -1,0 +1,11 @@
+{
+  "items":{
+    "Wooden Stick": {
+      "buy_price": 10,
+      "sell_price": 5,
+      "dmg": 5
+    }
+  }
+
+
+}

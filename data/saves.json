@@ -1,0 +1,23 @@
+{
+  "saves": {
+    "start_template": {
+      "name": "examplename",
+      "class": "N/A",
+      "stats": {
+        "level": 0,
+        "health": 1,
+        "mana": 1,
+        "exp": 0,
+        "exp_req": 100,
+        "att": 0,
+        "def": 0,
+        "evd": 0
+      },
+      "items": [],
+      "skills": [],
+      "training_points": 0,
+      "gold": 0,
+      "location": "start"
+    }
+  }
+}
