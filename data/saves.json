@@ -13,6 +13,16 @@
         "def": 0,
         "evd": 0
       },
+      "equipment": {
+        "left_hand": "empty",
+        "right_hand": "empty",
+        "head": "empty",
+        "chest": "empty",
+        "legs": "empty",
+        "feet": "empty",
+        "necklace": "empty",
+        "ring": "empty"
+      },
       "items": [],
       "skills": [],
       "training_points": 0,
