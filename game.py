@@ -2,7 +2,7 @@ import json
 from game_utilities import process_json
 
 
-def launch(type):
+def launch(setting):
     """
     Launches the game and loads save data
     :param type:
@@ -15,11 +15,11 @@ def launch(type):
     for key in player_data.keys():
         saves.append(key)
 
-    if type == "saves":
+    if setting == "saves":
         print(saves)
         save = input("Choose a save data: ")
         character = player_data[save]
-    if type == "new":
+    if setting == "new":
         character = player_data["start_template"]
         choose_status = False
         while not choose_status:
