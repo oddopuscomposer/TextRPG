@@ -20,7 +20,7 @@ def launch(setting):
         save = input("Choose a save data: ")
         character = player_data[save]
     if setting == "new":
-        character = player_data["start_template"]
+        character = player_data["save_template"]
         choose_status = False
         while not choose_status:
             name = input("What is your name?: ")

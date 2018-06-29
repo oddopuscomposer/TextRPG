@@ -9,21 +9,41 @@ def add_class():
     classes = process_json("classes.json")
     name = input("Enter class name: ")
     classes["classes"][name] = {}
-    health = input("Enter health: ")
-    numeric_validation(health)
+    entry = input("Enter health: ")
+    health = numeric_validation(entry)
     classes["classes"][name]["health"] = int(health)
 
-    mana = input("Enter mana: ")
+    entry = input("Enter mana: ")
+    mana = numeric_validation(entry)
     classes["classes"][name]["mana"] = int(mana)
-    write_json("classes.json", classes)
+    classes["xref"].append(name)
 
+    write_json("classes.json", classes)
+    print("Successfully Added")
 
 def delete_class():
     """
     Removes class from classes.json
     :return:
     """
-    pass
+    entry = input("Please enter a class to delete: ")
+    classes = process_json("classes.json")
+    if entry in classes["xref"]:
+        while True:
+            confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")
+            if confirm == "y":
+                del classes["classes"][entry]
+                classes["xref"].remove(entry)
+                print("Item deleted")
+                break
+            elif confirm == "n":
+                break
+            else:
+                pass
+    else:
+        print("entry is not in classes")
+
+    write_json("classes.json", classes)
 
 
 def add_equipable():
@@ -78,7 +98,7 @@ def delete_equipable():
     Remove equipable from items.json
     :return:
     """
-    entry = input("Please enter an equipable: ")
+    entry = input("Please enter an equipable to delete: ")
     items = process_json("items.json")
     if entry in items["equipment"]:
         while True:
@@ -120,7 +140,7 @@ def edit_game():
     """
     pass
 
-
+# delete_class()
 # add_class()
 # delete_equipable()
 # add_equipable()

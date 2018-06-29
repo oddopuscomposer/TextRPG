@@ -1,6 +1,6 @@
 {
   "saves": {
-    "start_template": {
+    "save_template": {
       "name": "examplename",
       "class": "N/A",
       "stats": {
