@@ -1,5 +1,5 @@
 import json
-from game import launch
+from game import launch, edit_game
 
 
 def main():
@@ -12,7 +12,7 @@ def main():
         elif command == "2":
             launch("saves")
         elif command == "3":
-            pass
+            edit_game()
         else:
             status = False
             print("Quit")

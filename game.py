@@ -51,4 +51,12 @@ def start_game(character):
         selection = input("Select an option: ")
 
 
+def edit_game():
+    """
+    Allows edits to the game's files
+    :return:
+    """
+    pass
+
+
 
