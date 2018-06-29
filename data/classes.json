@@ -8,5 +8,6 @@
             "health": "50",
             "mana": "50"
         }
-    }
+    },
+  "xref": ["Archer", "Knight"]
 }

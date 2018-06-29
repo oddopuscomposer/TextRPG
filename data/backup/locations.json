@@ -1,6 +1,14 @@
 {
-  "locations": ["start"]
-
-
-
+  "locations": {
+    "start": {
+      "shops": {
+        "shop1": [],
+        "shop2": []
+      },
+      "npcs": [],
+      "rest": true,
+      "enemies": []
+    }
+  },
+  "xref": []
 }

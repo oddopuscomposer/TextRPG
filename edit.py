@@ -112,6 +112,15 @@ def delete_misc_item():
     """
     pass
 
+
+def edit_game():
+    """
+    Main edit method
+    :return:
+    """
+    pass
+
+
 # add_class()
 # delete_equipable()
 # add_equipable()

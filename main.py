@@ -1,5 +1,5 @@
-import json
-from game import launch, edit_game
+from game import launch
+from edit import edit_game
 
 
 def main():

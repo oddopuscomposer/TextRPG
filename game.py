@@ -9,7 +9,7 @@ def launch(setting):
     :return:
     """
     player_data = process_json("saves.json")["saves"]
-    class_data = process_json("classes.json")["classes"]
+    class_data = process_json("classes.json")
 
     saves = []
     for key in player_data.keys():
@@ -25,11 +25,12 @@ def launch(setting):
         while not choose_status:
             name = input("What is your name?: ")
             character["name"] = name
+            print(class_data["xref"])
             cls = input("Choose your class: ")
-            if cls in class_data.keys():
+            if cls in class_data["xref"]:
                 character["class"] = cls
-                character["health"] = class_data[cls]["health"]
-                character["mana"] = class_data[cls]["mana"]
+                character["health"] = class_data["classes"][cls]["health"]
+                character["mana"] = class_data["classes"][cls]["mana"]
                 choose_status = True
             else:
                 print("Class doesnt exist")
@@ -47,16 +48,6 @@ def start_game(character):
     game_status = True
     print("Welcome to the game!")
     while game_status:
-        print("goto, shop, stats, ")
+        print("goto, shop, stats, rest")
         selection = input("Select an option: ")
-
-
-def edit_game():
-    """
-    Allows edits to the game's files
-    :return:
-    """
-    pass
-
-
 
