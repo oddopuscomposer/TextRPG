@@ -1,20 +1,5 @@
 {
     "equipment": {
-        "5": {
-            "buy_price": 5,
-            "class": [
-                "Archer"
-            ],
-            "damage": 5,
-            "rarity": "5",
-            "sell_price": 5,
-            "slot": "head",
-            "stats": {
-                "att": "1",
-                "def": "1",
-                "evd": "1"
-            }
-        },
         "Wooden Stick": {
             "buy_price": 10,
             "class": [
