@@ -1,0 +1,12 @@
+{
+    "classes": {
+        "Archer": {
+            "health": 20,
+            "mana": 20
+        },
+        "Knight": {
+            "health": "50",
+            "mana": "50"
+        }
+    }
+}
