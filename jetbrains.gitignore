@@ -2,6 +2,7 @@
 # Reference httpsintellij-support.jetbrains.comhcen-usarticles206544839
 
 # User-specific stuff
+.idea
 .ideaworkspace.xml
 .ideatasks.xml
 .ideausage.statistics.xml
