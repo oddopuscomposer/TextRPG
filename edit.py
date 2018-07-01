@@ -21,6 +21,7 @@ def add_class():
     write_json("classes.json", classes)
     print("Successfully Added")
 
+
 def delete_class():
     """
     Removes class from classes.json
@@ -95,7 +96,7 @@ def add_equipable():
 
 def delete_equipable():
     """
-    Remove equipable from items.json
+    Removes equipable from items.json
     :return:
     """
     entry = input("Please enter an equipable to delete: ")
@@ -127,7 +128,70 @@ def add_misc_item():
 
 def delete_misc_item():
     """
-    Remove misc item from items.json
+    Removes misc item from items.json
+    :return:
+    """
+    pass
+
+def add_skill():
+    """
+    Adds skill to skills.json
+    :return:
+    """
+    pass
+
+
+def delete_skill():
+    """
+    Removes skill from skills.json
+    :return:
+    """
+    pass
+
+
+def add_location():
+    """
+    Adds location to locations.json
+    :return:
+    """
+    pass
+
+
+def delete_location():
+    """
+    Removes location from locations.json
+    :return:
+    """
+    pass
+
+
+def add_npc():
+    """
+    Adds npc to npcs.json
+    :return:
+    """
+    pass
+
+
+def delete_npc():
+    """
+    Removes npc from npcs.json
+    :return:
+    """
+    pass
+
+
+def add_enemy():
+    """
+    Adds enemy from enemies.json
+    :return:
+    """
+    pass
+
+
+def delete_enemy():
+    """
+    Removes enemy from enemies.json
     :return:
     """
     pass
