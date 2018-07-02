@@ -2,7 +2,7 @@ import json
 
 
 ########################################################################################################################
-# JSON Methods                                                                                                         #
+# JSON & String Methods                                                                                                         #
 ########################################################################################################################
 
 
@@ -27,6 +27,11 @@ def write_json(filename, data):
     with open('data/' + filename, 'w') as outfile:
         json.dump(data, outfile, sort_keys=True, indent=4)
 
+
+def remove_prefix(text, prefix):
+    if text.startswith(prefix):
+        return text[len(prefix):]
+    return text
 
 ########################################################################################################################
 # Validations                                                                                                          #

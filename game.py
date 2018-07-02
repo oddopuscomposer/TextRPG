@@ -1,4 +1,4 @@
-from game_utilities import process_json, write_json
+from game_utilities import process_json, write_json, remove_prefix
 
 
 def launch(setting):
@@ -62,15 +62,16 @@ def start_game(character):
     game_status = True
     print("Welcome to the game!")
     print(character)
+    savefile = process_json("saves.json")
     while game_status:
         print("#######################")
         print("")
-        print("stats, inventory, goto, shop, encounter")
+        print("stats, inv, goto, shop, encounter")
         selection = input("Select an option: ")
         if selection == "stats":
             show_stats(character)
-        elif selection == "inventory":
-            show_inventory(character)
+        elif selection == "inv":
+            manage_equipment(character)
         elif selection == "goto":
             pass
         elif selection == "shop":
@@ -79,6 +80,8 @@ def start_game(character):
             pass
         else:
             print("Incorrect action, please try again")
+        savefile["saves"][character["name"]] = character
+        write_json("saves.json", savefile)
 
 
 def show_stats(character):
@@ -105,6 +108,11 @@ def show_stats(character):
 
 
 def show_inventory(character):
+    """
+    Prints equipment and inventory
+    :param character:
+    :return:
+    """
     print("Equipment")
     print("#######################")
     print("head: " + character["equipment"]["head"])
@@ -118,21 +126,74 @@ def show_inventory(character):
     print("#######################")
     print("Inventory")
     print("#######################")
-    inventory = ''.join(character["items"])
+    inventory = ''.join(character["inventory"])
     if len(inventory) > 0:
         print(inventory)
     else:
         print("none")
 
 
+def manage_equipment(character):
+    """
+    Manage character equipment (Equip and Dequip)
+    :param character:
+    :return:
+    """
+    items = process_json("items.json")
+    while True:
+        show_inventory(character)
+        entry = input("equip [item],dequip [slot], q to quit: ")
+        if entry.startswith("equip"):
+            item = remove_prefix(entry, "equip ")
+            if item in items["equipment"]:
+                if character["class"] in items["equipment"][item]["classes"]:
+                    slot = items["equipment"][item]["slot"]
+                    character["equipment"][slot] = item
+                    character["inventory"].remove(item)
+                    print("Equiped " + item)
+                else:
+                    print("Your class can't equip " + item + " or item not in inventory")
+            else:
+                print("The item is unequipable")
+        elif entry.startswith("dequip"):
+            slot = remove_prefix(entry, "dequip ")
+            if character["equipment"][slot] != "empty":
+                item = character["equipment"][slot]
+                character["equipment"][slot] = "empty"
+                character["inventory"].append(item)
+                print("Dequiped " + item)
+            else:
+                print("Your slot is empty")
+        elif entry == "q":
+            break
+        else:
+            print("Invalid input, try again")
+
+
+
+
 def rest():
+    """
+    Heal
+    :return:
+    """
     pass
 
 
-def go_to():
+def go_to(character):
+    """
+    Travel to a location
+    :param character:
+    :return:
+    """
     pass
 
 
-def shop():
+def shop(character):
+    """
+    Buy or Sell from Shop at Location if it exists
+    :param character:
+    :return:
+    """
     pass
 

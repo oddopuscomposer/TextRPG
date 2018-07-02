@@ -2,13 +2,13 @@
     "equipment": {
         "Wooden Stick": {
             "buy_price": 10,
-            "class": [
+            "classes": [
                 "Knight"
             ],
             "damage": 5,
             "rarity": "common",
             "sell_price": 5,
-            "slot": "hand",
+            "slot": "right_hand",
             "stats": {
                 "att": 0,
                 "def": 0,

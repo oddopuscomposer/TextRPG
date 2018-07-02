@@ -9,16 +9,47 @@
                 "left_hand": "empty",
                 "legs": "empty",
                 "necklace": "empty",
-                "right_hand": "empty",
+                "right_hand": "Wooden Stick",
                 "ring": "empty"
             },
             "gold": "0",
             "health": "50",
-            "items": [],
+            "inventory": [],
             "level": "0",
             "location": "start",
             "mana": "50",
             "name": "Chres",
+            "skills": [],
+            "stats": {
+                "att": "0",
+                "def": "0",
+                "evd": "0",
+                "exp": "0",
+                "exp_req": "100"
+            },
+            "training_points": "0"
+        },
+        "Dab": {
+            "class": "Archer",
+            "equipment": {
+                "chest": "empty",
+                "feet": "empty",
+                "head": "empty",
+                "left_hand": "empty",
+                "legs": "empty",
+                "necklace": "empty",
+                "right_hand": "empty",
+                "ring": "empty"
+            },
+            "gold": "0",
+            "health": "20",
+            "inventory": [
+                "Wooden Stick"
+            ],
+            "level": "0",
+            "location": "start",
+            "mana": "20",
+            "name": "Dab",
             "skills": [],
             "stats": {
                 "att": "0",
@@ -43,7 +74,7 @@
             },
             "gold": "0",
             "health": "50",
-            "items": [],
+            "inventory": [],
             "level": "0",
             "location": "start",
             "mana": "50",
@@ -60,6 +91,7 @@
         }
     },
     "xref": [
-        "Chres"
+        "Chres",
+        "Dab"
     ]
 }

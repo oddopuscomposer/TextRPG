@@ -85,7 +85,7 @@ def add_equipable():
     cls = input("Enter required classes([class1],[class2]): ")
     # need validation
     words = cls.split(",")
-    item["class"] = words
+    item["classes"] = words
 
     slot = input("Enter slot: ")
     # need validation
