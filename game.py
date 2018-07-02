@@ -20,6 +20,7 @@ def launch(setting):
         while True:
             if save in player_data["saves"]:
                 character = player_data["saves"][save]
+                name = character["name"]
                 break
             elif save == "exit":
                 print("")
@@ -102,8 +103,8 @@ def show_stats(character):
     print("att: " + character["stats"]["att"])
     print("def: " + character["stats"]["def"])
     print("evd: " + character["stats"]["evd"])
-    print("exp: " + character["stats"]["exp"])
-    print("next level: " + character["stats"]["exp_req"])
+    print("exp: " + character["exp"])
+    print("next level: " + character["exp_req"])
     print("training points: " + character["training_points"])
     print("skills: " + str(character["skills"]))
     print("location: " + character["location"])
@@ -147,11 +148,11 @@ def update_stats(character, equip):
     att_sum = 0
     def_sum = 0
     evd_sum = 0
-    if character["equipment"][slot] != "empty":  # if an item was just added
+    if character["equipment"][slot] != "empty":                         # if an item was just added
         att_sum += int(items["equipment"][equip]["stats"]["att"])
         def_sum += int(items["equipment"][equip]["stats"]["def"])
         evd_sum += int(items["equipment"][equip]["stats"]["evd"])
-    else:  # if an item was just removed
+    else:                                                               # if an item was just removed
         att_sum -= int(items["equipment"][equip]["stats"]["att"])
         def_sum -= int(items["equipment"][equip]["stats"]["def"])
         evd_sum -= int(items["equipment"][equip]["stats"]["evd"])

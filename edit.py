@@ -212,7 +212,3 @@ def edit_game():
     """
     pass
 
-# delete_class()
-# add_class()
-# delete_equipable()
-# add_equipable()
