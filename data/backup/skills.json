@@ -3,7 +3,8 @@
     "Arrow Storm":{
       "dmg": 20,
       "mana": 10,
-      "class": "Archer"
+      "class": "Archer",
+      "level": 1
    }
   }
 }

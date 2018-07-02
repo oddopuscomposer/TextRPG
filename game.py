@@ -3,7 +3,7 @@ from game_utilities import process_json, write_json, remove_prefix
 
 def launch(setting):
     """
-    Launches the game and loads save data
+    Launches the game or loads save data
     :param setting:
     :return:
     """
@@ -22,9 +22,11 @@ def launch(setting):
                 character = player_data["saves"][save]
                 break
             elif save == "exit":
-                print("Relaunch game to return to title screen")
+                print("")
+                break
             else:
                 print("save not found, try again or exit")
+                save = input("Choose a save data(quit to exit): ")
     if setting == "new":
         character = player_data["saves"]["start_template"].copy()
         choose_status = False
@@ -47,10 +49,11 @@ def launch(setting):
         player_data["xref"].append(character["name"])
         write_json("saves.json", player_data)
 
-    if name != "start_template":
+    if name != "start_template" and name != "":
         start_game(character)
     else:
-        print("Error: Can't use start_template as name of save, restart game and try again")
+        print("Error: Can't use start_template or empty string as name of save")
+        print("")
 
 
 def start_game(character):
@@ -197,12 +200,12 @@ def manage_equipment(character):
             print("Invalid input, try again")
 
 
-def rest():
+def rest(character):
     """
     Heal
     :return:
     """
-    pass
+    locations = process_json("locations.json")
 
 
 def go_to(character):

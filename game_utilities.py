@@ -66,6 +66,7 @@ def rarity_validation(entry):
             entry = input("Please enter a valid rarity: ")
     return entry
 
+
 def class_validation(entry):
     """
     Validates classes

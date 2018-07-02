@@ -1,33 +1,99 @@
 {
-  "saves": {
-    "start_template": {
-      "name": "examplename",
-      "class": "N/A",
-      "stats": {
-        "level": 0,
-        "health": 1,
-        "mana": 1,
-        "exp": 0,
-        "exp_req": 100,
-        "att": 0,
-        "def": 0,
-        "evd": 0
-      },
-      "equipment": {
-        "left_hand": "empty",
-        "right_hand": "empty",
-        "head": "empty",
-        "chest": "empty",
-        "legs": "empty",
-        "feet": "empty",
-        "necklace": "empty",
-        "ring": "empty"
-      },
-      "items": [],
-      "skills": [],
-      "training_points": 0,
-      "gold": 0,
-      "location": "start"
-    }
-  }
+    "saves": {
+        "Chres": {
+            "class": "Knight",
+            "equipment": {
+                "chest": "empty",
+                "feet": "empty",
+                "head": "empty",
+                "left_hand": "empty",
+                "legs": "empty",
+                "necklace": "empty",
+                "right_hand": "empty",
+                "ring": "empty"
+            },
+            "gold": "0",
+            "health": "50",
+            "inventory": [
+                "Wooden Stick"
+            ],
+            "level": "0",
+            "location": "start",
+            "mana": "50",
+            "name": "Chres",
+            "skills": [],
+            "stats": {
+                "att": "0",
+                "def": "0",
+                "evd": "0",
+                "exp": "0",
+                "exp_req": "100"
+            },
+            "training_points": "0"
+        },
+        "Dab": {
+            "class": "Archer",
+            "equipment": {
+                "chest": "empty",
+                "feet": "empty",
+                "head": "empty",
+                "left_hand": "empty",
+                "legs": "empty",
+                "necklace": "empty",
+                "right_hand": "empty",
+                "ring": "empty"
+            },
+            "gold": "0",
+            "health": "20",
+            "inventory": [
+                "Wooden Stick"
+            ],
+            "level": "0",
+            "location": "start",
+            "mana": "20",
+            "name": "Dab",
+            "skills": [],
+            "stats": {
+                "att": "0",
+                "def": "0",
+                "evd": "0",
+                "exp": "0",
+                "exp_req": "100"
+            },
+            "training_points": "0"
+        },
+        "start_template": {
+            "class": "Knight",
+            "equipment": {
+                "chest": "empty",
+                "feet": "empty",
+                "head": "empty",
+                "left_hand": "empty",
+                "legs": "empty",
+                "necklace": "empty",
+                "right_hand": "empty",
+                "ring": "empty"
+            },
+            "gold": "0",
+            "health": "50",
+            "inventory": [],
+            "level": "0",
+            "location": "start",
+            "mana": "50",
+            "name": "asdaasdsa",
+            "skills": [],
+            "stats": {
+                "att": "0",
+                "def": "0",
+                "evd": "0",
+                "exp": "0",
+                "exp_req": "100"
+            },
+            "training_points": "0"
+        }
+    },
+    "xref": [
+        "Chres",
+        "Dab"
+    ]
 }
