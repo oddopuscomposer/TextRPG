@@ -1,6 +1,14 @@
 from game_utilities import *
 
 
+def delete_save():
+    """
+    Removes save from saves.json
+    :return:
+    """
+    pass
+
+
 def add_class():
     """
     adds a class to the classes json database
