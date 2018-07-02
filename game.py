@@ -133,6 +133,31 @@ def show_inventory(character):
         print("none")
 
 
+def update_stats(character, equip):
+    """
+    Update stats from equipment
+    :return:
+    """
+    items = process_json("items.json")
+    slot = items["equipment"][equip]["slot"]
+
+    att_sum = 0
+    def_sum = 0
+    evd_sum = 0
+    if character["equipment"][slot] != "empty":  # if an item was just added
+        att_sum += int(items["equipment"][equip]["stats"]["att"])
+        def_sum += int(items["equipment"][equip]["stats"]["def"])
+        evd_sum += int(items["equipment"][equip]["stats"]["evd"])
+    else:  # if an item was just removed
+        att_sum -= int(items["equipment"][equip]["stats"]["att"])
+        def_sum -= int(items["equipment"][equip]["stats"]["def"])
+        evd_sum -= int(items["equipment"][equip]["stats"]["evd"])
+
+    character["stats"]["att"] = str(int(character["stats"]["att"]) + att_sum)
+    character["stats"]["def"] = str(int(character["stats"]["def"]) + def_sum)
+    character["stats"]["evd"] = str(int(character["stats"]["evd"]) + evd_sum)
+
+
 def manage_equipment(character):
     """
     Manage character equipment (Equip and Dequip)
@@ -150,6 +175,7 @@ def manage_equipment(character):
                     slot = items["equipment"][item]["slot"]
                     character["equipment"][slot] = item
                     character["inventory"].remove(item)
+                    update_stats(character, item)
                     print("Equiped " + item)
                 else:
                     print("Your class can't equip " + item + " or item not in inventory")
@@ -161,6 +187,7 @@ def manage_equipment(character):
                 item = character["equipment"][slot]
                 character["equipment"][slot] = "empty"
                 character["inventory"].append(item)
+                update_stats(character, item)
                 print("Dequiped " + item)
             else:
                 print("Your slot is empty")
@@ -168,8 +195,6 @@ def manage_equipment(character):
             break
         else:
             print("Invalid input, try again")
-
-
 
 
 def rest():

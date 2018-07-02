@@ -9,12 +9,14 @@
                 "left_hand": "empty",
                 "legs": "empty",
                 "necklace": "empty",
-                "right_hand": "Wooden Stick",
+                "right_hand": "empty",
                 "ring": "empty"
             },
             "gold": "0",
             "health": "50",
-            "inventory": [],
+            "inventory": [
+                "Wooden Stick"
+            ],
             "level": "0",
             "location": "start",
             "mana": "50",
