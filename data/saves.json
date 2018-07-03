@@ -15,7 +15,7 @@
             "exp": 0,
             "exp_req": 100,
             "gold": 0,
-            "hp": 50,
+            "hp": 10,
             "inventory": [
                 "Wooden Stick"
             ],

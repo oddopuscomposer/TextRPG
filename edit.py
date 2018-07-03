@@ -17,13 +17,13 @@ def add_class():
     classes = process_json("classes.json")
     name = input("Enter class name: ")
     classes["classes"][name] = {}
-    entry = input("Enter health: ")
+    entry = input("Enter hp: ")
     health = numeric_validation(entry)
-    classes["classes"][name]["health"] = int(health)
+    classes["classes"][name]["hp"] = int(health)
 
-    entry = input("Enter mana: ")
+    entry = input("Enter mp: ")
     mana = numeric_validation(entry)
-    classes["classes"][name]["mana"] = int(mana)
+    classes["classes"][name]["mp"] = int(mana)
     classes["xref"].append(name)
 
     write_json("classes.json", classes)
@@ -92,12 +92,14 @@ def add_equipable():
     item["slot"] = slot
 
     item["stats"] = {}
-    stats = input("Enter stats([att],[def],[evd]): ")
+    stats = input("Enter buffs([att],[def],[evd],[hp],[mp]): ")
     words = stats.split(",")
     # need validation
-    item["stats"]["att"] = words[0]
-    item["stats"]["def"] = words[1]
-    item["stats"]["evd"] = words[2]
+    item["buffs"]["att"] = words[0]
+    item["buffs"]["def"] = words[1]
+    item["buffs"]["evd"] = words[2]
+    item["buffs"]["hp"] = words[3]
+    items["buffs"]["mp"] = words[4]
 
     write_json("items.json", items)
 

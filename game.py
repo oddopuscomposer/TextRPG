@@ -42,10 +42,10 @@ def launch(setting):
             cls = input("Choose your class: ")
             if cls in class_data["xref"]:
                 character["class"] = cls
-                character["health"] = class_data["classes"][cls]["start_health"]
-                character["mana"] = class_data["classes"][cls]["start_mana"]
-                character["max_health"] = class_data["classes"][cls]["start_health"]
-                character["max_mana"] = class_data["classes"][cls]["start_mana"]
+                character["hp"] = class_data["classes"][cls]["start_hp"]
+                character["mp"] = class_data["classes"][cls]["start_mp"]
+                character["max_hp"] = class_data["classes"][cls]["start_hp"]
+                character["max_mp"] = class_data["classes"][cls]["start_mp"]
                 choose_status = True
             else:
                 print("Class doesnt exist")
@@ -82,11 +82,11 @@ def start_game(character):
         elif selection == "inv":
             manage_equipment(character)
         elif selection == "goto":
-            pass
+            go_to(character)
         elif selection == "shop":
-            pass
+            shop(character)
         elif selection == "encounter":
-            pass
+            encounter(character)
         else:
             print("Incorrect action, please try again")
         savefile["saves"][character["name"]] = character
@@ -103,10 +103,10 @@ def show_stats(character):
     print("name: " + character["name"])
     print("level: " + str(character["level"]))
     print("class: " + character["class"])
-    print("max health: " + str(character["max_health"]))
-    print("health: " + str(character["health"]))
-    print("max mana: " + str(character["max_mana"]))
-    print("mana: " + str(character["mana"]))
+    print("max hp: " + str(character["max_hp"]))
+    print("hp: " + str(character["hp"]))
+    print("max mp: " + str(character["max_mp"]))
+    print("mp: " + str(character["mp"]))
     print("att: " + str(character["stats"]["att"]))
     print("def: " + str(character["stats"]["def"]))
     print("evd: " + str(character["stats"]["evd"]))
@@ -156,25 +156,25 @@ def update_stats(character, equip):
     def_sum = 0
     evd_sum = 0
     hp_sum = 0
-    mana_sum = 0
+    mp_sum = 0
     if character["equipment"][slot] != "empty":                         # if an item was just added
         att_sum += items["equipment"][equip]["buffs"]["att"]
         def_sum += items["equipment"][equip]["buffs"]["def"]
         evd_sum += items["equipment"][equip]["buffs"]["evd"]
         hp_sum += items["equipment"][equip]["buffs"]["hp"]
-        mana_sum += items["equipment"][equip]["buffs"]["mana"]
+        mp_sum += items["equipment"][equip]["buffs"]["mp"]
     else:                                                               # if an item was just removed
         att_sum -= items["equipment"][equip]["buffs"]["att"]
         def_sum -= items["equipment"][equip]["buffs"]["def"]
         evd_sum -= items["equipment"][equip]["buffs"]["evd"]
         hp_sum -= items["equipment"][equip]["buffs"]["hp"]
-        mana_sum -= items["equipment"][equip]["buffs"]["mana"]
+        mp_sum -= items["equipment"][equip]["buffs"]["mp"]
 
     character["stats"]["att"] = character["stats"]["att"] + att_sum
     character["stats"]["def"] = character["stats"]["def"] + def_sum
     character["stats"]["evd"] = character["stats"]["evd"] + evd_sum
     character["max_hp"] = character["max_hp"] + hp_sum
-    character["max_mana"] = character["max_mana"] + mana_sum
+    character["max_mp"] = character["max_mp"] + mp_sum
 
 
 def manage_equipment(character):
@@ -228,8 +228,8 @@ def rest(character):
     location = character["location"]
     if location in locations:
         if locations[location]:
-            character["health"] = character["max_health"]
-            character["mana"] = character["max_mana"]
+            character["hp"] = character["max_hp"]
+            character["mp"] = character["max_mp"]
             print("You are well rested.")
         else:
             print("You cant rest in this location.")
@@ -247,6 +247,15 @@ def go_to(character):
 def shop(character):
     """
     Buy or Sell from Shop at Location if it exists
+    :param character:
+    :return:
+    """
+    pass
+
+
+def encounter(character):
+    """
+    Encounter an enemy
     :param character:
     :return:
     """
