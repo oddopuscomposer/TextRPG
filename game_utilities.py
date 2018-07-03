@@ -2,7 +2,7 @@ import json
 
 
 ########################################################################################################################
-# JSON & String Methods                                                                                                         #
+# JSON & String Methods                                                                                                #
 ########################################################################################################################
 
 
@@ -82,7 +82,12 @@ def slot_validation(entry):
     :param entry: string
     :return:
     """
-    pass
+    while True:
+        if entry in ["head", "chest", "legs", "feet", "left_hand", "right_hand", "necklace", "ring"]:
+            break
+        else:
+            entry = input("Please enter a valid slot: ")
+    return entry
 
 
 def array_validation(entry):

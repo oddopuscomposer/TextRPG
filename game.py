@@ -96,16 +96,16 @@ def show_stats(character):
     print("STATS")
     print("#######################")
     print("name: " + character["name"])
-    print("level: " + character["level"])
+    print("level: " + str(character["level"]))
     print("class: " + character["class"])
-    print("health: " + character["health"])
-    print("mana: " + character["mana"])
-    print("att: " + character["stats"]["att"])
-    print("def: " + character["stats"]["def"])
-    print("evd: " + character["stats"]["evd"])
-    print("exp: " + character["exp"])
-    print("next level: " + character["exp_req"])
-    print("training points: " + character["training_points"])
+    print("health: " + str(character["health"]))
+    print("mana: " + str(character["mana"]))
+    print("att: " + str(character["stats"]["att"]))
+    print("def: " + str(character["stats"]["def"]))
+    print("evd: " + str(character["stats"]["evd"]))
+    print("exp: " + str(character["exp"]))
+    print("next level: " + str(character["exp_req"]))
+    print("training points: " + str(character["training_points"]))
     print("skills: " + str(character["skills"]))
     print("location: " + character["location"])
     print("#######################")
@@ -149,17 +149,17 @@ def update_stats(character, equip):
     def_sum = 0
     evd_sum = 0
     if character["equipment"][slot] != "empty":                         # if an item was just added
-        att_sum += int(items["equipment"][equip]["stats"]["att"])
-        def_sum += int(items["equipment"][equip]["stats"]["def"])
-        evd_sum += int(items["equipment"][equip]["stats"]["evd"])
+        att_sum += items["equipment"][equip]["stats"]["att"]
+        def_sum += items["equipment"][equip]["stats"]["def"]
+        evd_sum += items["equipment"][equip]["stats"]["evd"]
     else:                                                               # if an item was just removed
-        att_sum -= int(items["equipment"][equip]["stats"]["att"])
-        def_sum -= int(items["equipment"][equip]["stats"]["def"])
-        evd_sum -= int(items["equipment"][equip]["stats"]["evd"])
+        att_sum -= items["equipment"][equip]["stats"]["att"]
+        def_sum -= items["equipment"][equip]["stats"]["def"]
+        evd_sum -= items["equipment"][equip]["stats"]["evd"]
 
-    character["stats"]["att"] = str(int(character["stats"]["att"]) + att_sum)
-    character["stats"]["def"] = str(int(character["stats"]["def"]) + def_sum)
-    character["stats"]["evd"] = str(int(character["stats"]["evd"]) + evd_sum)
+    character["stats"]["att"] = character["stats"]["att"] + att_sum
+    character["stats"]["def"] = character["stats"]["def"] + def_sum
+    character["stats"]["evd"] = character["stats"]["evd"] + evd_sum
 
 
 def manage_equipment(character):
@@ -175,7 +175,7 @@ def manage_equipment(character):
         if entry.startswith("equip"):
             item = remove_prefix(entry, "equip ")
             if item in items["equipment"]:
-                if character["class"] in items["equipment"][item]["classes"]:
+                if character["class"] or "any" in items["equipment"][item]["classes"]:
                     slot = items["equipment"][item]["slot"]
                     character["equipment"][slot] = item
                     character["inventory"].remove(item)
@@ -187,14 +187,17 @@ def manage_equipment(character):
                 print("The item is unequipable")
         elif entry.startswith("dequip"):
             slot = remove_prefix(entry, "dequip ")
-            if character["equipment"][slot] != "empty":
-                item = character["equipment"][slot]
-                character["equipment"][slot] = "empty"
-                character["inventory"].append(item)
-                update_stats(character, item)
-                print("Dequiped " + item)
+            if slot in ["head", "chest", "legs", "feet", "left_hand", "right_hand", "necklace", "ring"]:
+                if character["equipment"][slot] != "empty":
+                    item = character["equipment"][slot]
+                    character["equipment"][slot] = "empty"
+                    character["inventory"].append(item)
+                    update_stats(character, item)
+                    print("Dequiped " + item)
+                else:
+                    print("Your slot is empty")
             else:
-                print("Your slot is empty")
+                print("Invalid slot")
         elif entry == "q":
             break
         else:

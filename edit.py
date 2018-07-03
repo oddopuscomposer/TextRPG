@@ -87,8 +87,8 @@ def add_equipable():
     words = cls.split(",")
     item["classes"] = words
 
-    slot = input("Enter slot: ")
-    # need validation
+    entry = input("Enter slot: ")
+    slot = slot_validation(entry)
     item["slot"] = slot
 
     item["stats"] = {}
@@ -140,6 +140,7 @@ def delete_misc_item():
     :return:
     """
     pass
+
 
 def add_skill():
     """
