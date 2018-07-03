@@ -1,0 +1,15 @@
+{
+  "shops": {
+    "start shop" : {
+      "npc": "",
+      "inventory": ["Wooden Stick"],
+      "location": "start1"
+    },
+    "wow shop":{
+      "npc": "",
+      "inventory": [],
+      "location": "start"
+    }
+  },
+  "xref": ["start shop", "wow shop"]
+}

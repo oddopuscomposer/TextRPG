@@ -122,7 +122,7 @@ def show_stats(character):
 
 def show_inventory(character):
     """
-    Prints equipment and inventory
+    Prints equipment and inventory // Helper method for manage equipment
     :param character:
     :return:
     """
@@ -159,6 +159,7 @@ def update_stats(character, equip):
     evd_sum = 0
     hp_sum = 0
     mp_sum = 0
+
     if character["equipment"][slot] != "empty":                         # if an item was just added
         att_sum += items["equipment"][equip]["buffs"]["att"]
         def_sum += items["equipment"][equip]["buffs"]["def"]
@@ -245,17 +246,55 @@ def rest(character):
 
 def go_to(character):
     """
-    Travel to a location
+    Travel to an adjacent location
     :param character:
     :return:
     """
-    pass
+    locations = process_json("locations.json")
+    old_location = character["location"]
+    loc_list = locations["locations"][old_location]["adjacent"]
+    while True:
+        print(loc_list)
+        new_location = input("Choose a location (q to quit): ")
+        if new_location in loc_list:
+            if old_location in locations["locations"][new_location]["adjacent"]:
+                character["location"] = new_location
+                print("You are now in " + new_location)
+                break
+            else:
+                print("This area is one way")
+        elif new_location == "q":
+            break
+        else:
+            print("Invalid location, please try again")
 
 
 def shop(character):
     """
     Buy or Sell from Shop at Location if it exists
     :param character:
+    :return:
+    """
+    shops = process_json("shops.json")
+    locations = process_json("locations.json")
+    location = character["location"]
+    if not locations["locations"][location]["shops"]:
+        print("There are no shops in this area")
+    else:
+        while True:
+            print(locations["locations"][location]["shops"])
+            store = input("Select a shop (q to quit): ")
+            if store in locations["locations"][location]["shops"] and store in shops["xref"]:  # Shop loop
+                pass
+            elif store == "q":
+                break
+            else:
+                print("Invalid Shop Name")
+
+
+def shop_interaction():
+    """
+    Helper method for shop // handles interaction with shop keeper
     :return:
     """
     pass

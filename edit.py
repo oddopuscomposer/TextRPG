@@ -194,7 +194,7 @@ def delete_npc():
 
 def add_enemy():
     """
-    Adds enemy from enemies.json
+    Adds enemy to enemies.json
     :return:
     """
     pass
@@ -203,6 +203,22 @@ def add_enemy():
 def delete_enemy():
     """
     Removes enemy from enemies.json
+    :return:
+    """
+    pass
+
+
+def add_shop():
+    """
+    Adds shop to shops.json // [shops] [xref] locations[location][shops]
+    :return:
+    """
+    pass
+
+
+def delete_shop():
+    """
+    Removes shop from shops.json
     :return:
     """
     pass
