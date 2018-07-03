@@ -75,7 +75,7 @@ def start_game(character):
     while game_status:
         print("#######################")
         print("")
-        print("stats, inv, goto, shop, encounter")
+        print("stats, inv, rest, goto, shop, encounter")
         selection = input("Select an option: ")
         if selection == "stats":
             show_stats(character)
@@ -83,6 +83,8 @@ def start_game(character):
             manage_equipment(character)
         elif selection == "goto":
             go_to(character)
+        elif selection == "rest":
+            rest(character)
         elif selection == "shop":
             shop(character)
         elif selection == "encounter":
@@ -176,6 +178,12 @@ def update_stats(character, equip):
     character["max_hp"] = character["max_hp"] + hp_sum
     character["max_mp"] = character["max_mp"] + mp_sum
 
+    if character["hp"] > character["max_hp"]:
+        character["hp"] = character["max_hp"]
+
+    if character["mp"] > character["max_mp"]:
+        character["mp"] = character["max_mp"]
+
 
 def manage_equipment(character):
     """
@@ -226,8 +234,8 @@ def rest(character):
     """
     locations = process_json("locations.json")
     location = character["location"]
-    if location in locations:
-        if locations[location]:
+    if location in locations["xref"]:
+        if locations["locations"][location]:
             character["hp"] = character["max_hp"]
             character["mp"] = character["max_mp"]
             print("You are well rested.")
