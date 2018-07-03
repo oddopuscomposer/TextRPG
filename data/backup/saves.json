@@ -12,55 +12,26 @@
                 "right_hand": "empty",
                 "ring": "empty"
             },
-            "gold": "0",
-            "health": "50",
+            "exp": 0,
+            "exp_req": 100,
+            "gold": 0,
+            "hp": 50,
             "inventory": [
                 "Wooden Stick"
             ],
-            "level": "0",
+            "level": 0,
             "location": "start",
-            "mana": "50",
+            "mana": 50,
+            "max_hp": 50,
+            "max_mana": 50,
             "name": "Chres",
             "skills": [],
             "stats": {
-                "att": "0",
-                "def": "0",
-                "evd": "0",
-                "exp": "0",
-                "exp_req": "100"
+                "att": 0,
+                "def": 0,
+                "evd": 0
             },
-            "training_points": "0"
-        },
-        "Dab": {
-            "class": "Archer",
-            "equipment": {
-                "chest": "empty",
-                "feet": "empty",
-                "head": "empty",
-                "left_hand": "empty",
-                "legs": "empty",
-                "necklace": "empty",
-                "right_hand": "empty",
-                "ring": "empty"
-            },
-            "gold": "0",
-            "health": "20",
-            "inventory": [
-                "Wooden Stick"
-            ],
-            "level": "0",
-            "location": "start",
-            "mana": "20",
-            "name": "Dab",
-            "skills": [],
-            "stats": {
-                "att": "0",
-                "def": "0",
-                "evd": "0",
-                "exp": "0",
-                "exp_req": "100"
-            },
-            "training_points": "0"
+            "training_points": 0
         },
         "start_template": {
             "class": "Knight",
@@ -74,26 +45,27 @@
                 "right_hand": "empty",
                 "ring": "empty"
             },
-            "gold": "0",
-            "health": "50",
+            "exp": 0,
+            "exp_req": 100,
+            "gold": 0,
+            "hp": 50,
             "inventory": [],
-            "level": "0",
+            "level": 0,
             "location": "start",
-            "mana": "50",
-            "name": "asdaasdsa",
+            "mana": 50,
+            "max_hp": 50,
+            "max_mana": 50,
+            "name": "example",
             "skills": [],
             "stats": {
-                "att": "0",
-                "def": "0",
-                "evd": "0",
-                "exp": "0",
-                "exp_req": "100"
+                "att": 0,
+                "def": 0,
+                "evd": 0
             },
-            "training_points": "0"
+            "training_points": 0
         }
     },
     "xref": [
-        "Chres",
-        "Dab"
+        "Chres"
     ]
 }

@@ -18,7 +18,7 @@ def launch(setting):
         print(saves)
         save = input("Choose a save data(quit to exit): ")
         while True:
-            if save in player_data["saves"]:
+            if save in saves:
                 character = player_data["saves"][save]
                 name = character["name"]
                 break
@@ -33,7 +33,7 @@ def launch(setting):
         choose_status = False
         while not choose_status:
             name = input("What is your name?: ")
-            if name == "start_template":
+            if name == "start_template" or name in saves:
                 break
             player_data["saves"][name] = character
             character = player_data["saves"][name]
@@ -42,19 +42,24 @@ def launch(setting):
             cls = input("Choose your class: ")
             if cls in class_data["xref"]:
                 character["class"] = cls
-                character["health"] = class_data["classes"][cls]["health"]
-                character["mana"] = class_data["classes"][cls]["mana"]
+                character["health"] = class_data["classes"][cls]["start_health"]
+                character["mana"] = class_data["classes"][cls]["start_mana"]
+                character["max_health"] = class_data["classes"][cls]["start_health"]
+                character["max_mana"] = class_data["classes"][cls]["start_mana"]
                 choose_status = True
             else:
                 print("Class doesnt exist")
-        player_data["xref"].append(character["name"])
-        write_json("saves.json", player_data)
 
-    if name != "start_template" and name != "":
+    if setting == "saves":
         start_game(character)
-    else:
-        print("Error: Can't use start_template or empty string as name of save")
+    if name == "start_template" or name == "" or name in saves:
+        print("Error: Can't use start_template, empty string as name of save, or Save file already exists")
         print("")
+    else:
+        if character["name"] != "example":
+            player_data["xref"].append(character["name"])
+            write_json("saves.json", player_data)
+            start_game(character)
 
 
 def start_game(character):
@@ -98,7 +103,9 @@ def show_stats(character):
     print("name: " + character["name"])
     print("level: " + str(character["level"]))
     print("class: " + character["class"])
+    print("max health: " + str(character["max_health"]))
     print("health: " + str(character["health"]))
+    print("max mana: " + str(character["max_mana"]))
     print("mana: " + str(character["mana"]))
     print("att: " + str(character["stats"]["att"]))
     print("def: " + str(character["stats"]["def"]))
@@ -148,18 +155,26 @@ def update_stats(character, equip):
     att_sum = 0
     def_sum = 0
     evd_sum = 0
+    hp_sum = 0
+    mana_sum = 0
     if character["equipment"][slot] != "empty":                         # if an item was just added
-        att_sum += items["equipment"][equip]["stats"]["att"]
-        def_sum += items["equipment"][equip]["stats"]["def"]
-        evd_sum += items["equipment"][equip]["stats"]["evd"]
+        att_sum += items["equipment"][equip]["buffs"]["att"]
+        def_sum += items["equipment"][equip]["buffs"]["def"]
+        evd_sum += items["equipment"][equip]["buffs"]["evd"]
+        hp_sum += items["equipment"][equip]["buffs"]["hp"]
+        mana_sum += items["equipment"][equip]["buffs"]["mana"]
     else:                                                               # if an item was just removed
-        att_sum -= items["equipment"][equip]["stats"]["att"]
-        def_sum -= items["equipment"][equip]["stats"]["def"]
-        evd_sum -= items["equipment"][equip]["stats"]["evd"]
+        att_sum -= items["equipment"][equip]["buffs"]["att"]
+        def_sum -= items["equipment"][equip]["buffs"]["def"]
+        evd_sum -= items["equipment"][equip]["buffs"]["evd"]
+        hp_sum -= items["equipment"][equip]["buffs"]["hp"]
+        mana_sum -= items["equipment"][equip]["buffs"]["mana"]
 
     character["stats"]["att"] = character["stats"]["att"] + att_sum
     character["stats"]["def"] = character["stats"]["def"] + def_sum
     character["stats"]["evd"] = character["stats"]["evd"] + evd_sum
+    character["max_hp"] = character["max_hp"] + hp_sum
+    character["max_mana"] = character["max_mana"] + mana_sum
 
 
 def manage_equipment(character):
@@ -206,10 +221,18 @@ def manage_equipment(character):
 
 def rest(character):
     """
-    Heal
+    Heal character for health/mana
     :return:
     """
     locations = process_json("locations.json")
+    location = character["location"]
+    if location in locations:
+        if locations[location]:
+            character["health"] = character["max_health"]
+            character["mana"] = character["max_mana"]
+            print("You are well rested.")
+        else:
+            print("You cant rest in this location.")
 
 
 def go_to(character):
