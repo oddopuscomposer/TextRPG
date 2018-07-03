@@ -10,3 +10,5 @@ Instructions:
 2. "python main.py" in cmd in project directory
 
 3. Enjoy?
+
+4. also i'm 12
