@@ -14,16 +14,17 @@
             },
             "exp": 0,
             "exp_req": 100,
-            "gold": 0,
+            "gold": 90,
             "hp": 50,
             "inventory": [
+                "Wooden Stick",
                 "Wooden Stick"
             ],
             "level": 0,
-            "location": "start",
-            "mana": 50,
+            "location": "start1",
             "max_hp": 50,
-            "max_mana": 50,
+            "max_mp": 50,
+            "mp": 50,
             "name": "Chres",
             "skills": [],
             "stats": {
@@ -52,9 +53,9 @@
             "inventory": [],
             "level": 0,
             "location": "start",
-            "mana": 50,
             "max_hp": 50,
-            "max_mana": 50,
+            "max_mp": 50,
+            "mp": 50,
             "name": "example",
             "skills": [],
             "stats": {

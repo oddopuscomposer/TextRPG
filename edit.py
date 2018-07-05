@@ -66,6 +66,9 @@ def add_equipable():
     items["equipment"][name] = {}
     item = items["equipment"][name]
 
+    desc = input("Enter item description: ")
+    item["description"] = desc
+
     entry = input("Enter buy price: ")
     buy_price = numeric_validation(entry)
     item["buy_price"] = int(buy_price)

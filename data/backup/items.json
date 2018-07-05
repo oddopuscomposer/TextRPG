@@ -6,6 +6,7 @@
                 "Knight"
             ],
             "damage": 5,
+            "description" : "",
             "rarity": "common",
             "sell_price": 5,
             "slot": "right_hand",
@@ -13,8 +14,8 @@
                 "att": 5,
                 "def": 0,
                 "evd": 0,
-                "hp": 0,
-                "mana": 0
+                "hp": 3,
+                "mp": 2
             }
         }
     },

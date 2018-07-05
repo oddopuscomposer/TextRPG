@@ -1,14 +1,19 @@
 {
   "locations": {
-    "start": {
-      "shops": {
-        "shop1": [],
-        "shop2": []
-      },
+    "start1": {
+      "shops": ["start shop"],
       "npcs": [],
       "rest": true,
-      "enemies": []
+      "enemies": [],
+      "adjacent": ["start"]
+    },
+    "start": {
+      "shops": ["wow shop"],
+      "npcs": [],
+      "rest": true,
+      "enemies": [],
+      "adjacent": ["start1"]
     }
   },
-  "xref": ["start"]
+  "xref": ["start1", "start"]
 }

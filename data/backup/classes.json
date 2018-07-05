@@ -1,12 +1,12 @@
 {
     "classes": {
         "Archer": {
-            "start_health": 20,
-            "start_mana": 20
+            "start_hp": 20,
+            "start_mp": 20
         },
         "Knight": {
-            "start_health": 50,
-            "start_mana": 50
+            "start_hp": 50,
+            "start_mp": 50
         }
     },
     "xref": [
