@@ -229,5 +229,49 @@ def edit_game():
     Main edit method
     :return:
     """
-    pass
+    while True:
+        print("classes, items, shops, locations, enemies, saves, npcs, skills, progression, passives")
+        entry = input("What would you like to edit? (q to exit to menu): ")
+        if entry == "classes":
+            while True:
+                option = input("add or delete classes? (q to exit): ")
+                if option == "add":
+                    add_class()
+                elif option == "delete":
+                    delete_class()
+                elif option == "q":
+                    break
+        if entry == "items":
+            while True:
+                option = input("add or delete items? (q to exit): ")
+                if option == "add":
+                    option_two = input("equipable or misc?: ")
+                    if option_two == "equipable":
+                        add_equipable()
+                    elif option_two == "misc":
+                        add_misc_item()
+                    else:
+                        print("Invalid input")
+                elif option == "delete":
+                    delete_item()
+                elif option == "q":
+                    break
+        if entry == "shops":
+            pass
+        if entry == "locations":
+            pass
+        if entry == "locations":
+            pass
+        if entry == "saves":
+            pass
+        if entry == "npcs":
+            pass
+        if entry == "skills":
+            pass
+        if entry == "progression":
+            pass
+        if entry == "passives":
+            pass
+        elif entry == "q":
+            break
 
