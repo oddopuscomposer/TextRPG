@@ -338,9 +338,12 @@ def shop_interaction(character, shops, store):
                     cost = items["equipment"][entry]["buy_price"]
                     resp = input("Would you like to buy " + entry + " for " + str(cost) + "? (y/n): ")
                     if resp == "y":
-                        character["gold"] -= cost
-                        character["inventory"].append(entry)
-                        print("Item purchased for " + str(cost) + " gold")
+                        if character["gold"] > cost:
+                            character["gold"] -= cost
+                            character["inventory"].append(entry)
+                            print("Item purchased for " + str(cost) + " gold")
+                        else:
+                            print("You dont have enough gold")
                         break
                     elif resp == "n":
                         break
