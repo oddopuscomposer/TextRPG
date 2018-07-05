@@ -98,12 +98,13 @@ def add_equipable():
     stats = input("Enter buffs([att],[def],[evd],[hp],[mp]): ")
     words = stats.split(",")
     # need validation
-    item["buffs"]["att"] = words[0]
-    item["buffs"]["def"] = words[1]
-    item["buffs"]["evd"] = words[2]
-    item["buffs"]["hp"] = words[3]
-    item["buffs"]["mp"] = words[4]
+    item["buffs"]["att"] = int(words[0])
+    item["buffs"]["def"] = int(words[1])
+    item["buffs"]["evd"] = int(words[2])
+    item["buffs"]["hp"] = int(words[3])
+    item["buffs"]["mp"] = int(words[4])
 
+    item["type"] = "equipment"
     write_json("items.json", items)
 
 
