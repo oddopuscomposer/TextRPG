@@ -14,12 +14,12 @@
             },
             "exp": 0,
             "exp_req": 100,
-            "gold": 90,
+            "gold": 85,
             "hp": 50,
             "inventory": [
                 "Wooden Stick",
                 "Wooden Stick",
-                "Wood block"
+                "Wooden Stick"
             ],
             "level": 0,
             "location": "start1",

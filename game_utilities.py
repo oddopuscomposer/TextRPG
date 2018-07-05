@@ -29,6 +29,12 @@ def write_json(filename, data):
 
 
 def remove_prefix(text, prefix):
+    """
+    Removes prefix from a string
+    :param text:
+    :param prefix:
+    :return:
+    """
     if text.startswith(prefix):
         return text[len(prefix):]
     return text
@@ -42,7 +48,7 @@ def numeric_validation(entry):
     """
     Validates numeric inputs for entry
     :param entry: string
-    :return:
+    :return: entry
     """
     while True:
         try:
