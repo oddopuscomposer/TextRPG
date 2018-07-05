@@ -19,11 +19,11 @@ def add_class():
     classes["classes"][name] = {}
     entry = input("Enter hp: ")
     health = numeric_validation(entry)
-    classes["classes"][name]["hp"] = int(health)
+    classes["classes"][name]["start_hp"] = int(health)
 
     entry = input("Enter mp: ")
     mana = numeric_validation(entry)
-    classes["classes"][name]["mp"] = int(mana)
+    classes["classes"][name]["start_mp"] = int(mana)
     classes["xref"].append(name)
 
     write_json("classes.json", classes)
@@ -107,7 +107,7 @@ def add_equipable():
     write_json("items.json", items)
 
 
-def delete_equipable():
+def delete_item():
     """
     Removes equipable from items.json
     :return:
@@ -136,14 +136,11 @@ def add_misc_item():
     Adds misc item to items.json
     :return:
     """
-    pass
-
-
-def delete_misc_item():
-    """
-    Removes misc item from items.json
-    :return:
-    """
+    # "buy_price": 10,
+    # "sell_price": 5,
+    # "rarity": "common",
+    # "description": "",
+    # "type": "misc"
     pass
 
 
