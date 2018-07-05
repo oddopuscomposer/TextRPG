@@ -94,7 +94,7 @@ def add_equipable():
     slot = slot_validation(entry)
     item["slot"] = slot
 
-    item["stats"] = {}
+    item["buffs"] = {}
     stats = input("Enter buffs([att],[def],[evd],[hp],[mp]): ")
     words = stats.split(",")
     # need validation
@@ -102,9 +102,22 @@ def add_equipable():
     item["buffs"]["def"] = words[1]
     item["buffs"]["evd"] = words[2]
     item["buffs"]["hp"] = words[3]
-    items["buffs"]["mp"] = words[4]
+    item["buffs"]["mp"] = words[4]
 
     write_json("items.json", items)
+
+
+def add_misc_item():
+    """
+    Adds misc item to items.json
+    :return:
+    """
+    # "buy_price": 10,
+    # "sell_price": 5,
+    # "rarity": "common",
+    # "description": "",
+    # "type": "misc"
+    pass
 
 
 def delete_item():
@@ -129,19 +142,6 @@ def delete_item():
         print("entry is not in items")
 
     write_json("items.json", items)
-
-
-def add_misc_item():
-    """
-    Adds misc item to items.json
-    :return:
-    """
-    # "buy_price": 10,
-    # "sell_price": 5,
-    # "rarity": "common",
-    # "description": "",
-    # "type": "misc"
-    pass
 
 
 def add_skill():
