@@ -94,16 +94,17 @@ def add_equipable():
     slot = slot_validation(entry)
     item["slot"] = slot
 
-    item["stats"] = {}
+    item["buffs"] = {}
     stats = input("Enter buffs([att],[def],[evd],[hp],[mp]): ")
     words = stats.split(",")
     # need validation
-    item["buffs"]["att"] = words[0]
-    item["buffs"]["def"] = words[1]
-    item["buffs"]["evd"] = words[2]
-    item["buffs"]["hp"] = words[3]
-    items["buffs"]["mp"] = words[4]
+    item["buffs"]["att"] = int(words[0])
+    item["buffs"]["def"] = int(words[1])
+    item["buffs"]["evd"] = int(words[2])
+    item["buffs"]["hp"] = int(words[3])
+    item["buffs"]["mp"] = int(words[4])
 
+    item["type"] = "equipment"
     write_json("items.json", items)
 
 
@@ -160,12 +161,6 @@ def add_misc_item():
     item["type"] = "misc"
 
     write_json("items.json", items)
-    # "buy_price": 10,
-    # "sell_price": 5,
-    # "rarity": "common",
-    # "description": "",
-    # "type": "misc"
-    pass
 
 
 def add_skill():
