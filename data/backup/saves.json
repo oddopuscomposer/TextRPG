@@ -18,7 +18,8 @@
             "hp": 50,
             "inventory": [
                 "Wooden Stick",
-                "Wooden Stick"
+                "Wooden Stick",
+                "Wood block"
             ],
             "level": 0,
             "location": "start1",

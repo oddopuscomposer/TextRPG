@@ -63,8 +63,8 @@ def add_equipable():
     items = process_json("items.json")
 
     name = input("Enter item name: ")
-    items["equipment"][name] = {}
-    item = items["equipment"][name]
+    items["items"][name] = {}
+    item = items["items"][name]
 
     desc = input("Enter item description: ")
     item["description"] = desc
@@ -114,11 +114,11 @@ def delete_equipable():
     """
     entry = input("Please enter an equipable to delete: ")
     items = process_json("items.json")
-    if entry in items["equipment"]:
+    if entry in items["items"]:
         while True:
             confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")
             if confirm == "y":
-                del items["equipment"][entry]
+                del items["items"][entry]
                 print("Item deleted")
                 break
             elif confirm == "n":

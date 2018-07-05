@@ -1,7 +1,8 @@
 {
-    "equipment": {
+    "items": {
         "Wooden Stick": {
             "buy_price": 10,
+            "type": "equipment",
             "classes": [
                 "Knight"
             ],
@@ -17,7 +18,14 @@
                 "hp": 3,
                 "mp": 2
             }
+        },
+        "Wood block": {
+          "buy_price": 10,
+          "sell_price": 5,
+          "rarity": "common",
+          "description": "",
+          "type": "misc"
         }
-    },
-    "misc": {}
+
+    }
 }
