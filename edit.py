@@ -136,6 +136,30 @@ def add_misc_item():
     Adds misc item to items.json
     :return:
     """
+    items = process_json("items.json")
+
+    name = input("Enter item name: ")
+    items["items"][name] = {}
+    item = items["items"][name]
+
+    desc = input("Enter item description: ")
+    item["description"] = desc
+
+    entry = input("Enter buy price: ")
+    buy_price = numeric_validation(entry)
+    item["buy_price"] = int(buy_price)
+
+    entry = input("Enter sell price: ")
+    sell_price = numeric_validation(entry)
+    item["sell_price"] = int(sell_price)
+
+    entry = input("Enter rarity(common, uncommon, rare, ancient, legendary): ")
+    rarity = rarity_validation(entry)
+    item["rarity"] = rarity
+
+    item["type"] = "misc"
+
+    write_json("items.json", items)
     # "buy_price": 10,
     # "sell_price": 5,
     # "rarity": "common",
