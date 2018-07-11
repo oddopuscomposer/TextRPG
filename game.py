@@ -409,7 +409,6 @@ def encounter(character):
 
     if len(location_enemies) > 0:
         choice = numpy.random.choice(location_enemies, 1, location_rates)
-        print(choice[0])
         if choice[0] != "none":
             print(choice[0] + " wants to fight")
             enemy = enemies["enemies"][choice[0]]
