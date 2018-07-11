@@ -1,4 +1,5 @@
 from game_utilities import process_json, write_json, remove_prefix
+import numpy
 
 
 def launch(setting):
@@ -389,5 +390,40 @@ def encounter(character):
     :param character:
     :return:
     """
+    location = character["location"]
+    locations = process_json("locations.json")
+    enemies = process_json("enemies.json")
+
+    curr_location = locations["locations"][location]
+    location_enemies = list(curr_location["enemies"].keys())
+    location_rates = list(curr_location["enemies"].values())
+
+    max_rate = 0
+    for item in location_rates:
+        max_rate += item
+
+    if max_rate != 1 and max_rate > 0:
+        none_rate = 1 - max_rate
+        location_rates.append(none_rate)
+        location_enemies.append("none")
+
+    if len(location_enemies) > 0:
+        choice = numpy.random.choice(location_enemies, 1, location_rates)
+        print(choice[0])
+        if choice[0] != "none":
+            print(choice[0] + " wants to fight")
+            enemy = enemies["enemies"][choice[0]]
+            battle(character, enemy)
+        else:
+            print("No enemies found")
+    else:
+        print("There are no enemies in this area")
+
+
+def battle(character, enemy):
     pass
+
+
+
+
 

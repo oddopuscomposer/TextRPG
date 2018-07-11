@@ -22,7 +22,7 @@
                 "Wooden Stick"
             ],
             "level": 0,
-            "location": "start1",
+            "location": "start",
             "max_hp": 50,
             "max_mp": 50,
             "mp": 50,

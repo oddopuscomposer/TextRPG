@@ -1,8 +1,20 @@
 {
   "enemies":{
+    "goblin": {
+      "hp": 50,
+      "attack": [10,2,4,6],
+      "drops": [],
+      "exp": 0
+    },
+    "diddy kong":{
+      "hp": 30,
+      "attack": [15],
+      "drops": [],
+      "exp": 0
+    }
 
   },
-  "xref": []
+  "xref": ["goblin", "diddy kong"]
 
 
 
