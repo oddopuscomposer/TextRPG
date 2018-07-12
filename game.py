@@ -1,4 +1,4 @@
-from game_utilities import process_json, write_json, remove_prefix
+from game_utilities import process_json, write_json, remove_prefix, check_run_chance
 import numpy
 
 
@@ -314,7 +314,6 @@ def shop_interaction(character, shops, store):
     while True:
         option = input("buy(b) or sell(s)? (q for quit): ")
         if option == "b" or option == "buy":
-            #print(shops["shops"][store]["npc"])
             print(shops["shops"][store]["inventory"])
             for item in shops["shops"][store]["inventory"]:
                 match = items["items"][item]
@@ -420,7 +419,35 @@ def encounter(character):
 
 
 def battle(character, enemy):
-    pass
+    """
+    Main Battle Method
+    :param character:
+    :param enemy:
+    :return:
+    """
+    enemy_health = enemy["hp"]
+    your_health = character["hp"]
+    who_died = ""
+    while True:
+        while True:
+            print("fight, item, run")
+            choice = input("Choose an option: ")
+            if choice == "fight":
+                pass
+            elif choice == "item":
+                pass
+            elif choice == "run":
+                escape_status = check_run_chance(character["level"], enemy["level"])
+                if escape_status:
+                    break
+            else:
+                print("Please select a valid option")
+        break
+
+
+    print("Battle ended")
+
+
 
 
 
