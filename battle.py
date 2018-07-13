@@ -1,4 +1,5 @@
 import numpy as np
+from game_utilities import *
 
 
 def battle(character, enemy):
@@ -17,7 +18,7 @@ def battle(character, enemy):
     escape_status = False
 
     while True:     # Full Fight
-        print("Turn #" + turn_count)
+        print("Turn #" + str(turn_count))
         while True:     # Full Turn
             if escape_status:
                 break
@@ -27,7 +28,7 @@ def battle(character, enemy):
                     choice = input("Choose an option: ")
                     if choice == "fight":
                         pass
-
+                        enemy_health -= 10
                         break
                     elif choice == "item":
                         pass
@@ -126,4 +127,36 @@ def evasion_check(character, enemy):
 
 
 def loot(character, enemy):
-    pass
+    """
+    Enemy resource transfer
+    :param character:
+    :param enemy:
+    :return:
+    """
+    progression = process_json("progression.json")
+    character["exp"] += enemy["exp"]
+    if character["exp"] > character["exp_req"]:
+        character["exp"] = character["exp"] - character["exp_req"]
+        character["level"] += 1
+        character["exp_req"] = progression[str(character["level"])]
+
+    if enemy["drops"] != {}:
+
+        items = list(enemy["drops"].keys())
+        probs = list((enemy["drops"].values()))
+
+        max_rate = 0
+        for item in probs:
+            max_rate += item
+
+        if max_rate != 1 and max_rate > 0:
+            none_rate = 1 - max_rate
+            probs.append(none_rate)
+            items.append("none")
+
+        drop = np.random.choice(items, 1, probs)[0]
+
+        if drop != "none":
+            print(enemy["name"] + " dropped a " + drop)
+            character["inventory"].append(drop)
+

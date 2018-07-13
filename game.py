@@ -314,7 +314,11 @@ def shop_interaction(character, shops, store):
     while True:
         option = input("buy(b) or sell(s)? (q for quit): ")
         if option == "b" or option == "buy":
-            print(shops["shops"][store]["inventory"])
+            if len(shops["shops"][store]["inventory"]) != 0:
+                print("Inventory: ")
+            else:
+                print("There is nothing in this shop!")
+            count = 0
             for item in shops["shops"][store]["inventory"]:
                 match = items["items"][item]
                 price = match["buy_price"]
@@ -323,21 +327,23 @@ def shop_interaction(character, shops, store):
                 slot = match["slot"]
                 damage = match["damage"]
                 buffs = match["buffs"]
-
-                print(item)
-                print("price: " + str(price))
-                print("rarity: " + rarity)
-                print("classes: " + str(classes))
-                print("slot: " + slot)
-                print("damage: " + str(damage))
-                for k in buffs:
-                    print(k + ": " + str(buffs[k]))
-                print("----------------------------------------")
+                count += 1
+                print(str(count) + ". " + item)
 
                 while True:
-                    entry = input("What would you like to purchase? (q to quit): ")
+                    entry = input("What are you interested in buying? (q to quit): ")
                     if entry in shops["shops"][store]["inventory"]:
                         while True:
+                            print("----------------------------------------")
+                            print(item)
+                            print("price: " + str(price))
+                            print("rarity: " + rarity)
+                            print("classes: " + str(classes))
+                            print("slot: " + slot)
+                            print("damage: " + str(damage))
+                            for k in buffs:
+                                print(k + ": " + str(buffs[k]))
+                            print("----------------------------------------")
                             cost = items["items"][entry]["buy_price"]
                             resp = input("Would you like to buy " + entry + " for " + str(cost) + "? (y/n): ")
                             if resp == "y":
