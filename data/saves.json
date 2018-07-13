@@ -14,9 +14,15 @@
             },
             "exp": 0,
             "exp_req": 120,
-            "gold": 90,
+            "gold": 30,
             "hp": 50,
             "inventory": [
+                "Wooden Stick",
+                "Wooden Stick",
+                "Wooden Stick",
+                "Wooden Stick",
+                "Wooden Stick",
+                "Wooden Stick",
                 "Wooden Stick",
                 "Wooden Stick",
                 "Wooden Stick",
@@ -51,7 +57,7 @@
             },
             "exp": 0,
             "exp_req": 100,
-            "gold": 0,
+            "gold": 100,
             "hp": 50,
             "inventory": [],
             "level": 0,
@@ -63,8 +69,8 @@
             "skills": [],
             "stats": {
                 "att": 0,
-                "def": 0,
                 "crt": 1,
+                "def": 0,
                 "evd": 0
             },
             "training_points": 0
