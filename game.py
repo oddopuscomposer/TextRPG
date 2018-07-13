@@ -76,7 +76,7 @@ def start_game(character):
     while game_status:
         print("#######################")
         print("")
-        print("stats, inv, rest, goto, shop, encounter")
+        print("stats, inv, rest, goto, shop, encounter, quit")
         selection = input("Select an option: ")
         if selection == "stats":
             show_stats(character)
@@ -90,6 +90,8 @@ def start_game(character):
             shop(character)
         elif selection == "encounter":
             encounter(character)
+        elif selection == "quit":
+            pass
         else:
             print("Incorrect action, please try again")
         savefile["saves"][character["name"]] = character
