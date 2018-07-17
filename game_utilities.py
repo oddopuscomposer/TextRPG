@@ -109,3 +109,19 @@ def array_validation(entry):
 ########################################################################################################################
 # Game Utilities                                                                                                       #
 ########################################################################################################################
+
+
+def passive_modifier(character, att):
+    """
+    Modifies attack damage dependant on class ability
+    :param cls:
+    :param att: initial attack damage
+    :return: mod_att: modified attack damage
+    """
+    cls = character["class"]
+    if cls == "Archer":
+        pass
+    elif cls == "Knight":
+        pass
+    else:
+        print("Invalid Class")

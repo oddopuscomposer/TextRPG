@@ -12,6 +12,38 @@ def battle(character, enemy):
     enemy_health = enemy["hp"]
     character_health = character["hp"]
     character_stats = character["buffs"]
+    attack_turn = ""
+
+    if evasion_check(character, enemy) == 1:  # if character is faster
+        attack_turn = "character"
+    else:  # if enemy is faster
+        attack_turn = "enemy"
+
+    while True:  # A turn iteration
+        if attack_turn == "character":  # if it is the character's turn to attack
+            pass
+            crit = critical_check(character)
+
+            attack = attack(character, crit)
+
+            print(character["name"] + " attacked with " + str(attack) + " damage.")
+
+            defend = np.random.choice(enemy["defend"], 1)
+
+            print("The enemy defended with " + str(defend) + " block.")
+
+            damage = defend(enemy, damage, defend, 0)
+
+            print("The enemy took " + str(damage) + " damage.")
+
+
+
+        else:  # if it is the enemy's turn to attack
+            pass
+
+
+
+
 
 
 def run_check(character_level, enemy_level):
@@ -110,7 +142,7 @@ def loot(character, enemy):
             character["inventory"].append(drop)
 
 
-def crit_check(character):
+def critical_check(character):
     """
     Checks to see if the action is a crit.
     :param character:
@@ -118,7 +150,51 @@ def crit_check(character):
     """
     chance = character["buffs"]["crt"]
     roll = np.random.randint(1, 1000)
+    print("Your critical chance is " + str(chance))
     if roll < chance:
         return True
     else:
         return False
+
+
+def attack(character, critical):
+    """
+    Character attack calculations
+    :param character:
+    :return:
+    """
+    return 0
+
+
+def defend(entity, attack, defense, critical):
+    """
+    Defending an attack
+    :param entity:
+    :param attack:
+    :param defense:
+    :param critical:
+    :return:
+    """
+    if isinstance(defense, list):
+        defense = np.random.choice(defense, 1)
+
+    damage = attack - defense
+    if damage < 1:
+        damage = 1
+    if critical:
+        damage = 0
+
+    entity["hp"] = entity["hp"] - damage
+
+
+def parry(entity, attack, defense, critical):
+    """
+    Parrying an attack
+    :param entity:
+    :param attack:
+    :param defense:
+    :param critical:
+    :return:
+    """
+
+

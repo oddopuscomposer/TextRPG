@@ -5,6 +5,7 @@
       "level": 1,
       "hp": 50,
       "attack": [10,2,4,6],
+      "defend": [10,20,30,40],
       "drops": {"Wooden Stick": 0.3},
       "exp": 99,
       "evd": 0
