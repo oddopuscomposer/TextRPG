@@ -1,31 +1,37 @@
 {
     "items": {
-        "Wooden Stick": {
+        "Gamecube Controller": {
+            "buy_price": 30,
+            "description": "Weird plastic connected to rubber and other plastic by wires.",
+            "rarity": "rare",
+            "sell_price": 25,
+            "type": "misc"
+        },
+        "Wood block": {
             "buy_price": 10,
-            "type": "equipment",
-            "classes": [
-                "Knight"
-            ],
-            "damage": 5,
-            "description" : "",
+            "description": "",
             "rarity": "common",
             "sell_price": 5,
-            "slot": "right_hand",
+            "type": "misc"
+        },
+        "Wooden Stick": {
             "buffs": {
                 "att": 5,
                 "def": 0,
                 "evd": 0,
                 "hp": 3,
                 "mp": 2
-            }
-        },
-        "Wood block": {
-          "buy_price": 10,
-          "sell_price": 5,
-          "rarity": "common",
-          "description": "",
-          "type": "misc"
+            },
+            "buy_price": 10,
+            "classes": [
+                "Knight"
+            ],
+            "damage": 5,
+            "description": "",
+            "rarity": "common",
+            "sell_price": 5,
+            "slot": "right_hand",
+            "type": "equipment"
         }
-
     }
 }

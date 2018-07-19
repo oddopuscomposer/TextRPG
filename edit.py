@@ -165,6 +165,7 @@ def add_misc_item():
     # "rarity": "common",
     # "description": "",
     # "type": "misc"
+    pass
 
 
 def add_skill():
@@ -172,31 +173,9 @@ def add_skill():
     Adds skill to skills.json
     :return:
     """
+    pass
 
-    skills = process_json("skills.json")
 
-    name = input("Enter skill name: ")
-    skills["skills"][name] = {}
-    skill = skills["skills"][name]
-
-    entry = input("Enter damage: ")
-    dmg = numeric_validation(entry)
-    skill["dmg"] = int(dmg)
-
-    entry = input("Enter mana cost: ")
-    mana = numeric_validation(entry)
-    skill["mana"] = int(mana)
-
-    entry = input("Enter class requirement([class1],[class2]): ")
-    cls = class_validation(entry)
-    words = cls.split(",")
-    skill["class"] = words
-
-    entry = input("Enter level requirement: ")
-    level = numeric_validation(entry)
-    skill["level"] = int(level)
-
-    write_json("skills.json", skills)
 def delete_skill():
     """
     Removes skill from skills.json
@@ -312,14 +291,7 @@ def edit_game():
         if entry == "npcs":
             pass
         if entry == "skills":
-            while True:
-                option = input("add or delete skills? (q to exit): ")
-                if option == "add":
-                    add_skill()
-                elif option == "delete":
-                    delete_skill()
-                elif option == "q":
-                    break
+            pass
         if entry == "progression":
             pass
         if entry == "passives":

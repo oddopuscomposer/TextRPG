@@ -5,7 +5,7 @@ from edit import edit_game
 def main():
     status = True
     while status:
-        print("Welcome to the RPG")
+        print("Welcome to the TextRPG created by ChresSSB and TrueShoShin")
         command = input("1 for new game, 2 for load, 3 for edit, anything else for quit: ")
         if command == "1":
             launch("new")

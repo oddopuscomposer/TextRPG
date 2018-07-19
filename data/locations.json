@@ -4,14 +4,14 @@
       "shops": ["start shop"],
       "npcs": [],
       "rest": true,
-      "enemies": [],
+      "enemies": {},
       "adjacent": ["start"]
     },
     "start": {
       "shops": ["wow shop"],
       "npcs": [],
       "rest": true,
-      "enemies": [],
+      "enemies": {"goblin": 0.5, "diddy kong": 0.2},
       "adjacent": ["start1"]
     }
   },

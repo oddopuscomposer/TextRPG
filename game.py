@@ -1,4 +1,5 @@
-from game_utilities import process_json, write_json, remove_prefix
+from game_utilities import *
+from battle import *
 
 
 def launch(setting):
@@ -75,7 +76,7 @@ def start_game(character):
     while game_status:
         print("#######################")
         print("")
-        print("stats, inv, rest, goto, shop, encounter")
+        print("stats, inv, rest, goto, shop, encounter, quit")
         selection = input("Select an option: ")
         if selection == "stats":
             show_stats(character)
@@ -89,6 +90,8 @@ def start_game(character):
             shop(character)
         elif selection == "encounter":
             encounter(character)
+        elif selection == "quit":
+            pass
         else:
             print("Incorrect action, please try again")
         savefile["saves"][character["name"]] = character
@@ -313,8 +316,11 @@ def shop_interaction(character, shops, store):
     while True:
         option = input("buy(b) or sell(s)? (q for quit): ")
         if option == "b" or option == "buy":
-            #print(shops["shops"][store]["npc"])
-            print(shops["shops"][store]["inventory"])
+            if len(shops["shops"][store]["inventory"]) != 0:
+                print("Inventory: ")
+            else:
+                print("There is nothing in this shop!")
+            count = 0
             for item in shops["shops"][store]["inventory"]:
                 match = items["items"][item]
                 price = match["buy_price"]
@@ -323,21 +329,23 @@ def shop_interaction(character, shops, store):
                 slot = match["slot"]
                 damage = match["damage"]
                 buffs = match["buffs"]
-
-                print(item)
-                print("price: " + str(price))
-                print("rarity: " + rarity)
-                print("classes: " + str(classes))
-                print("slot: " + slot)
-                print("damage: " + str(damage))
-                for k in buffs:
-                    print(k + ": " + str(buffs[k]))
-                print("----------------------------------------")
+                count += 1
+                print(str(count) + ". " + item)
 
                 while True:
-                    entry = input("What would you like to purchase? (q to quit): ")
+                    entry = input("What are you interested in buying? (q to quit): ")
                     if entry in shops["shops"][store]["inventory"]:
                         while True:
+                            print("----------------------------------------")
+                            print(item)
+                            print("price: " + str(price))
+                            print("rarity: " + rarity)
+                            print("classes: " + str(classes))
+                            print("slot: " + slot)
+                            print("damage: " + str(damage))
+                            for k in buffs:
+                                print(k + ": " + str(buffs[k]))
+                            print("----------------------------------------")
                             cost = items["items"][entry]["buy_price"]
                             resp = input("Would you like to buy " + entry + " for " + str(cost) + "? (y/n): ")
                             if resp == "y":
@@ -389,5 +397,38 @@ def encounter(character):
     :param character:
     :return:
     """
-    pass
+    location = character["location"]
+    locations = process_json("locations.json")
+    enemies = process_json("enemies.json")
+
+    curr_location = locations["locations"][location]
+    location_enemies = list(curr_location["enemies"].keys())
+    location_rates = list(curr_location["enemies"].values())
+
+    max_rate = 0
+    for item in location_rates:
+        max_rate += item
+
+    if max_rate != 1 and max_rate > 0:
+        none_rate = 1 - max_rate
+        location_rates.append(none_rate)
+        location_enemies.append("none")
+
+    if len(location_enemies) > 0:
+        choice = numpy.random.choice(location_enemies, 1, location_rates)
+        if choice[0] != "none":
+            print(choice[0] + " wants to fight")
+            enemy = enemies["enemies"][choice[0]]
+            battle(character, enemy)
+        else:
+            print("No enemies found")
+    else:
+        print("There are no enemies in this area")
+
+
+
+
+
+
+
 

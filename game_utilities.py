@@ -1,5 +1,7 @@
 import json
+import numpy
 
+# Validations and utilities for larger game methods
 
 ########################################################################################################################
 # JSON & String Methods                                                                                                #
@@ -29,6 +31,12 @@ def write_json(filename, data):
 
 
 def remove_prefix(text, prefix):
+    """
+    Removes prefix from a string
+    :param text:
+    :param prefix:
+    :return:
+    """
     if text.startswith(prefix):
         return text[len(prefix):]
     return text
@@ -42,7 +50,7 @@ def numeric_validation(entry):
     """
     Validates numeric inputs for entry
     :param entry: string
-    :return:
+    :return: entry
     """
     while True:
         try:
@@ -109,3 +117,22 @@ def array_validation(entry):
     """
     pass
 
+########################################################################################################################
+# Game Utilities                                                                                                       #
+########################################################################################################################
+
+
+def passive_modifier(character, att):
+    """
+    Modifies attack damage dependant on class ability
+    :param cls:
+    :param att: initial attack damage
+    :return: mod_att: modified attack damage
+    """
+    cls = character["class"]
+    if cls == "Archer":
+        pass
+    elif cls == "Knight":
+        pass
+    else:
+        print("Invalid Class")

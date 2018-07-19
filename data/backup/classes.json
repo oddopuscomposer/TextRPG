@@ -2,15 +2,18 @@
     "classes": {
         "Archer": {
             "start_hp": 20,
-            "start_mp": 20
+            "start_mp": 20,
+            "passives": []
         },
         "Knight": {
             "start_hp": 50,
-            "start_mp": 50
+            "start_mp": 50,
+            "passives": []
         }
     },
     "xref": [
         "Archer",
-        "Knight"
+        "Knight",
+        "Any"
     ]
 }
