@@ -86,15 +86,15 @@ def add_equipable():
     item["damage"] = int(damage)
 
     cls = input("Enter required classes([class1],[class2]): ")
-    # need validation
     words = cls.split(",")
+    words = class_validation(words)
     item["classes"] = words
 
     entry = input("Enter slot: ")
     slot = slot_validation(entry)
     item["slot"] = slot
 
-    item["stats"] = {}
+    item["buffs"] = {}
     stats = input("Enter buffs([att],[def],[evd],[hp],[mp]): ")
     words = stats.split(",")
     # need validation
@@ -102,7 +102,9 @@ def add_equipable():
     item["buffs"]["def"] = words[1]
     item["buffs"]["evd"] = words[2]
     item["buffs"]["hp"] = words[3]
-    items["buffs"]["mp"] = words[4]
+    item["buffs"]["mp"] = words[4]
+
+    item["type"] = "equipment"
 
     write_json("items.json", items)
 
@@ -112,7 +114,7 @@ def delete_item():
     Removes equipable from items.json
     :return:
     """
-    entry = input("Please enter an equipable to delete: ")
+    entry = input("Please enter an item to delete: ")
     items = process_json("items.json")
     if entry in items["items"]:
         while True:
@@ -160,12 +162,6 @@ def add_misc_item():
     item["type"] = "misc"
 
     write_json("items.json", items)
-    # "buy_price": 10,
-    # "sell_price": 5,
-    # "rarity": "common",
-    # "description": "",
-    # "type": "misc"
-    pass
 
 
 def add_skill():
@@ -173,7 +169,30 @@ def add_skill():
     Adds skill to skills.json
     :return:
     """
-    pass
+    skills = process_json("skills.json")
+
+    name = input("Enter skill name: ")
+    skills["skills"][name] = {}
+    skill = skills["skills"][name]
+
+    entry = input("Enter damage: ")
+    dmg = numeric_validation(entry)
+    skill["dmg"] = int(dmg)
+
+    entry = input("Enter mana cost: ")
+    mana = numeric_validation(entry)
+    skill["mana"] = int(mana)
+
+    entry = input("Enter class requirement([class1],[class2]): ")
+    cls = class_validation(entry)
+    words = cls.split(",")
+    skill["class"] = words
+
+    entry = input("Enter level requirement: ")
+    level = numeric_validation(entry)
+    skill["level"] = int(level)
+
+    write_json("skills.json", skills)
 
 
 def delete_skill():
@@ -291,7 +310,14 @@ def edit_game():
         if entry == "npcs":
             pass
         if entry == "skills":
-            pass
+            while True:
+                option = input("add or delete skills? (q to exit): ")
+                if option == "add":
+                    add_skill()
+                elif option == "delete":
+                    delete_skill()
+                elif option == "q":
+                    break
         if entry == "progression":
             pass
         if entry == "passives":

@@ -1,14 +1,14 @@
 {
     "classes": {
         "Archer": {
+            "passives": [],
             "start_hp": 20,
-            "start_mp": 20,
-            "passives": []
+            "start_mp": 20
         },
         "Knight": {
+            "passives": [],
             "start_hp": 50,
-            "start_mp": 50,
-            "passives": []
+            "start_mp": 50
         }
     },
     "xref": [

@@ -17,14 +17,11 @@ def launch(setting):
 
     if setting == "saves":
         print(saves)
-        save = input("Choose a save data(quit to exit): ")
+        save = input("Choose a save data: ")
         while True:
             if save in saves:
                 character = player_data["saves"][save]
                 name = character["name"]
-                break
-            elif save == "exit":
-                print("")
                 break
             else:
                 print("save not found, try again or exit")
