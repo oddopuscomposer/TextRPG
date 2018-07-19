@@ -1,10 +1,18 @@
 {
-  "skills": {
-    "Arrow Storm":{
-      "dmg": 20,
-      "mana": 10,
-      "class": "Archer",
-      "level": 1
-   }
-  }
+    "skills": {
+        "Arrow Storm": {
+            "class": "Archer",
+            "dmg": 20,
+            "level": 1,
+            "mana": 10
+        },
+        "Shield Bash": {
+            "class": [
+                "Knight"
+            ],
+            "dmg": 20,
+            "level": 2,
+            "mana": 5
+        }
+    }
 }

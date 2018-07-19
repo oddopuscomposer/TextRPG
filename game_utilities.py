@@ -73,7 +73,18 @@ def class_validation(entry):
     :param entry: array
     :return:
     """
-    pass
+    classname = process_json("classes.json")
+
+    while True:
+        if type(entry) == str:
+            if entry not in [classname["xref"]]:
+                entry = input("Please enter a valid class or classes: ")
+        else:
+            for item in entry:
+                if item not in [classname["xref"]]:
+                    entry = input("Please enter a valid class or classes: ")
+        break
+    return entry
 
 
 def slot_validation(entry):
