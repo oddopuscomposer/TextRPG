@@ -71,7 +71,7 @@ def start_game(character):
     """
     game_status = True
     print("Welcome to the game!")
-    print(character)
+    # print(character)
     savefile = process_json("saves.json")
     while game_status:
         print("#######################")

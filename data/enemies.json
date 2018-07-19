@@ -15,6 +15,7 @@
       "level": 1,
       "hp": 30,
       "attack": [15],
+      "defend": [10,20,30,40],
       "drops": {},
       "exp": 0,
       "evd": 0

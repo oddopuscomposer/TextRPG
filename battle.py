@@ -9,9 +9,7 @@ def battle(character, enemy):
     :param enemy:
     :return:
     """
-    enemy_health = enemy["hp"]
-    character_health = character["hp"]
-    character_stats = character["buffs"]
+    character_stats = character["stats"]
     attack_turn = ""
 
     if evasion_check(character, enemy) == 1:  # if character is faster
@@ -19,31 +17,37 @@ def battle(character, enemy):
     else:  # if enemy is faster
         attack_turn = "enemy"
 
+    print(attack_turn + " goes first")
     while True:  # A turn iteration
         if attack_turn == "character":  # if it is the character's turn to attack
-            pass
-            crit = critical_check(character)
+            choice = input("attack, run, item: ")
+            if choice == "attack":
+                crit = critical_check(character)
 
-            attack = attack(character, crit)
+                if crit:
+                    print("CRITICAL")
+                att = attack(character, crit)
 
-            print(character["name"] + " attacked with " + str(attack) + " damage.")
+                print(character["name"] + " attacked with " + str(att) + " damage.")
 
-            defend = np.random.choice(enemy["defend"], 1)
+                defs = np.random.choice(enemy["defend"], 1)[0]
 
-            print("The enemy defended with " + str(defend) + " block.")
+                print("The enemy defended with " + str(defs) + " block.")
 
-            damage = defend(enemy, damage, defend, 0)
+                damage = defend(enemy, att, defs, False)
 
-            print("The enemy took " + str(damage) + " damage.")
-
+                print("The enemy took " + str(damage) + " damage.")
+            elif choice == "run":
+                run = run_check(character["level"], enemy["level"])
+                if run:
+                    print("Success!")
+                    break
+                else:
+                    print("Failed!")
 
 
         else:  # if it is the enemy's turn to attack
             pass
-
-
-
-
 
 
 def run_check(character_level, enemy_level):
@@ -148,9 +152,9 @@ def critical_check(character):
     :param character:
     :return:
     """
-    chance = character["buffs"]["crt"]
+    chance = character["stats"]["crt"]
     roll = np.random.randint(1, 1000)
-    print("Your critical chance is " + str(chance))
+    print("Your critical chance is " + str(chance) + " /1000 (" + percentage_converter(chance/1000) + "%)")
     if roll < chance:
         return True
     else:
@@ -163,7 +167,10 @@ def attack(character, critical):
     :param character:
     :return:
     """
-    return 0
+    if critical:
+        return character["stats"]["att"] * 2
+    else:
+        return character["stats"]["att"]
 
 
 def defend(entity, attack, defense, critical):
@@ -186,6 +193,8 @@ def defend(entity, attack, defense, critical):
 
     entity["hp"] = entity["hp"] - damage
 
+    return damage
+
 
 def parry(entity, attack, defense, critical):
     """
@@ -196,5 +205,5 @@ def parry(entity, attack, defense, critical):
     :param critical:
     :return:
     """
-
+    pass
 
