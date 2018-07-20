@@ -8,16 +8,19 @@
       "defend": [10,20,30,40],
       "drops": {"Wooden Stick": 0.3},
       "exp": 99,
-      "evd": 0
+      "evd": 0,
+      "gold": 500
     },
     "diddy kong":{
       "name": "diddy kong",
       "level": 1,
       "hp": 30,
       "attack": [15],
+      "defend": [10,20,30,40],
       "drops": {},
-      "exp": 0,
-      "evd": 0
+      "exp": 99,
+      "evd": 0,
+      "gold": 500
     }
 
   },

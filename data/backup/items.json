@@ -17,6 +17,7 @@
         "Wooden Stick": {
             "buffs": {
                 "att": 5,
+                "crt": 0,
                 "def": 0,
                 "evd": 0,
                 "hp": 3,

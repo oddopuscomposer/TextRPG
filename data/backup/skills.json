@@ -4,7 +4,7 @@
       "dmg": 20,
       "mana": 10,
       "class": "Archer",
-      "min_level": 1
+      "level": 1
    }
   }
 }

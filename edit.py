@@ -6,7 +6,20 @@ def delete_save():
     Removes save from saves.json
     :return:
     """
-    pass
+    saves = process_json("saves.json")
+    print("Saves: " + list(saves["saves"].keys()))
+    while True:
+        choice = input("Which save file would you like to delete?(q to quit): ")
+        if choice in saves["saves"].keys():
+            del saves["saves"][choice]
+            saves["xref"].remove(choice)
+            print("Save file deleted")
+            break
+        elif choice == "q":
+            break
+        else:
+            print("That save file doesnt exist")
+    write_json("saves.json", saves)
 
 
 def add_class():
@@ -95,7 +108,7 @@ def add_equipable():
     item["slot"] = slot
 
     item["buffs"] = {}
-    stats = input("Enter buffs([att],[def],[evd],[hp],[mp]): ")
+    stats = input("Enter buffs([att],[def],[evd],[hp],[mp],[crt]): ")
     words = stats.split(",")
     # need validation
     item["buffs"]["att"] = words[0]
@@ -103,6 +116,7 @@ def add_equipable():
     item["buffs"]["evd"] = words[2]
     item["buffs"]["hp"] = words[3]
     item["buffs"]["mp"] = words[4]
+    item["buffs"]["crt"] = words[5]
 
     item["type"] = "equipment"
 
@@ -184,8 +198,8 @@ def add_skill():
     skill["mana"] = int(mana)
 
     entry = input("Enter class requirement([class1],[class2]): ")
-    cls = class_validation(entry)
-    words = cls.split(",")
+    entry = entry.split(",")
+    words = class_validation(entry)
     skill["class"] = words
 
     entry = input("Enter level requirement: ")
@@ -306,7 +320,7 @@ def edit_game():
         if entry == "locations":
             pass
         if entry == "saves":
-            pass
+            delete_save()
         if entry == "npcs":
             pass
         if entry == "skills":

@@ -2,6 +2,7 @@
     "saves": {
         "Chres": {
             "class": "Knight",
+            "deaths": 0,
             "equipment": {
                 "chest": "empty",
                 "feet": "empty",
@@ -12,11 +13,12 @@
                 "right_hand": "empty",
                 "ring": "empty"
             },
-            "exp": 0,
-            "exp_req": 120,
-            "gold": 30,
-            "hp": 50,
+            "exp": 78,
+            "exp_req": 140,
+            "gold": 530,
+            "hp": 30,
             "inventory": [
+                "Wooden Stick",
                 "Wooden Stick",
                 "Wooden Stick",
                 "Wooden Stick",
@@ -28,23 +30,24 @@
                 "Wooden Stick",
                 "Wooden Stick"
             ],
-            "level": 1,
-            "location": "start1",
+            "level": 2,
+            "location": "start",
             "max_hp": 50,
             "max_mp": 50,
             "mp": 50,
             "name": "Chres",
             "skills": [],
             "stats": {
-                "att": 0,
+                "att": 30,
                 "crt": 1,
-                "def": 0,
-                "evd": 0
+                "def": 20,
+                "evd": 8
             },
             "training_points": 0
         },
         "start_template": {
             "class": "Knight",
+            "deaths": 0,
             "equipment": {
                 "chest": "empty",
                 "feet": "empty",

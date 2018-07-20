@@ -36,7 +36,12 @@ def launch(setting):
             player_data["saves"][name] = character
             character = player_data["saves"][name]
             character["name"] = name
-            print(class_data["xref"])
+
+            classes = []
+            for item in class_data["xref"]:
+                if item != "Any":
+                    classes.append(item)
+            print(classes)
             cls = input("Choose your class: ")
             if cls in class_data["xref"]:
                 character["class"] = cls
@@ -51,8 +56,8 @@ def launch(setting):
     if setting == "saves":
         start_game(character)
     if name == "start_template" or name == "" or name in saves:
-        print("Error: Can't use start_template, empty string as name of save, or Save file already exists")
-        print("")
+        #print("Error: Can't use start_template, empty string as name of save, or Save file already exists")
+        print("Error")
     else:
         if character["name"] != "example":
             player_data["xref"].append(character["name"])
@@ -88,7 +93,7 @@ def start_game(character):
         elif selection == "encounter":
             encounter(character)
         elif selection == "quit":
-            pass
+            break
         else:
             print("Incorrect action, please try again")
         savefile["saves"][character["name"]] = character
@@ -105,6 +110,7 @@ def show_stats(character):
     print("name: " + character["name"])
     print("level: " + str(character["level"]))
     print("class: " + character["class"])
+    print("deaths: " + str(character["deaths"]))
     print("max hp: " + str(character["max_hp"]))
     print("hp: " + str(character["hp"]))
     print("max mp: " + str(character["max_mp"]))

@@ -11,43 +11,103 @@ def battle(character, enemy):
     """
     character_stats = character["stats"]
     attack_turn = ""
+    max_hp = enemy["hp"]
+    enemy_name = enemy["name"]
+    turn = 1
+    run = False
 
     if evasion_check(character, enemy) == 1:  # if character is faster
         attack_turn = "character"
     else:  # if enemy is faster
         attack_turn = "enemy"
 
+    print(character["name"] + ": " + str(character["hp"]))
+    print(enemy_name + ": " + str(max_hp))
+
     print(attack_turn + " goes first")
     while True:  # A turn iteration
+        print("################################")
+        print("Turn - " + str(turn))
         if attack_turn == "character":  # if it is the character's turn to attack
             choice = input("attack, run, item: ")
-            if choice == "attack":
-                crit = critical_check(character)
+            while True:
+                if choice == "attack":
+                    crit = critical_check(character)
 
-                if crit:
-                    print("CRITICAL")
-                att = attack(character, crit)
+                    if crit:
+                        print("CRITICAL")
+                    att = attack(character, crit)
 
-                print(character["name"] + " attacked with " + str(att) + " damage.")
+                    print(character["name"] + " attacked with " + str(att) + " damage.")
 
-                defs = np.random.choice(enemy["defend"], 1)[0]
+                    defs = np.random.choice(enemy["defend"], 1)[0]
 
-                print("The enemy defended with " + str(defs) + " block.")
+                    print(enemy_name + " defended with " + str(defs) + " block.")
 
-                damage = defend(enemy, att, defs, False)
+                    damage = defend(enemy, att, defs, False)
 
-                print("The enemy took " + str(damage) + " damage.")
-            elif choice == "run":
-                run = run_check(character["level"], enemy["level"])
-                if run:
-                    print("Success!")
+                    print(enemy_name + " took " + str(damage) + " damage.")
+                    if enemy["hp"] >= 0:
+                        print(enemy_name + " has " + str(enemy["hp"]) + " HP left")
+                    else:
+                        print(enemy_name + " has 0 HP left")
+
                     break
-                else:
-                    print("Failed!")
 
+                elif choice == "run":
+                    run = run_check(character["level"], enemy["level"])
+                    if run:
+                        print("Success!")
+                        break
+                    else:
+                        print("Failed!")
+                        break
+                else:
+                    choice = input("attack, run, item: ")
+            if run:
+                break
+            attack_turn = "enemy"
 
         else:  # if it is the enemy's turn to attack
             pass
+            att = np.random.choice(enemy["attack"], 1)[0]
+
+            print(enemy_name + " attacked with " + str(att) + " damage.")
+
+            choice = input("defend, evade, parry: ")
+
+            crit = critical_check(character)
+            while True:
+                if choice == "defend":
+                    damage = defend(character, att, character["stats"]["def"], crit)
+                    print(character["name"] + " defended with " + str(character["stats"]["def"]) + " block.")
+                    print(character["name"] + " took " + str(damage))
+                    print(character["name"] + " has " + str(character["hp"]) + " HP left.")
+                    break
+                elif choice == "evade":
+                    damage = evade(character, att, character["stats"]["def"], crit)
+                    print(character["name"] + " evaded with " + str(character["stats"]["evd"]) + " evade")
+                    print(character["name"] + " took " + str(damage))
+                    print(character["name"] + " has " + str(character["hp"]) + " HP left.")
+                    break
+                elif choice == "parry":
+                    pass
+                    break
+                else:
+                    choice = input("defend, evade, parry: ")
+
+            attack_turn = "character"
+        if character["hp"] <= 0:
+            print("You were defeated!")
+            character["deaths"] += 1
+            break
+        if enemy["hp"] <= 0:
+            print("The enemy was defeated!")
+            loot(character, enemy)
+            break
+        turn += 1
+
+    enemy["hp"] = max_hp
 
 
 def run_check(character_level, enemy_level):
@@ -120,10 +180,16 @@ def loot(character, enemy):
     """
     progression = process_json("progression.json")
     character["exp"] += enemy["exp"]
+    print(character["name"] + " gained " + str(enemy["exp"]) + " experience")
     if character["exp"] > character["exp_req"]:
         character["exp"] = character["exp"] - character["exp_req"]
         character["level"] += 1
+        print(character["name"] + " grew to level " + str(character["level"]))
         character["exp_req"] = progression[str(character["level"])]
+
+    character["gold"] += enemy["gold"]
+    if enemy["gold"] != 0:
+        print(enemy["name"] + " dropped " + str(enemy["gold"]) + " gold")
 
     if enemy["drops"] != {}:
 
@@ -144,6 +210,8 @@ def loot(character, enemy):
         if drop != "none":
             print(enemy["name"] + " dropped a " + drop)
             character["inventory"].append(drop)
+        else:
+            print(enemy["name"] + " did not drop anything")
 
 
 def critical_check(character):
@@ -154,7 +222,7 @@ def critical_check(character):
     """
     chance = character["stats"]["crt"]
     roll = np.random.randint(1, 1000)
-    print("Your critical chance is " + str(chance) + " /1000 (" + percentage_converter(chance/1000) + "%)")
+    #print("Your critical chance is " + str(chance) + " /1000 (" + percentage_converter(chance/1000) + "%)")
     if roll < chance:
         return True
     else:
@@ -163,17 +231,24 @@ def critical_check(character):
 
 def attack(character, critical):
     """
-    Character attack calculations
+    Character attack damage calculations
     :param character:
+    :param critical:
     :return:
     """
+    items = process_json("items.json")["items"]
+    att = 0
+    if character["equipment"]["right_hand"] != "empty":
+        att = items[character["equipment"]["right_hand"]]["damage"]
+
+
     if critical:
-        return character["stats"]["att"] * 2
+        return (character["stats"]["att"] + att) * 2
     else:
-        return character["stats"]["att"]
+        return character["stats"]["att"] + att
 
 
-def defend(entity, attack, defense, critical):
+def defend(entity, att, defense, critical):
     """
     Defending an attack
     :param entity:
@@ -183,12 +258,14 @@ def defend(entity, attack, defense, critical):
     :return:
     """
     if isinstance(defense, list):
-        defense = np.random.choice(defense, 1)
+        defense = np.random.choice(defense, 1)[0]
 
-    damage = attack - defense
+    damage = int(att - defense)
     if damage < 1:
         damage = 1
     if critical:
+        damage = 0
+    if att == 0:
         damage = 0
 
     entity["hp"] = entity["hp"] - damage
@@ -196,7 +273,7 @@ def defend(entity, attack, defense, critical):
     return damage
 
 
-def parry(entity, attack, defense, critical):
+def parry(entity, att, defense, critical):
     """
     Parrying an attack
     :param entity:
@@ -207,3 +284,21 @@ def parry(entity, attack, defense, critical):
     """
     pass
 
+
+def evade(entity, att, evd, critical):
+    """
+    Character evade mechanic
+    :param entity:
+    :param att:
+    :param evd:
+    :param critical:
+    :return:
+    """
+    if evd > att:
+        damage = 0
+    else:
+        damage = att
+
+    entity["hp"] = entity["hp"] - damage
+
+    return damage
