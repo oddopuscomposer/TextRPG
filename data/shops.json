@@ -2,7 +2,7 @@
   "shops": {
     "start shop" : {
       "npc": "",
-      "inventory": ["Wooden Stick"],
+      "inventory": ["Wooden Stick", "Gamecube Controller"],
       "location": "start1"
     },
     "wow shop":{

@@ -139,18 +139,25 @@ def show_inventory(character):
     print("chest: " + character["equipment"]["chest"])
     print("legs: " + character["equipment"]["legs"])
     print("feet: " + character["equipment"]["feet"])
-    print("left_hand: " + character["equipment"]["left_hand"])
-    print("right_hand: " + character["equipment"]["right_hand"])
+    print("left hand: " + character["equipment"]["left hand"])
+    print("right hand: " + character["equipment"]["right hand"])
     print("necklace: " + character["equipment"]["necklace"])
     print("ring: " + character["equipment"]["ring"])
     print("#######################")
     print("Inventory")
     print("#######################")
-    inventory = ', '.join(character["inventory"])
-    if len(inventory) > 0:
-        print(inventory)
+    itemlist = []
+    if len(character["inventory"]) > 0:
+        for item in character["inventory"]:
+            itemlist.append(item)
+            if len(itemlist) == 3:
+                print('     '.join(itemlist))
+                itemlist = []
+        if len(itemlist) > 0:
+            print('     '.join(itemlist))
     else:
-        print("none")
+        print("Your inventory is empty. :<")
+    print("")
 
 
 def update_stats(character, equip):
@@ -166,6 +173,7 @@ def update_stats(character, equip):
     evd_sum = 0
     hp_sum = 0
     mp_sum = 0
+    crt_sum = 0
 
     if character["equipment"][slot] != "empty":                         # if an item was just added
         att_sum += items["items"][equip]["buffs"]["att"]
@@ -173,16 +181,19 @@ def update_stats(character, equip):
         evd_sum += items["items"][equip]["buffs"]["evd"]
         hp_sum += items["items"][equip]["buffs"]["hp"]
         mp_sum += items["items"][equip]["buffs"]["mp"]
+        crt_sum += items["items"][equip]["buffs"]["crt"]
     else:                                                               # if an item was just removed
         att_sum -= items["items"][equip]["buffs"]["att"]
         def_sum -= items["items"][equip]["buffs"]["def"]
         evd_sum -= items["items"][equip]["buffs"]["evd"]
         hp_sum -= items["items"][equip]["buffs"]["hp"]
         mp_sum -= items["items"][equip]["buffs"]["mp"]
+        crt_sum -= items["items"][equip]["buffs"]["crt"]
 
     character["stats"]["att"] = character["stats"]["att"] + att_sum
     character["stats"]["def"] = character["stats"]["def"] + def_sum
     character["stats"]["evd"] = character["stats"]["evd"] + evd_sum
+    character["stats"]["crt"] = character["stats"]["crt"] + crt_sum
     character["max_hp"] = character["max_hp"] + hp_sum
     character["max_mp"] = character["max_mp"] + mp_sum
 
@@ -211,7 +222,7 @@ def manage_equipment(character):
                     character["equipment"][slot] = item
                     character["inventory"].remove(item)
                     update_stats(character, item)
-                    print("Equiped " + item)
+                    print("Equipped " + item)
                 else:
                     print("Your class can't equip " + item + " or item not in inventory")
             else:
@@ -325,49 +336,51 @@ def shop_interaction(character, shops, store):
                 print("There is nothing in this shop!")
             count = 0
             for item in shops["shops"][store]["inventory"]:
-                match = items["items"][item]
-                price = match["buy_price"]
-                rarity = match["rarity"]
-                classes = match["classes"]
-                slot = match["slot"]
-                damage = match["damage"]
-                buffs = match["buffs"]
                 count += 1
                 print(str(count) + ". " + item)
 
-                while True:
-                    entry = input("What are you interested in buying? (q to quit): ")
-                    if entry in shops["shops"][store]["inventory"]:
-                        while True:
-                            print("----------------------------------------")
-                            print(item)
-                            print("price: " + str(price))
-                            print("rarity: " + rarity)
+            while True:
+                entry = input("What are you interested in buying? (q to quit): ")
+                if entry in shops["shops"][store]["inventory"]:
+                    while True:
+                        match = items["items"][item]
+                        price = match["buy_price"]
+                        rarity = match["rarity"]
+                        if match["type"] == "equipment":
+                            classes = match["classes"]
+                            slot = match["slot"]
+                            damage = match["damage"]
+                            buffs = match["buffs"]
+                        print("----------------------------------------")
+                        print(item)
+                        print("price: " + str(price))
+                        print("rarity: " + rarity)
+                        if match["type"] == "equipment":
                             print("classes: " + str(classes))
                             print("slot: " + slot)
                             print("damage: " + str(damage))
                             for k in buffs:
                                 print(k + ": " + str(buffs[k]))
-                            print("----------------------------------------")
-                            cost = items["items"][entry]["buy_price"]
-                            resp = input("Would you like to buy " + entry + " for " + str(cost) + "? (y/n): ")
-                            if resp == "y":
-                                if character["gold"] > cost:
-                                    character["gold"] -= cost
-                                    character["inventory"].append(entry)
-                                    print(entry + " purchased for " + str(cost) + " gold")
-                                else:
-                                    print("You dont have enough gold")
-                                break
-                            elif resp == "n":
-                                break
+                        print("----------------------------------------")
+                        cost = items["items"][entry]["buy_price"]
+                        resp = input("Would you like to buy " + entry + " for " + str(cost) + "? (y/n): ")
+                        if resp == "y":
+                            if character["gold"] > cost:
+                                character["gold"] -= cost
+                                character["inventory"].append(entry)
+                                print(entry + " purchased for " + str(cost) + " gold")
                             else:
-                                print("Invalid response")
-                        break
-                    elif entry == "q":
-                        break
-                    else:
-                        print("Item not in shop's inventory or does not exist")
+                                print("You dont have enough gold")
+                            break
+                        elif resp == "n":
+                            break
+                        else:
+                            print("Invalid response")
+                    break
+                elif entry == "q":
+                    break
+                else:
+                    print("Item not in shop's inventory or does not exist")
         elif option == "s" or option == "sell":
             show_inventory(character)
             while True:

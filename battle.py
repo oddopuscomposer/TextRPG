@@ -85,7 +85,7 @@ def battle(character, enemy):
                     print(character["name"] + " has " + str(character["hp"]) + " HP left.")
                     break
                 elif choice == "evade":
-                    damage = evade(character, att, character["stats"]["def"], crit)
+                    damage = evade(character, att, character["stats"]["evd"], crit)
                     print(character["name"] + " evaded with " + str(character["stats"]["evd"]) + " evade")
                     print(character["name"] + " took " + str(damage))
                     print(character["name"] + " has " + str(character["hp"]) + " HP left.")

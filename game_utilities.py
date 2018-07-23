@@ -106,21 +106,37 @@ def slot_validation(entry):
     :param entry: string
     :return:
     """
+    slots = ["head", "chest", "legs", "feet", "left hand", "right hand", "necklace", "ring"]
+
     while True:
-        if entry in ["head", "chest", "legs", "feet", "left_hand", "right_hand", "necklace", "ring"]:
-            break
-        else:
-            entry = input("Please enter a valid slot: ")
-    return entry
+        count = 0
+        for item in entry:
+            if item in slots:
+                count += 1
+            else:
+                break
+            if count == len(entry):
+                return entry
+
+        entry = input("Please input a valid slot/slots: ")
+        entry = entry.split(",")
 
 
-def array_validation(entry):
+def int_array_validation(entry):
     """
-    Validates proper array entry
+    Validates proper integer array entry used for stats related methods
     :param entry: array
     :return:
     """
-    pass
+    while True:
+        for item in entry:
+            try:
+                item = int(item)
+            except ValueError:
+                print("Please enter 6 integers separated by commas example: 10,23,12,34,54,22")
+                entry = input("Enter buffs([att],[def],[evd],[hp],[mp],[crt]): ")
+                break
+    return entry
 
 ########################################################################################################################
 # Game Utilities                                                                                                       #

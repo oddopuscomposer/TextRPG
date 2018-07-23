@@ -76,6 +76,15 @@ def add_equipable():
     items = process_json("items.json")
 
     name = input("Enter item name: ")
+    if items["items"][name]:
+        while True:
+            choice = input("This item already exists, do you want to overwrite? (y/n): ")
+            if choice == "y":
+                break
+            elif choice == "n":
+                return "null"
+            else:
+                print("Invalid input")
     items["items"][name] = {}
     item = items["items"][name]
 
@@ -103,14 +112,16 @@ def add_equipable():
     words = class_validation(words)
     item["classes"] = words
 
-    entry = input("Enter slot: ")
+    print(["head", "chest", "legs", "feet", "left hand", "right hand", "necklace", "ring"])
+    entry = input("Enter a slot/slots([slot1],[slot2]): ")
     slot = slot_validation(entry)
     item["slot"] = slot
 
     item["buffs"] = {}
+    print("These buffs are integer values separated by commas")
     stats = input("Enter buffs([att],[def],[evd],[hp],[mp],[crt]): ")
     words = stats.split(",")
-    # need validation
+    words = int_array_validation(words)
     item["buffs"]["att"] = words[0]
     item["buffs"]["def"] = words[1]
     item["buffs"]["evd"] = words[2]
@@ -128,8 +139,10 @@ def delete_item():
     Removes equipable from items.json
     :return:
     """
-    entry = input("Please enter an item to delete: ")
     items = process_json("items.json")
+    print(list(items["items"].keys()))
+    entry = input("Please enter an item to delete: ")
+
     if entry in items["items"]:
         while True:
             confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")
