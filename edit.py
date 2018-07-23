@@ -76,7 +76,9 @@ def add_equipable():
     items = process_json("items.json")
 
     name = input("Enter item name: ")
-    if items["items"][name]:
+
+    try:
+        items["items"][name]
         while True:
             choice = input("This item already exists, do you want to overwrite? (y/n): ")
             if choice == "y":
@@ -85,6 +87,9 @@ def add_equipable():
                 return "null"
             else:
                 print("Invalid input")
+    except KeyError:
+        pass
+
     items["items"][name] = {}
     item = items["items"][name]
 
@@ -107,6 +112,8 @@ def add_equipable():
     damage = numeric_validation(entry)
     item["damage"] = int(damage)
 
+    print("Options: ")
+    print(','.join(process_json("classes.json")["xref"]))
     cls = input("Enter required classes([class1],[class2]): ")
     words = cls.split(",")
     words = class_validation(words)
@@ -114,6 +121,7 @@ def add_equipable():
 
     print(["head", "chest", "legs", "feet", "left hand", "right hand", "necklace", "ring"])
     entry = input("Enter a slot/slots([slot1],[slot2]): ")
+    entry = entry.split(",")
     slot = slot_validation(entry)
     item["slot"] = slot
 
@@ -121,7 +129,7 @@ def add_equipable():
     print("These buffs are integer values separated by commas")
     stats = input("Enter buffs([att],[def],[evd],[hp],[mp],[crt]): ")
     words = stats.split(",")
-    words = int_array_validation(words)
+    words = stat_validation(words)
     item["buffs"]["att"] = words[0]
     item["buffs"]["def"] = words[1]
     item["buffs"]["evd"] = words[2]
@@ -132,6 +140,7 @@ def add_equipable():
     item["type"] = "equipment"
 
     write_json("items.json", items)
+    print("Item created and saved")
 
 
 def delete_item():
@@ -140,7 +149,8 @@ def delete_item():
     :return:
     """
     items = process_json("items.json")
-    print(list(items["items"].keys()))
+    print("Options: ")
+    print(','.join(list(items["items"].keys())))
     entry = input("Please enter an item to delete: ")
 
     if entry in items["items"]:

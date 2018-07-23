@@ -122,7 +122,7 @@ def slot_validation(entry):
         entry = entry.split(",")
 
 
-def int_array_validation(entry):
+def stat_validation(entry):
     """
     Validates proper integer array entry used for stats related methods
     :param entry: array
@@ -136,6 +136,7 @@ def int_array_validation(entry):
                 print("Please enter 6 integers separated by commas example: 10,23,12,34,54,22")
                 entry = input("Enter buffs([att],[def],[evd],[hp],[mp],[crt]): ")
                 break
+        break
     return entry
 
 ########################################################################################################################
