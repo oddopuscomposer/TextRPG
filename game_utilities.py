@@ -100,18 +100,17 @@ def class_validation(entry):
         entry = entry.split(",")
 
 
-def slot_validation(entry):
+def array_validation(entry, checked):
     """
     Validates character slots
     :param entry: string
     :return:
     """
-    slots = ["head", "chest", "legs", "feet", "left hand", "right hand", "necklace", "ring"]
 
     while True:
         count = 0
         for item in entry:
-            if item in slots:
+            if item in checked:
                 count += 1
             else:
                 break
@@ -138,6 +137,9 @@ def stat_validation(entry):
                 break
         break
     return entry
+
+def prob_validation(entry):
+    pass
 
 ########################################################################################################################
 # Game Utilities                                                                                                       #

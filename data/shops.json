@@ -1,15 +1,15 @@
 {
   "shops": {
-    "start shop" : {
+    "Wooden Stick Shop" : {
       "npc": "",
       "inventory": ["Wooden Stick", "Gamecube Controller"],
-      "location": "start1"
+      "location": "Starterville"
     },
-    "wow shop":{
+    "There's nothing here Shop":{
       "npc": "",
       "inventory": [],
-      "location": "start"
+      "location": "Testland"
     }
   },
-  "xref": ["start shop", "wow shop"]
+  "xref": ["Wooden Stick Shop", "There's nothing here Shop"]
 }

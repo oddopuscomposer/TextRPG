@@ -122,7 +122,7 @@ def add_equipable():
     print(["head", "chest", "legs", "feet", "left hand", "right hand", "necklace", "ring"])
     entry = input("Enter a slot/slots([slot1],[slot2]): ")
     entry = entry.split(",")
-    slot = slot_validation(entry)
+    slot = array_validation(entry, ["head", "chest", "legs", "feet", "left hand", "right hand", "necklace", "ring"])
     item["slot"] = slot
 
     item["buffs"] = {}
@@ -209,6 +209,19 @@ def add_skill():
     skills = process_json("skills.json")
 
     name = input("Enter skill name: ")
+    try:
+        skills["skills"][name]
+        while True:
+            choice = input("This item already exists, do you want to overwrite? (y/n): ")
+            if choice == "y":
+                break
+            elif choice == "n":
+                return "null"
+            else:
+                print("Invalid input")
+    except KeyError:
+        pass
+
     skills["skills"][name] = {}
     skill = skills["skills"][name]
 
@@ -237,7 +250,26 @@ def delete_skill():
     Removes skill from skills.json
     :return:
     """
-    pass
+    skills = process_json("skills.json")
+    print("Options: ")
+    print(','.join(list(skills["skills"].keys())))
+    entry = input("Please enter an item to delete: ")
+
+    if entry in skills["items"]:
+        while True:
+            confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")
+            if confirm == "y":
+                del skills["skills"][entry]
+                print("Item deleted")
+                break
+            elif confirm == "n":
+                break
+            else:
+                pass
+    else:
+        print("entry is not in skills")
+
+    write_json("skills.json", skills)
 
 
 def add_location():
@@ -245,7 +277,79 @@ def add_location():
     Adds location to locations.json
     :return:
     """
-    pass
+    locations = process_json("locations.json")
+
+    name = input("Enter location name: ")
+    try:
+        locations["location"][name]
+        while True:
+            choice = input("This item already exists, do you want to overwrite? (y/n): ")
+            if choice == "y":
+                break
+            elif choice == "n":
+                return "null"
+            else:
+                print("Invalid input")
+    except KeyError:
+        pass
+
+    locations["locations"][name] = {}
+    location = locations["locations"][name]
+
+    print("Options: ")
+    print(','.join(process_json("shops.json")["xref"]))
+    entry = input("What shops are in this location? ([shop1], [shop2]): ")
+    if entry != "":
+        entry = entry.split(",")
+        entry = array_validation(entry, process_json("shops.json")["xref"])
+    location["shops"] = entry
+
+    location["npcs"] = []
+
+    while True:
+        entry = input("Can you rest in this area? (y/n)")
+        if entry == "y":
+            entry = True
+            break
+        elif entry == "n":
+            entry = False
+            break
+        else:
+            print("Invalid input")
+
+    location["rest"] = entry
+
+    print("Options: ")
+    print(','.join(locations["xref"]))
+    entry = input("What locations are adjacent to this one? ([location1],[location2]): ")
+    entry = entry.split(",")
+    entry = array_validation(entry, locations["xref"])
+    for loc in entry:
+        locations["locations"][loc]["adjacent"].append(name)
+    location["adjacent"] = entry
+
+    print("Options: ")
+    print('.'.join(process_json("enemies.json")["xref"]))
+    entry = input("What enemies are here? ([enemy1],[enemy2]): ")
+    entry = entry.split(",")
+    entry = array_validation(entry, process_json("enemies.json")["xref"])
+    print("Enemies: ")
+    print(','.join(entry))
+    print("Spawn rate is defined as a value 0-1 in decimal form")
+    probs = input("What probabilities do these enemies have of appearing in this location? ([prob1],[prob2])")
+    probs = probs.split(",")
+
+    if len(probs) == len(entry):
+        enemydict = {}
+        print(entry)
+        print(probs)
+        for enemy, prob in zip(entry, probs):
+            enemydict[enemy] = float(prob)
+
+    location["enemies"] = enemydict
+
+    locations["xref"].append(name)
+    write_json("locations.json", locations)
 
 
 def delete_location():
@@ -253,7 +357,29 @@ def delete_location():
     Removes location from locations.json
     :return:
     """
-    pass
+    locations = process_json("locations.json")
+    print("Options: ")
+    print(','.join(list(locations["locations"].keys())))
+    entry = input("Please enter an item to delete: ")
+
+    if entry in locations["locations"]:
+        while True:
+            confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")
+            if confirm == "y":
+                del locations["locations"][entry]
+                for loc in locations["locations"]:
+                    if entry in locations["locations"][loc]["adjacent"]:
+                        locations["locations"][loc]["adjacent"].remove(entry)
+                print("Location deleted")
+                break
+            elif confirm == "n":
+                break
+            else:
+                pass
+    else:
+        print("entry is not in locations")
+
+    write_json("locations.json", locations)
 
 
 def add_npc():
@@ -339,9 +465,14 @@ def edit_game():
         if entry == "shops":
             pass
         if entry == "locations":
-            pass
-        if entry == "locations":
-            pass
+            while True:
+                option = input("add or delete locations? (q to exit): ")
+                if option == "add":
+                    add_location()
+                elif option == "delete":
+                    delete_location()
+                elif option == "q":
+                    break
         if entry == "saves":
             delete_save()
         if entry == "npcs":
