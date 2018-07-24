@@ -139,6 +139,7 @@ def add_equipable():
 
     item["type"] = "equipment"
 
+    items["xref"].append(name)
     write_json("items.json", items)
     print("Item created and saved")
 
@@ -198,6 +199,7 @@ def add_misc_item():
 
     item["type"] = "misc"
 
+    items["xref"].append(name)
     write_json("items.json", items)
 
 

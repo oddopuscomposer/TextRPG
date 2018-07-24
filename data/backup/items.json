@@ -7,7 +7,7 @@
             "sell_price": 25,
             "type": "misc"
         },
-        "Wood block": {
+        "Wood Block": {
             "buy_price": 10,
             "description": "",
             "rarity": "common",
@@ -33,7 +33,18 @@
             "sell_price": 5,
             "slot": "right hand",
             "type": "equipment"
+        },
+        "cheese": {
+            "buy_price": 1,
+            "description": "cheese ",
+            "rarity": "common",
+            "sell_price": 0,
+            "type": "misc"
         }
     },
-    "xref": ["Wooden Stick", "Wood Block", "Gamecube Controller"]
+    "xref": [
+        "Wooden Stick",
+        "Wood Block",
+        "Gamecube Controller"
+    ]
 }

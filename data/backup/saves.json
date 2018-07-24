@@ -15,7 +15,7 @@
             },
             "exp": 78,
             "exp_req": 140,
-            "gold": 515,
+            "gold": 505,
             "hp": 29,
             "inventory": [
                 "Wooden Stick",
@@ -28,10 +28,11 @@
                 "Wooden Stick",
                 "Wooden Stick",
                 "Wooden Stick",
-                "Wooden Stick"
+                "Wooden Stick",
+                "Wood Block"
             ],
             "level": 2,
-            "location": "Testland",
+            "location": "IRL",
             "max_hp": 53,
             "max_mp": 52,
             "mp": 50,
