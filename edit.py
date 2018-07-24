@@ -37,8 +37,8 @@ def add_class():
     entry = input("Enter mp: ")
     mana = numeric_validation(entry)
     classes["classes"][name]["start_mp"] = int(mana)
-    classes["xref"].append(name)
 
+    classes["xref"].append(name)
     write_json("classes.json", classes)
     print("Successfully Added")
 
@@ -159,6 +159,7 @@ def delete_item():
             confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")
             if confirm == "y":
                 del items["items"][entry]
+                items["xref"].remove(entry)
                 print("Item deleted")
                 break
             elif confirm == "n":
@@ -470,6 +471,7 @@ def add_shop():
     locations["locations"][entry]["shops"].append(name)
     shop["location"] = entry
 
+    print("Shop created")
     shops["xref"].append(name)
     write_json("locations.json", locations)
     write_json("shops.json", shops)

@@ -106,23 +106,25 @@ def array_validation(entry, checked):
     :param entry: string
     :return:
     """
-    if type(entry) == str:
-        if entry in checked:
-            return entry
-
-
     while True:
-        count = 0
-        for item in entry:
-            if item in checked:
-                count += 1
-            else:
-                break
-            if count == len(entry):
+        if type(entry) == str:
+            if entry in checked:
                 return entry
+            else:
+                entry = input("Try again: ")
+        else:
+            while True:
+                count = 0
+                for item in entry:
+                    if item in checked:
+                        count += 1
+                    else:
+                        break
+                    if count == len(entry):
+                        return entry
 
-        entry = input("Please input a valid array: ")
-        entry = entry.split(",")
+                entry = input("Please input a valid array: ")
+                entry = entry.split(",")
 
 
 def stat_validation(entry):

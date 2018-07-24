@@ -36,7 +36,8 @@
             "npcs": [],
             "rest": true,
             "shops": [
-                "There's nothing here Shop"
+                "There's nothing here Shop",
+                "lol"
             ]
         }
     },

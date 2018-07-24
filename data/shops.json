@@ -17,9 +17,9 @@
         },
         "lol": {
             "inventory": [
-                "Wood Block"
+                "Wooden Stick"
             ],
-            "location": "IRL",
+            "location": "Testland",
             "name": "lol",
             "npc": ""
         }
