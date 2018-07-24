@@ -9,7 +9,9 @@
             },
             "npcs": [],
             "rest": false,
-            "shops": ""
+            "shops": [
+                "lol"
+            ]
         },
         "Starterville": {
             "adjacent": [
@@ -41,7 +43,6 @@
     "xref": [
         "Starterville",
         "Testland",
-        "IRL",
         "IRL"
     ]
 }

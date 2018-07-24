@@ -1,19 +1,48 @@
 {
-  "locations": {
-    "start1": {
-      "shops": ["start shop"],
-      "npcs": [],
-      "rest": true,
-      "enemies": {},
-      "adjacent": ["start"]
+    "locations": {
+        "IRL": {
+            "adjacent": [
+                "Testland"
+            ],
+            "enemies": {
+                "goblin": 0.5
+            },
+            "npcs": [],
+            "rest": false,
+            "shops": [
+                "lol"
+            ]
+        },
+        "Starterville": {
+            "adjacent": [
+                "Testland"
+            ],
+            "enemies": {},
+            "npcs": [],
+            "rest": true,
+            "shops": [
+                "Wooden Stick Shop"
+            ]
+        },
+        "Testland": {
+            "adjacent": [
+                "Starterville",
+                "IRL"
+            ],
+            "enemies": {
+                "diddy kong": 0.2,
+                "goblin": 0.5
+            },
+            "npcs": [],
+            "rest": true,
+            "shops": [
+                "There's nothing here Shop"
+            ]
+        }
     },
-    "start": {
-      "shops": ["wow shop"],
-      "npcs": [],
-      "rest": true,
-      "enemies": {"goblin": 0.5, "diddy kong": 0.2},
-      "adjacent": ["start1"]
-    }
-  },
-  "xref": ["start1", "start"]
+    "xref": [
+        "Starterville",
+        "Testland",
+        "IRL"
+    ]
 }

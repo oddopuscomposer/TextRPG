@@ -1,15 +1,35 @@
 {
-  "shops": {
-    "start shop" : {
-      "npc": "",
-      "inventory": ["Wooden Stick"],
-      "location": "start1"
+    "shops": {
+        "Nothing Shop": {
+            "inventory": [],
+            "location": "Testland",
+            "name": "Nothing Shop",
+            "npc": ""
+        },
+        "Wooden Stick Shop": {
+            "inventory": [
+                "Wooden Stick",
+                "Gamecube Controller"
+            ],
+            "location": "Starterville",
+            "name": "Wooden Stick Shop",
+            "npc": ""
+        },
+        "lol": {
+            "inventory": [
+                "Wood Block"
+            ],
+            "location": "IRL",
+            "name": "lol",
+            "npc": ""
+        }
     },
-    "wow shop":{
-      "npc": "",
-      "inventory": [],
-      "location": "start"
-    }
-  },
-  "xref": ["start shop", "wow shop"]
+    "xref": [
+        "Wooden Stick Shop",
+        "There's nothing here Shop",
+        "dsanids",
+        "lol",
+        "lol",
+        "lol"
+    ]
 }

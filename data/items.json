@@ -34,5 +34,6 @@
             "slot": "right hand",
             "type": "equipment"
         }
-    }
+    },
+    "xref": ["Wooden Stick", "Wood Block", "Gamecube Controller"]
 }

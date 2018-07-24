@@ -102,10 +102,14 @@ def class_validation(entry):
 
 def array_validation(entry, checked):
     """
-    Validates character slots
+    Validates arrays
     :param entry: string
     :return:
     """
+    if type(entry) == str:
+        if entry in checked:
+            return entry
+
 
     while True:
         count = 0
@@ -117,7 +121,7 @@ def array_validation(entry, checked):
             if count == len(entry):
                 return entry
 
-        entry = input("Please input a valid slot/slots: ")
+        entry = input("Please input a valid array: ")
         entry = entry.split(",")
 
 
@@ -137,6 +141,7 @@ def stat_validation(entry):
                 break
         break
     return entry
+
 
 def prob_validation(entry):
     pass

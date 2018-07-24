@@ -212,7 +212,7 @@ def add_skill():
     try:
         skills["skills"][name]
         while True:
-            choice = input("This item already exists, do you want to overwrite? (y/n): ")
+            choice = input("This skill already exists, do you want to overwrite? (y/n): ")
             if choice == "y":
                 break
             elif choice == "n":
@@ -253,14 +253,14 @@ def delete_skill():
     skills = process_json("skills.json")
     print("Options: ")
     print(','.join(list(skills["skills"].keys())))
-    entry = input("Please enter an item to delete: ")
+    entry = input("Please enter a skill to delete: ")
 
-    if entry in skills["items"]:
+    if entry in skills["skills"]:
         while True:
             confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")
             if confirm == "y":
                 del skills["skills"][entry]
-                print("Item deleted")
+                print("skill deleted")
                 break
             elif confirm == "n":
                 break
@@ -278,12 +278,13 @@ def add_location():
     :return:
     """
     locations = process_json("locations.json")
+    shops = process_json("shops.json")
 
     name = input("Enter location name: ")
     try:
         locations["location"][name]
         while True:
-            choice = input("This item already exists, do you want to overwrite? (y/n): ")
+            choice = input("This location already exists, do you want to overwrite? (y/n): ")
             if choice == "y":
                 break
             elif choice == "n":
@@ -302,6 +303,12 @@ def add_location():
     if entry != "":
         entry = entry.split(",")
         entry = array_validation(entry, process_json("shops.json")["xref"])
+        for shop in entry:
+            shops["shops"][shop]["location"] = name
+
+    else:
+        entry = []
+
     location["shops"] = entry
 
     location["npcs"] = []
@@ -349,6 +356,8 @@ def add_location():
     location["enemies"] = enemydict
 
     locations["xref"].append(name)
+
+    write_json("shops.json", shops)
     write_json("locations.json", locations)
 
 
@@ -360,7 +369,7 @@ def delete_location():
     locations = process_json("locations.json")
     print("Options: ")
     print(','.join(list(locations["locations"].keys())))
-    entry = input("Please enter an item to delete: ")
+    entry = input("Please enter a location to delete: ")
 
     if entry in locations["locations"]:
         while True:
@@ -419,7 +428,47 @@ def add_shop():
     Adds shop to shops.json // [shops] [xref] locations[location][shops]
     :return:
     """
-    pass
+    shops = process_json("shops.json")
+    locations = process_json("locations.json")
+
+    name = input("Enter shop name: ")
+    try:
+        shops["location"][name]
+        while True:
+            choice = input("This shop already exists, do you want to overwrite? (y/n): ")
+            if choice == "y":
+                break
+            elif choice == "n":
+                return "null"
+            else:
+                print("Invalid input")
+    except KeyError:
+        pass
+
+    shops["shops"][name] = {}
+    shop = shops["shops"][name]
+    shop["name"] = name
+
+    print("Options: ")
+    print(','.join(process_json("items.json")["xref"]))
+    entry = input("What items are sold in this shop? ([item1],[item2]): ")
+    entry = entry.split(",")
+    entry = array_validation(entry, process_json("items.json")["xref"])
+    shop["inventory"] = entry
+
+    entry = input("Who is the shopkeeper?: ")
+    shop["npc"] = entry
+
+    print("Options: ")
+    print(','.join(process_json("locations.json")["xref"]))
+    entry = input("Where is this shop located?: ")
+    entry = array_validation(entry, process_json("locations.json")["xref"])
+    locations["locations"][entry]["shops"].append(name)
+    shop["location"] = entry
+
+    shops["xref"].append(name)
+    write_json("locations.json", locations)
+    write_json("shops.json", shops)
 
 
 def delete_shop():
@@ -427,7 +476,30 @@ def delete_shop():
     Removes shop from shops.json
     :return:
     """
-    pass
+    shops = process_json("shops.json")
+    locations = process_json("locations.json")
+    print("Options: ")
+    print(','.join(list(shops["shops"].keys())))
+    entry = input("Please enter a shop to delete: ")
+
+    if entry in shops["shops"]:
+        while True:
+            confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")
+            if confirm == "y":
+                if entry in locations["locations"][shops["shops"][entry]["location"]]["shops"]:
+                    locations["locations"][shops["shops"][entry]["location"]]["shops"].remove(entry)
+                del shops["shops"][entry]
+                print("shop deleted")
+                break
+            elif confirm == "n":
+                break
+            else:
+                pass
+    else:
+        print("entry is not in shops")
+
+    write_json("shops.json", shops)
+    write_json("locations.json", locations)
 
 
 def edit_game():
@@ -463,7 +535,14 @@ def edit_game():
                 elif option == "q":
                     break
         if entry == "shops":
-            pass
+            while True:
+                option = input("add or delete shops? (q to exit): ")
+                if option == "add":
+                    add_shop()
+                elif option == "delete":
+                    delete_shop()
+                elif option == "q":
+                    break
         if entry == "locations":
             while True:
                 option = input("add or delete locations? (q to exit): ")
