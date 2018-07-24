@@ -376,9 +376,11 @@ def delete_location():
             confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")
             if confirm == "y":
                 del locations["locations"][entry]
+                locations["xref"].remove(entry)
                 for loc in locations["locations"]:
                     if entry in locations["locations"][loc]["adjacent"]:
                         locations["locations"][loc]["adjacent"].remove(entry)
+
                 print("Location deleted")
                 break
             elif confirm == "n":
@@ -489,6 +491,7 @@ def delete_shop():
                 if entry in locations["locations"][shops["shops"][entry]["location"]]["shops"]:
                     locations["locations"][shops["shops"][entry]["location"]]["shops"].remove(entry)
                 del shops["shops"][entry]
+                shops["xref"].remove(entry)
                 print("shop deleted")
                 break
             elif confirm == "n":
