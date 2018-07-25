@@ -1,32 +1,67 @@
 {
-  "enemies":{
-    "goblin": {
-      "name": "goblin",
-      "level": 1,
-      "hp": 50,
-      "attack": [10,2,4,6],
-      "defend": [10,20,30,40],
-      "drops": {"Wooden Stick": 0.3},
-      "exp": 99,
-      "evd": 0,
-      "gold": 500
+    "enemies": {
+        "diddy kong": {
+            "attack": [
+                15
+            ],
+            "defend": [
+                10,
+                20,
+                30,
+                40
+            ],
+            "drops": {},
+            "evd": 0,
+            "exp": 99,
+            "gold": 500,
+            "hp": 30,
+            "level": 1,
+            "name": "diddy kong"
+        },
+        "goblin": {
+            "attack": [
+                10,
+                2,
+                4,
+                6
+            ],
+            "defend": [
+                10,
+                20,
+                30,
+                40
+            ],
+            "drops": {
+                "Wooden Stick": 0.3
+            },
+            "evd": 0,
+            "exp": 99,
+            "gold": 500,
+            "hp": 50,
+            "level": 1,
+            "name": "goblin"
+        },
+        "monster1": {
+            "attack": [
+                1
+            ],
+            "defend": [
+                1
+            ],
+            "drops": {
+                "cheese": 0.1
+            },
+            "evd": 1,
+            "exp": 1,
+            "gold": 1,
+            "hp": 1,
+            "level": 1,
+            "name": "monster1"
+        }
     },
-    "diddy kong":{
-      "name": "diddy kong",
-      "level": 1,
-      "hp": 30,
-      "attack": [15],
-      "defend": [10,20,30,40],
-      "drops": {},
-      "exp": 99,
-      "evd": 0,
-      "gold": 500
-    }
-
-  },
-  "xref": ["goblin", "diddy kong"]
-
-
-
-
+    "xref": [
+        "goblin",
+        "diddy kong",
+        1
+    ]
 }

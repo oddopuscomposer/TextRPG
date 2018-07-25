@@ -419,13 +419,98 @@ def add_enemy():
     """
     pass
 
+    enemies = process_json("enemies.json")
+
+    name = input("What is the enemy's name?: ")
+
+    try:
+        enemies["enemies"][name]
+        while True:
+            choice = input("This enemy already exists, do you want to overwrite? (y/n): ")
+            if choice == "y":
+                break
+            elif choice == "n":
+                return "null"
+            else:
+                print("Invalid input")
+    except KeyError:
+        pass
+
+    enemies["enemies"][name] = {}
+    enemy = enemies["enemies"][name]
+    enemy["name"] = name
+
+    entry = input("What is the enemy's level?: ")
+    entry = numeric_validation(entry)
+    enemy["level"] = int(entry)
+
+    entry = input("What is the enemy's hp?: ")
+    entry = numeric_validation(entry)
+    enemy["hp"] = int(entry)
+
+    entry = input("What are the enemy's attacks?([int1],[int2]): ")
+    entry = entry.split(",")
+    entry = numeric_array_validation_at_least_one(entry)
+    enemy["attack"] = entry
+
+    entry = input("What are the enemy's defends?([int1],[int2]): ")
+    if entry == '':
+        entry = []
+    else:
+        entry = entry.split(",")
+    entry = numeric_array_validation_at_least_one(entry)
+    enemy["defend"] = entry
+
+    entry = input("What is the enemy's evasion?: ")
+    entry = numeric_validation(entry)
+    enemy["evd"] = entry
+
+    print("Options: ")
+    print(','.join(process_json("items.json")["xref"]))
+    entry = input("What are the enemy's drops? ([item1]:[prob1],[item2]:[prob2]): ")
+    entry = entry.split(",")
+    entry = enemy_drop_validation(entry)
+    enemy["drops"] = entry
+
+    entry = input("What is the enemy's gold drop?: ")
+    entry = numeric_validation(entry)
+    enemy["gold"] = entry
+
+    entry = input("What is the enemy's exp drop?: ")
+    entry = numeric_validation(entry)
+    enemy["exp"] = entry
+
+    print("Enemy added")
+    enemies["xref"].append(entry)
+    write_json("enemies.json", enemies)
+
 
 def delete_enemy():
     """
     Removes enemy from enemies.json
     :return:
     """
-    pass
+    enemies = process_json("enemies.json")
+    print("Options: ")
+    print(','.join(list(enemies["enemies"].keys())))
+    entry = input("Please enter an enemy to delete: ")
+
+    if entry in enemies["enemies"]:
+        while True:
+            confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")
+            if confirm == "y":
+                del enemies["enemies"][entry]
+                enemies["xref"].remove(entry)
+                print("enemy deleted")
+                break
+            elif confirm == "n":
+                break
+            else:
+                pass
+    else:
+        print("entry is not in enemies")
+
+    write_json("enemies.json", enemies)
 
 
 def add_shop():
@@ -576,6 +661,15 @@ def edit_game():
             pass
         if entry == "passives":
             pass
+        if entry == "enemies":
+            while True:
+                option = input("add or delete enemies? (q to exit): ")
+                if option == "add":
+                    add_enemy()
+                elif option == "delete":
+                    delete_enemy()
+                elif option == "q":
+                    break
         elif entry == "q":
             break
 

@@ -65,6 +65,41 @@ def numeric_validation(entry):
     return entry
 
 
+def numeric_array_validation(entry):
+    while True:
+        count = 0
+        for item in entry:
+            if type(item) == int:
+                count += 1
+
+        if count != len(entry):
+            entry = input("Please input an invalid integer array: ")
+        else:
+            return entry
+
+
+def numeric_array_validation_at_least_one(entry):
+    while True:
+        count = 0
+
+        for item in entry:
+            try:
+                item = int(item)
+            except:
+                pass
+            if type(item) == int:
+                count += 1
+
+        if count != len(entry) or len(entry) < 1 or entry == ['']:
+            entry = input("Please input an invalid integer array: ")
+            entry = entry.split(",")
+        else:
+            final_entry = []
+            for item in entry:
+                final_entry.append(int(item))
+            return final_entry
+
+
 def rarity_validation(entry):
     """
     Validates rarity of equipables and items
@@ -103,7 +138,8 @@ def class_validation(entry):
 def array_validation(entry, checked):
     """
     Validates arrays
-    :param entry: string
+    :param entry:
+    :param checked:
     :return:
     """
     while True:
@@ -145,8 +181,29 @@ def stat_validation(entry):
     return entry
 
 
-def prob_validation(entry):
-    pass
+def enemy_drop_validation(entry):
+    items = process_json("items.json")["xref"]
+    while True:
+        drop = 0
+        count = 0
+        new_dict = {}
+        for split in entry:
+            pair = split.split(":")
+            item = pair[0]
+            prob = float(pair[1])
+            if item in items and 0.0 < prob <= 1.0:
+                count += 1
+                drop += float(prob)
+                new_dict[item] = float(prob)
+            else:
+                print("Item not exist or probability not between 0-1")
+                entry = input("Please input valid values: ")
+                break
+        if count == len(entry) and drop <= 1:
+            return new_dict
+        else:
+            print("Item not all valid or total drops probability greater than 1")
+            entry = input("Please input valid values: ")
 
 ########################################################################################################################
 # Game Utilities                                                                                                       #
