@@ -74,30 +74,36 @@ def start_game(character):
     game_status = True
     print("Welcome to the game!")
     # print(character)
-    savefile = process_json("saves.json")
+    save_file = process_json("saves.json")
     while game_status:
         print("#######################")
-        print("")
-        print("stats, inv, rest, goto, shop, encounter, quit")
-        selection = input("Select an option: ")
-        if selection == "stats":
+        print("1. Stats")
+        print("2. Inventory")
+        print("3. Rest")
+        print("4. Travel")
+        print("5. Shop")
+        print("6. Encounter")
+        print("7. Quit")
+        print("#######################")
+        selection = input("Select an option: ").lower()
+        if selection.startswith("sta") or selection == "1":
             show_stats(character)
-        elif selection == "inv":
+        elif selection.startswith("inv") or selection == "2":
             manage_equipment(character)
-        elif selection == "goto":
-            go_to(character)
-        elif selection == "rest":
+        elif selection.startswith("res") or selection == "3":
             rest(character)
-        elif selection == "shop":
+        elif selection.startswith("trav") or selection.startswith("goto") or selection == "4":
+            go_to(character)
+        elif selection.startswith("sho") or selection == "5":
             shop(character)
-        elif selection == "encounter":
+        elif selection.startswith("enc") or selection == "6":
             encounter(character)
-        elif selection == "quit":
+        elif selection.startswith("qui") or selection == "7":
             break
         else:
-            print("Incorrect action, please try again")
-        savefile["saves"][character["name"]] = character
-        write_json("saves.json", savefile)
+            print("Unrecognized Action. Please try again!")
+        save_file["saves"][character["name"]] = character
+        write_json("saves.json", save_file)
 
 
 def show_stats(character):
@@ -265,12 +271,12 @@ def rest(character):
         if locations["locations"][location]:
             character["hp"] = character["max_hp"]
             character["mp"] = character["max_mp"]
-            print("You are well rested.")
+            print("You feel well rested.")
             print("+" + str(character["max_hp"] - character["hp"]) + " hp")
             print("+" + str(character["max_mp"] - character["mp"]) + " mp")
 
         else:
-            print("You cant rest in this location.")
+            print("You can't rest in this location.")
 
 
 def go_to(character):
