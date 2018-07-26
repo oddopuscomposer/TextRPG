@@ -16,7 +16,7 @@
             "exp": 78,
             "exp_req": 140,
             "gold": 505,
-            "hp": 29,
+            "hp": 50,
             "inventory": [
                 "Wooden Stick",
                 "Wooden Stick",
@@ -28,8 +28,8 @@
                 "Wooden Stick",
                 "Wooden Stick",
                 "Wooden Stick",
-                "Wooden Stick",
-                "Wood Block"
+                "Wood Block",
+                "Wooden Stick"
             ],
             "level": 2,
             "location": "Testland",
@@ -72,10 +72,10 @@
             "name": "example",
             "skills": [],
             "stats": {
-                "att": 0,
-                "crt": 1,
-                "def": 0,
-                "evd": 0
+                "att": 10,
+                "crt": 10,
+                "def": 10,
+                "evd": 10
             },
             "training_points": 0
         }

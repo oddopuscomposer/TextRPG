@@ -16,7 +16,9 @@ def launch(setting):
     name = ""
 
     if setting == "saves":
-        print(saves)
+        print("Saves: ")
+        for item in saves:
+            print("     - " + item)
         save = input("Choose a save data: ")
         while True:
             if save in saves:
@@ -111,25 +113,24 @@ def show_stats(character):
     Shows character stats/current save
     :return:
     """
-    print("STATS")
+    print("Stats:")
     print("#######################")
-    print("name: " + character["name"])
-    print("level: " + str(character["level"]))
-    print("class: " + character["class"])
-    print("deaths: " + str(character["deaths"]))
-    print("max hp: " + str(character["max_hp"]))
-    print("hp: " + str(character["hp"]))
-    print("max mp: " + str(character["max_mp"]))
-    print("mp: " + str(character["mp"]))
-    print("att: " + str(character["stats"]["att"]))
-    print("def: " + str(character["stats"]["def"]))
-    print("evd: " + str(character["stats"]["evd"]))
-    print("exp: " + str(character["exp"]))
-    print("next level: " + str(character["exp_req"]))
-    print("training points: " + str(character["training_points"]))
-    print("skills: " + str(character["skills"]))
-    print("gold: " + str(character["gold"]))
-    print("location: " + character["location"])
+    print("Name: " + character["name"])
+    print("Level: " + str(character["level"]))
+    print("Class: " + character["class"])
+    print("Deaths: " + str(character["deaths"]))
+    print("HP: " + str(character["hp"]) + "/" + str(character["max_hp"]))
+    print("MP: " + str(character["mp"]) + "/" + str(character["max_mp"]))
+    print("Attack: " + str(character["stats"]["att"]))
+    print("Defense: " + str(character["stats"]["def"]))
+    print("Evasion: " + str(character["stats"]["evd"]))
+    print("Critical: " + str(character["stats"]["crt"]))
+    print("Exp: " + str(character["exp"]))
+    print("Next Level: " + str(character["exp_req"]))
+    print("Training Points: " + str(character["training_points"]))
+    print("Skills: " + str(character["skills"]))
+    print("Gold: " + str(character["gold"]))
+    print("Location: " + character["location"])
     print("#######################")
 
 
@@ -141,7 +142,7 @@ def show_inventory(character):
     """
     print("Equipment")
     print("#######################")
-    print("head: " + character["equipment"]["head"])
+    print("Helmet: " + character["equipment"]["head"])
     print("chest: " + character["equipment"]["chest"])
     print("legs: " + character["equipment"]["legs"])
     print("feet: " + character["equipment"]["feet"])
@@ -152,15 +153,15 @@ def show_inventory(character):
     print("#######################")
     print("Inventory")
     print("#######################")
-    itemlist = []
+    item_list = []
     if len(character["inventory"]) > 0:
         for item in character["inventory"]:
-            itemlist.append(item)
-            if len(itemlist) == 3:
-                print('     '.join(itemlist))
-                itemlist = []
-        if len(itemlist) > 0:
-            print('     '.join(itemlist))
+            item_list.append(item)
+            if len(item_list) == 3:
+                print('     '.join(item_list))
+                item_list = []
+        if len(item_list) > 0:
+            print('     '.join(item_list))
     else:
         print("Your inventory is empty. :<")
     print("")
@@ -222,36 +223,63 @@ def manage_equipment(character):
         entry = input("equip [item],dequip [slot], look [item], q to quit: ")
         if entry.startswith("equip"):
             item = remove_prefix(entry, "equip ")
-            if item in items["items"] and items["items"][item]["type"] == "equipment":
-                if character["class"] or "any" in items["items"][item]["classes"]:
-                    slot = items["items"][item]["slot"]
-                    character["equipment"][slot] = item
-                    character["inventory"].remove(item)
-                    update_stats(character, item)
-                    print("Equipped " + item)
+            if item in items["items"]:
+                if items["items"][item]["type"] == "equipment":
+                    if character["class"] or "any" in items["items"][item]["classes"]:
+                        slot = items["items"][item]["slot"]
+                        character["equipment"][slot] = item
+                        character["inventory"].remove(item)
+                        update_stats(character, item)
+                        print("Equipped " + item)
+                    else:
+                        print("Your class can't equip this " + item)
                 else:
-                    print("Your class can't equip " + item + " or item not in inventory")
+                    print("This item can not be equipped.")
             else:
-                print("The item is unequipable")
+                print("This item does not exist.")
         elif entry.startswith("dequip"):
-            slot = remove_prefix(entry, "dequip ")
-            if slot in ["head", "chest", "legs", "feet", "left_hand", "right_hand", "necklace", "ring"]:
-                if character["equipment"][slot] != "empty":
-                    item = character["equipment"][slot]
-                    character["equipment"][slot] = "empty"
-                    character["inventory"].append(item)
-                    update_stats(character, item)
-                    print("Dequiped " + item)
-                else:
-                    print("Your slot is empty")
+            dequip = "fail"
+            item = remove_prefix(entry, "dequip ")
+            if item in items["items"]:
+                for slot in character["equipment"]:
+                    if character["equipment"][slot] == item:
+                        character["equipment"][slot] = "empty"
+                        character["inventory"].append(item)
+                        update_stats(character, item)
+                        dequip = "success"
+                        print("Dequiped " + item)
+                if dequip == "fail":
+                    print("You do not have that item equipped.")
             else:
-                print("Invalid slot")
+                print("Item does not exist.")
         elif entry.startswith("look"):
             look = remove_prefix(entry, "look ")
             if look in character["inventory"]:
-                for key in items["items"][look]:
-                    print(key + ": " + str(items["items"][look][key]))
-                exit = input("press anything to go back to inventory: ")
+                if items["items"][look]["type"] == "equipment":
+                    print("Name: " + look)
+                    print("Description: " + items["items"][look]["description"])
+                    print("Rarity: " + items["items"][look]["rarity"])
+                    print("Buy Price: " + str(items["items"][look]["buy_price"]))
+                    print("Sell Price: " + str(items["items"][look]["sell_price"]))
+                    print("Type: " + items["items"][look]["type"])
+                    print("Slot: " + items["items"][look]["slot"])
+                    print("Required Classes: " + ', '.join(items["items"][look]["classes"]))
+                    print("Properties: ")
+                    print("     HP: +" + str(items["items"][look]["buffs"]["hp"]))
+                    print("     MP: +" + str(items["items"][look]["buffs"]["mp"]))
+                    print("     Attack: +" + str(items["items"][look]["buffs"]["att"]))
+                    print("     Defense: +" + str(items["items"][look]["buffs"]["def"]))
+                    print("     Evasion: +" + str(items["items"][look]["buffs"]["evd"]))
+                    print("     Critical: +" + str(items["items"][look]["buffs"]["crt"]))
+                    input("press anything to go back to inventory: ")
+                if items["items"][look]["type"] == "misc":
+                    print("Name: " + look)
+                    print("Description: " + items["items"][look]["description"])
+                    print("Rarity: " + items["items"][look]["rarity"])
+                    print("Buy Price: " + str(items["items"][look]["buy_price"]))
+                    print("Sell Price: " + str(items["items"][look]["sell_price"]))
+                    print("Type: " + items["items"][look]["type"])
+                    input("press anything to go back to inventory: ")
             else:
                 print("Invalid Item")
         elif entry == "q":
@@ -269,11 +297,11 @@ def rest(character):
     location = character["location"]
     if location in locations["xref"]:
         if locations["locations"][location]:
-            character["hp"] = character["max_hp"]
-            character["mp"] = character["max_mp"]
             print("You feel well rested.")
             print("+" + str(character["max_hp"] - character["hp"]) + " hp")
             print("+" + str(character["max_mp"] - character["mp"]) + " mp")
+            character["hp"] = character["max_hp"]
+            character["mp"] = character["max_mp"]
 
         else:
             print("You can't rest in this location.")
@@ -437,6 +465,7 @@ def encounter(character):
         location_enemies.append("none")
 
     if len(location_enemies) > 0:
+        print("You look around for enemies...")
         choice = numpy.random.choice(location_enemies, 1, location_rates)
         if choice[0] != "none":
             print(choice[0] + " wants to fight")
@@ -445,7 +474,7 @@ def encounter(character):
         else:
             print("No enemies found")
     else:
-        print("There are no enemies in this area")
+        print("There are no enemies in this area.")
 
 
 
