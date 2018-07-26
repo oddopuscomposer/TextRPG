@@ -238,8 +238,8 @@ def attack(character, critical):
     """
     items = process_json("items.json")["items"]
     att = 0
-    if character["equipment"]["right_hand"] != "empty":
-        att = items[character["equipment"]["right_hand"]]["damage"]
+    if character["equipment"]["right hand"] != "empty":
+        att = items[character["equipment"]["right hand"]]["damage"]
 
 
     if critical:

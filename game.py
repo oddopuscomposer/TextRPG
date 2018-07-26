@@ -235,7 +235,7 @@ def manage_equipment(character):
                 print("The item is unequipable")
         elif entry.startswith("dequip"):
             slot = remove_prefix(entry, "dequip ")
-            if slot in ["head", "chest", "legs", "feet", "left_hand", "right_hand", "necklace", "ring"]:
+            if slot in ["head", "chest", "legs", "feet", "left hand", "right hand", "necklace", "ring"]:
                 if character["equipment"][slot] != "empty":
                     item = character["equipment"][slot]
                     character["equipment"][slot] = "empty"

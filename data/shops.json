@@ -1,9 +1,9 @@
 {
     "shops": {
-        "Nothing Shop": {
+        "There's nothing here Shop": {
             "inventory": [],
             "location": "Testland",
-            "name": "Nothing Shop",
+            "name": "There's nothing here Shop",
             "npc": ""
         },
         "Wooden Stick Shop": {
