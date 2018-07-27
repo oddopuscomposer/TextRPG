@@ -345,7 +345,7 @@ def shop(character):
         print("There are no shops in this area")
     else:
         while True:
-            print(locations["locations"][location]["shops"])
+            print(', '.join(locations["locations"][location]["shops"]))
             store = input("Select a shop (q to quit): ")
             if store in locations["locations"][location]["shops"] and store in shops["xref"]:  # Shop loop
                 shop_interaction(character, shops, store)
@@ -397,19 +397,36 @@ def shop_interaction(character, shops, store):
                                 print(k + ": " + str(buffs[k]))
                         print("----------------------------------------")
                         cost = items["items"][entry]["buy_price"]
-                        resp = input("Would you like to buy " + entry + " for " + str(cost) + "? (y/n): ")
-                        if resp == "y":
-                            if character["gold"] > cost:
-                                character["gold"] -= cost
-                                character["inventory"].append(entry)
-                                print(entry + " purchased for " + str(cost) + " gold")
-                            else:
-                                print("You dont have enough gold")
-                            break
-                        elif resp == "n":
-                            break
+                        while True:
+                            number = input("How many would you like to buy?: ")
+                            try:
+                                int(number)
+                                break
+                            except ValueError:
+                                print("Please input a number!")
+                        price = int(number) * cost
+                        if price > character["gold"]:
+                            print("You do not have enough gold!")
                         else:
-                            print("Invalid response")
+                            if number == 1:
+                                resp = input("Would you like to buy " + entry + " for " + str(price) + "? (y/n): ")
+                            elif number == 0:
+                                break
+                            else:
+                                resp = input("Would you like to buy " + str(number) + " " + entry + " for " + str(price) + "? (y/n): ")
+                            if resp == "y":
+                                if character["gold"] > price:
+                                    character["gold"] -= price
+                                    for x in range(int(number)-1):
+                                        character["inventory"].append(entry)
+                                    print(str(number) + " " + entry + " purchased for " + str(price) + " gold")
+                                else:
+                                    print("You do not have enough gold")
+                                break
+                            elif resp == "n":
+                                break
+                            else:
+                                print("Invalid response")
                     break
                 elif entry == "q":
                     break
@@ -420,20 +437,39 @@ def shop_interaction(character, shops, store):
             while True:
                 sell = input("What would you like to sell? (q to quit): ")
                 if sell in character["inventory"]:
-                    price = items["items"][sell]["sell_price"]
-                    confirm = input("Are you sure you want to sell " + sell + " for " + str(price) + " gold? (y/n): ")
-                    if confirm == "y":
-                        character["gold"] += price
-                        character["inventory"].remove(sell)
-                        print(sell + " sold for " + str(price) + " gold")
-                    elif confirm == "n":
-                        break
+                    print("You have " + str(character["inventory"].count(sell)) + " " + sell + " in your inventory.")
+                    while True:
+                        number = input("How many would you like to sell?: ")
+                        try:
+                            int(number)
+                            break
+                        except ValueError:
+                            print("Please input a number!")
+                    if int(number) <= character["inventory"].count(sell):
+                        price = items["items"][sell]["sell_price"]
+                        price = price * int(number)
+                        if number == 1:
+                            confirm = input("Are you sure you want to sell " + sell + " for " + str(
+                                price) + " gold? (y/n): ")
+                        elif number == 0:
+                            break
+                        else:
+                            confirm = input("Are you sure you want to sell " + str(number) + " " + sell + " for " + str(price) + " gold? (y/n): ")
+                        if confirm == "y":
+                            for x in range(int(number)-1):
+                                character["inventory"].remove(sell)
+                            character["gold"] += price
+                            print(str(number) + " " + sell + " sold for " + str(price) + " gold")
+                        elif confirm == "n":
+                            break
+                        else:
+                            print("Invalid input")
                     else:
-                        print("Invalid input")
+                        print("You do not have that many " + sell + " in your inventory.")
                 elif sell == "q":
                     break
                 else:
-                    print("Invalid Selection")
+                    print("You do not have " + sell + " in your inventory.")
 
         elif option == "q":
             break
