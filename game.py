@@ -387,22 +387,20 @@ def shop_interaction(character, shops, store):
             for item in shops["shops"][store]["inventory"]:
                 count += 1
                 print(str(count) + ". " + item)
-
+            print("")
             while True:
                 entry = input("What are you interested in buying? (q to quit): ")
                 if entry == "q":
                     break
-                for item in shops["shops"][store]["inventory"]:
-                    if item.startswith(entry):
-                        entry = item
-                        break
                 try:
                     entry = int(entry)
-                    if entry < len(shops["shops"][store]["inventory"]):
+                    if entry <= len(shops["shops"][store]["inventory"]):
                         entry = shops["shops"][store]["inventory"][entry-1]
+                        print(entry)
                 except ValueError:
-                    print("Item does not exist.")
-                    break
+                    for item in shops["shops"][store]["inventory"]:
+                        if item.startswith(entry):
+                            entry = item
 
                 if entry in shops["shops"][store]["inventory"]:
                     while True:
@@ -427,7 +425,7 @@ def shop_interaction(character, shops, store):
                         print("----------------------------------------")
                         cost = items["items"][entry]["buy_price"]
                         while True:
-                            number = input("How many would you like to buy?: ")
+                            number = input("How many " + entry + " would you like to buy?: ")
                             try:
                                 int(number)
                                 break
@@ -437,9 +435,9 @@ def shop_interaction(character, shops, store):
                         if price > character["gold"]:
                             print("You do not have enough gold!")
                         else:
-                            if number == 1:
+                            if int(number) == 1:
                                 resp = input("Would you like to buy " + entry + " for " + str(price) + "? (y/n): ")
-                            elif number == 0:
+                            elif int(number) == 0:
                                 break
                             else:
                                 resp = input("Would you like to buy " + str(number) + " " + entry + " for " + str(price) + "? (y/n): ")
