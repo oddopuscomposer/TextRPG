@@ -1,4 +1,3 @@
-from game_utilities import *
 from battle import *
 
 
