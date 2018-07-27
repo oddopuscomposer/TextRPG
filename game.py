@@ -375,6 +375,7 @@ def shop_interaction(character, shops, store):
     :return:
     """
     items = process_json("items.json")
+    saves = process_json("saves.json")
     while True:
         option = input("buy(b) or sell(s)? (q for quit): ")
         if option == "b" or option == "buy":
@@ -403,7 +404,7 @@ def shop_interaction(character, shops, store):
 
                 if entry in shops["shops"][store]["inventory"]:
                     while True:
-                        match = items["items"][item]
+                        match = items["items"][entry]
                         price = match["buy_price"]
                         rarity = match["rarity"]
                         if match["type"] == "equipment":
@@ -412,7 +413,7 @@ def shop_interaction(character, shops, store):
                             damage = match["damage"]
                             buffs = match["buffs"]
                         print("----------------------------------------")
-                        print(item)
+                        print(entry)
                         print("price: " + str(price))
                         print("rarity: " + rarity)
                         if match["type"] == "equipment":
@@ -443,9 +444,11 @@ def shop_interaction(character, shops, store):
                             if resp == "y":
                                 if character["gold"] > price:
                                     character["gold"] -= price
-                                    for x in range(int(number)-1):
+                                    for x in range(0, int(number)):
                                         character["inventory"].append(entry)
                                     print(str(number) + " " + entry + " purchased for " + str(price) + " gold")
+                                    saves["saves"][character["name"]] = character
+                                    write_json("saves.json", saves)
                                 else:
                                     print("You do not have enough gold")
                                 break
@@ -487,10 +490,12 @@ def shop_interaction(character, shops, store):
                         else:
                             confirm = input("Are you sure you want to sell " + str(number) + " " + sell + " for " + str(price) + " gold? (y/n): ")
                         if confirm == "y":
-                            for x in range(int(number)-1):
+                            for x in range(0, int(number)):
                                 character["inventory"].remove(sell)
                             character["gold"] += price
                             print(str(number) + " " + sell + " sold for " + str(price) + " gold")
+                            saves["saves"][character["name"]] = character
+                            write_json("saves.json", saves)
                         elif confirm == "n":
                             break
                         else:
