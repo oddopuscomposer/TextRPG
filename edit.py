@@ -48,8 +48,11 @@ def delete_class():
     Removes class from classes.json
     :return:
     """
-    entry = input("Please enter a class to delete: ")
     classes = process_json("classes.json")
+    print("Please do not remove Any from the game if you care about items that cater to all classes.")
+    print(', '.join(classes["xref"]))
+    entry = input("Please enter a class to delete: ")
+
     if entry in classes["xref"]:
         while True:
             confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")

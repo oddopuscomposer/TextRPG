@@ -417,7 +417,7 @@ def shop_interaction(character, shops, store):
                         print("price: " + str(price))
                         print("rarity: " + rarity)
                         if match["type"] == "equipment":
-                            print("classes: " + str(classes))
+                            print("classes: " + str(', '.join(classes)))
                             print("slot: " + slot)
                             print("damage: " + str(damage))
                             for k in buffs:
