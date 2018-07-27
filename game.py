@@ -140,16 +140,15 @@ def show_inventory(character):
     :param character:
     :return:
     """
+    print("")
+    print("#######################")
     print("Equipment")
     print("#######################")
-    print("Helmet: " + character["equipment"]["head"])
-    print("chest: " + character["equipment"]["chest"])
-    print("legs: " + character["equipment"]["legs"])
-    print("feet: " + character["equipment"]["feet"])
-    print("left hand: " + character["equipment"]["left hand"])
-    print("right hand: " + character["equipment"]["right hand"])
-    print("necklace: " + character["equipment"]["necklace"])
-    print("ring: " + character["equipment"]["ring"])
+    for k, v in character["equipment"].items():
+        if v != "empty":
+            print("- " + v)
+
+    print("")
     print("#######################")
     print("Inventory")
     print("#######################")
@@ -317,15 +316,31 @@ def go_to(character):
     old_location = character["location"]
     loc_list = locations["locations"][old_location]["adjacent"]
     while True:
-        print(loc_list)
+        print(', '.join(loc_list))
         new_location = input("Choose a location (q to quit): ")
+        for loc in loc_list:
+            if loc.startswith(new_location):
+                new_location = loc
+                break
+
         if new_location in loc_list:
             if old_location in locations["locations"][new_location]["adjacent"]:
                 character["location"] = new_location
                 print("You are now in " + new_location)
                 break
             else:
-                print("This area is one way")
+                print("You can not go back the same way!")
+                while True:
+                    cont = input("Continue?(y/n): ")
+                    if cont == "y":
+                        character["location"] = new_location
+                        print("You are now in " + new_location)
+                        break
+                    elif cont == "n":
+                        break
+                    else:
+                        print("Invalid option!")
+                    break
         elif new_location == "q":
             break
         else:
@@ -375,6 +390,20 @@ def shop_interaction(character, shops, store):
 
             while True:
                 entry = input("What are you interested in buying? (q to quit): ")
+                if entry == "q":
+                    break
+                for item in shops["shops"][store]["inventory"]:
+                    if item.startswith(entry):
+                        entry = item
+                        break
+                try:
+                    entry = int(entry)
+                    if entry < len(shops["shops"][store]["inventory"]):
+                        entry = shops["shops"][store]["inventory"][entry-1]
+                except ValueError:
+                    print("Item does not exist.")
+                    break
+
                 if entry in shops["shops"][store]["inventory"]:
                     while True:
                         match = items["items"][item]
@@ -436,6 +465,11 @@ def shop_interaction(character, shops, store):
             show_inventory(character)
             while True:
                 sell = input("What would you like to sell? (q to quit): ")
+                for item in character["inventory"]:
+                    if item.startswith(sell):
+                        sell = item
+                        break
+
                 if sell in character["inventory"]:
                     print("You have " + str(character["inventory"].count(sell)) + " " + sell + " in your inventory.")
                     while True:
@@ -504,6 +538,9 @@ def encounter(character):
         print("You look around for enemies...")
         choice = numpy.random.choice(location_enemies, 1, location_rates)
         if choice[0] != "none":
+            print("###########################")
+            print("##########BATTLE###########")
+            print("###########################")
             print(choice[0] + " wants to fight")
             enemy = enemies["enemies"][choice[0]]
             battle(character, enemy)
@@ -511,11 +548,3 @@ def encounter(character):
             print("No enemies found")
     else:
         print("There are no enemies in this area.")
-
-
-
-
-
-
-
-

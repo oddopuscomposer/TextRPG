@@ -21,15 +21,15 @@ def battle(character, enemy):
     else:  # if enemy is faster
         attack_turn = "enemy"
 
-    print(character["name"] + ": " + str(character["hp"]))
-    print(enemy_name + ": " + str(max_hp))
+    print(character["name"] + ": " + str(character["hp"]) + "/" + str(character["max_hp"]))
+    print(enemy_name + ": " + str(max_hp) + "/" + str(max_hp))
 
     print(attack_turn + " goes first")
     while True:  # A turn iteration
         print("################################")
         print("Turn - " + str(turn))
         if attack_turn == "character":  # if it is the character's turn to attack
-            choice = input("attack, run, item: ")
+            choice = input("Attack, Item, Run: ").lower()
             while True:
                 if choice == "attack":
                     crit = critical_check(character)
