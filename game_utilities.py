@@ -1,5 +1,5 @@
 import json
-
+from termcolor import colored
 # Validations and utilities for larger game methods
 
 ########################################################################################################################
@@ -223,3 +223,21 @@ def passive_modifier(character, att):
         pass
     else:
         print("Invalid Class")
+
+
+def rarity_color_assigner(drop):
+    rarities = ["common", "uncommon", "rare", "ancient", "legendary"]
+    items = process_json("items.json")
+    item = items["items"][drop]
+
+    for rarity in rarities:
+        if rarity == item["rarity"] and rarity == "common":
+            return colored(drop, 'white')
+        elif rarity == item["rarity"] and rarity == "uncommon":
+            return colored(drop, 'green')
+        elif rarity == item["rarity"] and rarity == "rare":
+            return colored(drop, 'gold')
+        elif rarity == item["rarity"] and rarity == "ancient":
+            return colored(drop, 'cyan')
+        elif rarity == item["rarity"] and rarity == "legendary":
+            return colored(drop, 'magenta')

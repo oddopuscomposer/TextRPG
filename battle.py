@@ -1,5 +1,6 @@
 import numpy as np
 from game_utilities import *
+from termcolor import colored
 
 
 def battle(character, enemy):
@@ -10,9 +11,9 @@ def battle(character, enemy):
     :return:
     """
     character_stats = character["stats"]
-    attack_turn = ""
     max_hp = enemy["hp"]
-    enemy_name = enemy["name"]
+    enemy_name = colored(enemy["name"], "red")
+    character_name = colored(character["name"], "blue")
     turn = 1
     run = False
 
@@ -21,7 +22,7 @@ def battle(character, enemy):
     else:  # if enemy is faster
         attack_turn = "enemy"
 
-    print(character["name"] + ": " + str(character["hp"]) + "/" + str(character["max_hp"]))
+    print(character_name + ": " + str(character["hp"]) + "/" + str(character["max_hp"]))
     print(enemy_name + ": " + str(max_hp) + "/" + str(max_hp))
 
     print(attack_turn + " goes first")
@@ -35,18 +36,18 @@ def battle(character, enemy):
                     crit = critical_check(character)
 
                     if crit:
-                        print("CRITICAL")
+                        print(colored("CRITICAL", "yellow"))
                     att = attack(character, crit)
 
-                    print(character["name"] + " attacked with " + str(att) + " damage.")
+                    print(character_name + " attacked with " + colored(str(att), 'blue') + " damage.")
 
                     defs = np.random.choice(enemy["defend"], 1)[0]
 
-                    print(enemy_name + " defended with " + str(defs) + " block.")
+                    print(enemy_name + " defended with " + colored(str(defs), 'red') + " block.")
 
                     damage = defend(enemy, att, defs, False)
 
-                    print(enemy_name + " took " + str(damage) + " damage.")
+                    print(enemy_name + " took " + colored(str(damage), 'red') + " damage.")
                     if enemy["hp"] >= 0:
                         print(enemy_name + " has " + str(enemy["hp"]) + " HP left")
                     else:
@@ -72,7 +73,7 @@ def battle(character, enemy):
             pass
             att = np.random.choice(enemy["attack"], 1)[0]
 
-            print(enemy_name + " attacked with " + str(att) + " damage.")
+            print(enemy_name + " attacked with " + colored(str(att), "red") + " damage.")
 
             choice = input("defend, evade, parry: ")
 
@@ -80,15 +81,16 @@ def battle(character, enemy):
             while True:
                 if choice == "defend":
                     damage = defend(character, att, character["stats"]["def"], crit)
-                    print(character["name"] + " defended with " + str(character["stats"]["def"]) + " block.")
-                    print(character["name"] + " took " + str(damage))
-                    print(character["name"] + " has " + str(character["hp"]) + " HP left.")
+                    print(character_name + " defended with " + colored(str(character_stats["def"]), "blue") +
+                          " block.")
+                    print(character_name + " took " + colored(str(damage), 'blue') + " damage.")
+                    print(character_name + " has " + colored(str(character["hp"]), 'blue') + " HP left.")
                     break
                 elif choice == "evade":
-                    damage = evade(character, att, character["stats"]["evd"], crit)
-                    print(character["name"] + " evaded with " + str(character["stats"]["evd"]) + " evade")
-                    print(character["name"] + " took " + str(damage))
-                    print(character["name"] + " has " + str(character["hp"]) + " HP left.")
+                    damage = evade(character, att, character_stats["evd"], crit)
+                    print(character_name + " evaded with " + colored(str(character_stats["evd"]), 'blue') + " evade")
+                    print(character_name + " took " + colored(str(damage), 'blue') + " damage.")
+                    print(character_name + " has " + str(character["hp"]) + " HP left.")
                     break
                 elif choice == "parry":
                     pass
@@ -98,11 +100,11 @@ def battle(character, enemy):
 
             attack_turn = "character"
         if character["hp"] <= 0:
-            print("You were defeated!")
+            print("You were " + colored("defeated!", "blue"))
             character["deaths"] += 1
             break
         if enemy["hp"] <= 0:
-            print("The enemy was defeated!")
+            print("The enemy was " + colored("defeated!", "red"))
             loot(character, enemy)
             break
         turn += 1
@@ -178,18 +180,19 @@ def loot(character, enemy):
     :param enemy:
     :return:
     """
+    character_name = colored(character["name"], "blue")
     progression = process_json("progression.json")
     character["exp"] += enemy["exp"]
-    print(character["name"] + " gained " + str(enemy["exp"]) + " experience")
+    print(character_name + " gained " + colored(str(enemy["exp"]), "magenta") + " experience")
     if character["exp"] > character["exp_req"]:
         character["exp"] = character["exp"] - character["exp_req"]
         character["level"] += 1
-        print(character["name"] + " grew to level " + str(character["level"]))
+        print(character_name + " grew to level " + str(character["level"]))
         character["exp_req"] = progression[str(character["level"])]
 
     character["gold"] += enemy["gold"]
     if enemy["gold"] != 0:
-        print(enemy["name"] + " dropped " + str(enemy["gold"]) + " gold")
+        print(enemy["name"] + " dropped " + colored(str(enemy["gold"]), 'yellow') + " gold")
 
     if enemy["drops"] != {}:
 
@@ -208,7 +211,7 @@ def loot(character, enemy):
         drop = np.random.choice(items, 1, probs)[0]
 
         if drop != "none":
-            print(enemy["name"] + " dropped a " + drop)
+            print(enemy["name"] + " dropped a " + rarity_color_assigner(drop))
             character["inventory"].append(drop)
         else:
             print(enemy["name"] + " did not drop anything")
@@ -238,9 +241,8 @@ def attack(character, critical):
     """
     items = process_json("items.json")["items"]
     att = 0
-    if character["equipment"]["right_hand"] != "empty":
-        att = items[character["equipment"]["right_hand"]]["damage"]
-
+    if character["equipment"]["right hand"] != "empty":
+        att = items[character["equipment"]["right hand"]]["damage"]
 
     if critical:
         return (character["stats"]["att"] + att) * 2
@@ -252,7 +254,7 @@ def defend(entity, att, defense, critical):
     """
     Defending an attack
     :param entity:
-    :param attack:
+    :param att:
     :param defense:
     :param critical:
     :return:

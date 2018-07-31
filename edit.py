@@ -7,8 +7,9 @@ def delete_save():
     :return:
     """
     saves = process_json("saves.json")
-    print("Saves: " + list(saves["saves"].keys()))
+    print("Saves: " + ', '.join(list(saves["saves"].keys())))
     while True:
+        print("Warning: deleting save template breaks new characters")
         choice = input("Which save file would you like to delete?(q to quit): ")
         if choice in saves["saves"].keys():
             del saves["saves"][choice]

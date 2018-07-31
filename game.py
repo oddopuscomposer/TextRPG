@@ -1,4 +1,6 @@
 from battle import *
+import numpy
+from termcolor import colored
 
 
 def launch(setting):
@@ -114,7 +116,7 @@ def show_stats(character):
     """
     print("Stats:")
     print("#######################")
-    print("Name: " + character["name"])
+    print("Name: " + colored(character["name"], 'blue'))
     print("Level: " + str(character["level"]))
     print("Class: " + character["class"])
     print("Deaths: " + str(character["deaths"]))
@@ -547,6 +549,6 @@ def encounter(character):
             enemy = enemies["enemies"][choice[0]]
             battle(character, enemy)
         else:
-            print("No enemies found")
+            print("No enemies were found")
     else:
         print("There are no enemies in this area.")

@@ -13,17 +13,15 @@
                 "right hand": "Wooden Stick",
                 "ring": "empty"
             },
-            "exp": 78,
-            "exp_req": 140,
-            "gold": 380,
-            "hp": 53,
+            "exp": 37,
+            "exp_req": 160,
+            "gold": 760,
+            "hp": 49,
             "inventory": [
                 "Wood Block",
-                "Wooden Stick",
-                "Wooden Stick",
                 "Wooden Stick"
             ],
-            "level": 2,
+            "level": 3,
             "location": "Testland",
             "max_hp": 53,
             "max_mp": 52,

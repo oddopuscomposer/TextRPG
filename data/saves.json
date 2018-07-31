@@ -13,16 +13,16 @@
                 "right hand": "Wooden Stick",
                 "ring": "empty"
             },
-            "exp": 78,
-            "exp_req": 140,
-            "gold": 260,
-            "hp": 53,
+            "exp": 37,
+            "exp_req": 160,
+            "gold": 760,
+            "hp": 49,
             "inventory": [
                 "Wood Block",
                 "Wooden Stick"
             ],
-            "level": 2,
-            "location": "Starterville",
+            "level": 3,
+            "location": "Testland",
             "max_hp": 53,
             "max_mp": 52,
             "mp": 52,
@@ -68,43 +68,9 @@
                 "evd": 10
             },
             "training_points": 0
-        },
-        "thing": {
-            "class": "Archer",
-            "deaths": 0,
-            "equipment": {
-                "chest": "empty",
-                "feet": "empty",
-                "head": "empty",
-                "left_hand": "empty",
-                "legs": "empty",
-                "necklace": "empty",
-                "right_hand": "empty",
-                "ring": "empty"
-            },
-            "exp": 0,
-            "exp_req": 100,
-            "gold": 1000,
-            "hp": 20,
-            "inventory": [],
-            "level": 0,
-            "location": "Starterville",
-            "max_hp": 20,
-            "max_mp": 20,
-            "mp": 20,
-            "name": "thing",
-            "skills": [],
-            "stats": {
-                "att": 10,
-                "crt": 10,
-                "def": 10,
-                "evd": 10
-            },
-            "training_points": 0
         }
     },
     "xref": [
-        "Chres",
-        "thing"
+        "Chres"
     ]
 }
