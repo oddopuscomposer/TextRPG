@@ -485,7 +485,7 @@ def add_enemy():
     enemy["exp"] = entry
 
     print("Enemy added")
-    enemies["xref"].append(entry)
+    enemies["xref"].append(name)
     write_json("enemies.json", enemies)
 
 
