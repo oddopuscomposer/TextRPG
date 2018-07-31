@@ -7,8 +7,9 @@ def delete_save():
     :return:
     """
     saves = process_json("saves.json")
-    print("Saves: " + list(saves["saves"].keys()))
+    print("Saves: " + ', '.join(list(saves["saves"].keys())))
     while True:
+        print("Warning: deleting save template breaks new characters")
         choice = input("Which save file would you like to delete?(q to quit): ")
         if choice in saves["saves"].keys():
             del saves["saves"][choice]
@@ -48,8 +49,11 @@ def delete_class():
     Removes class from classes.json
     :return:
     """
-    entry = input("Please enter a class to delete: ")
     classes = process_json("classes.json")
+    print("Please do not remove Any from the game if you care about items that cater to all classes.")
+    print(', '.join(classes["xref"]))
+    entry = input("Please enter a class to delete: ")
+
     if entry in classes["xref"]:
         while True:
             confirm = input("Are you sure you want to delete " + entry + "? (y/n): ")
@@ -151,7 +155,7 @@ def delete_item():
     """
     items = process_json("items.json")
     print("Options: ")
-    print(','.join(list(items["items"].keys())))
+    print(', '.join(list(items["items"].keys())))
     entry = input("Please enter an item to delete: ")
 
     if entry in items["items"]:
@@ -255,7 +259,7 @@ def delete_skill():
     """
     skills = process_json("skills.json")
     print("Options: ")
-    print(','.join(list(skills["skills"].keys())))
+    print(', '.join(list(skills["skills"].keys())))
     entry = input("Please enter a skill to delete: ")
 
     if entry in skills["skills"]:
@@ -492,7 +496,7 @@ def delete_enemy():
     """
     enemies = process_json("enemies.json")
     print("Options: ")
-    print(','.join(list(enemies["enemies"].keys())))
+    print(', '.join(list(enemies["enemies"].keys())))
     entry = input("Please enter an enemy to delete: ")
 
     if entry in enemies["enemies"]:
@@ -570,7 +574,7 @@ def delete_shop():
     shops = process_json("shops.json")
     locations = process_json("locations.json")
     print("Options: ")
-    print(','.join(list(shops["shops"].keys())))
+    print(', '.join(list(shops["shops"].keys())))
     entry = input("Please enter a shop to delete: ")
 
     if entry in shops["shops"]:

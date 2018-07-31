@@ -13,29 +13,19 @@
                 "right hand": "Wooden Stick",
                 "ring": "empty"
             },
-            "exp": 78,
-            "exp_req": 140,
-            "gold": 505,
-            "hp": 29,
+            "exp": 37,
+            "exp_req": 160,
+            "gold": 760,
+            "hp": 49,
             "inventory": [
-                "Wooden Stick",
-                "Wooden Stick",
-                "Wooden Stick",
-                "Wooden Stick",
-                "Wooden Stick",
-                "Wooden Stick",
-                "Wooden Stick",
-                "Wooden Stick",
-                "Wooden Stick",
-                "Wooden Stick",
-                "Wooden Stick",
-                "Wood Block"
+                "Wood Block",
+                "Wooden Stick"
             ],
-            "level": 2,
+            "level": 3,
             "location": "Testland",
             "max_hp": 53,
             "max_mp": 52,
-            "mp": 50,
+            "mp": 52,
             "name": "Chres",
             "skills": [],
             "stats": {
@@ -61,7 +51,7 @@
             },
             "exp": 0,
             "exp_req": 100,
-            "gold": 100,
+            "gold": 1000,
             "hp": 50,
             "inventory": [],
             "level": 0,
@@ -72,10 +62,10 @@
             "name": "example",
             "skills": [],
             "stats": {
-                "att": 0,
-                "crt": 1,
-                "def": 0,
-                "evd": 0
+                "att": 10,
+                "crt": 10,
+                "def": 10,
+                "evd": 10
             },
             "training_points": 0
         }

@@ -1,5 +1,6 @@
-from game_utilities import *
 from battle import *
+import numpy
+from termcolor import colored
 
 
 def launch(setting):
@@ -16,7 +17,9 @@ def launch(setting):
     name = ""
 
     if setting == "saves":
-        print(saves)
+        print("Saves: ")
+        for item in saves:
+            print("     - " + item)
         save = input("Choose a save data: ")
         while True:
             if save in saves:
@@ -111,25 +114,24 @@ def show_stats(character):
     Shows character stats/current save
     :return:
     """
-    print("STATS")
+    print("Stats:")
     print("#######################")
-    print("name: " + character["name"])
-    print("level: " + str(character["level"]))
-    print("class: " + character["class"])
-    print("deaths: " + str(character["deaths"]))
-    print("max hp: " + str(character["max_hp"]))
-    print("hp: " + str(character["hp"]))
-    print("max mp: " + str(character["max_mp"]))
-    print("mp: " + str(character["mp"]))
-    print("att: " + str(character["stats"]["att"]))
-    print("def: " + str(character["stats"]["def"]))
-    print("evd: " + str(character["stats"]["evd"]))
-    print("exp: " + str(character["exp"]))
-    print("next level: " + str(character["exp_req"]))
-    print("training points: " + str(character["training_points"]))
-    print("skills: " + str(character["skills"]))
-    print("gold: " + str(character["gold"]))
-    print("location: " + character["location"])
+    print("Name: " + colored(character["name"], 'blue'))
+    print("Level: " + str(character["level"]))
+    print("Class: " + character["class"])
+    print("Deaths: " + str(character["deaths"]))
+    print("HP: " + str(character["hp"]) + "/" + str(character["max_hp"]))
+    print("MP: " + str(character["mp"]) + "/" + str(character["max_mp"]))
+    print("Attack: " + str(character["stats"]["att"]))
+    print("Defense: " + str(character["stats"]["def"]))
+    print("Evasion: " + str(character["stats"]["evd"]))
+    print("Critical: " + str(character["stats"]["crt"]))
+    print("Exp: " + str(character["exp"]))
+    print("Next Level: " + str(character["exp_req"]))
+    print("Training Points: " + str(character["training_points"]))
+    print("Skills: " + str(character["skills"]))
+    print("Gold: " + str(character["gold"]))
+    print("Location: " + character["location"])
     print("#######################")
 
 
@@ -139,28 +141,27 @@ def show_inventory(character):
     :param character:
     :return:
     """
+    print("")
+    print("#######################")
     print("Equipment")
     print("#######################")
-    print("head: " + character["equipment"]["head"])
-    print("chest: " + character["equipment"]["chest"])
-    print("legs: " + character["equipment"]["legs"])
-    print("feet: " + character["equipment"]["feet"])
-    print("left hand: " + character["equipment"]["left hand"])
-    print("right hand: " + character["equipment"]["right hand"])
-    print("necklace: " + character["equipment"]["necklace"])
-    print("ring: " + character["equipment"]["ring"])
+    for k, v in character["equipment"].items():
+        if v != "empty":
+            print("- " + v)
+
+    print("")
     print("#######################")
     print("Inventory")
     print("#######################")
-    itemlist = []
+    item_list = []
     if len(character["inventory"]) > 0:
         for item in character["inventory"]:
-            itemlist.append(item)
-            if len(itemlist) == 3:
-                print('     '.join(itemlist))
-                itemlist = []
-        if len(itemlist) > 0:
-            print('     '.join(itemlist))
+            item_list.append(item)
+            if len(item_list) == 3:
+                print('     '.join(item_list))
+                item_list = []
+        if len(item_list) > 0:
+            print('     '.join(item_list))
     else:
         print("Your inventory is empty. :<")
     print("")
@@ -222,36 +223,63 @@ def manage_equipment(character):
         entry = input("equip [item],dequip [slot], look [item], q to quit: ")
         if entry.startswith("equip"):
             item = remove_prefix(entry, "equip ")
-            if item in items["items"] and items["items"][item]["type"] == "equipment":
-                if character["class"] or "any" in items["items"][item]["classes"]:
-                    slot = items["items"][item]["slot"]
-                    character["equipment"][slot] = item
-                    character["inventory"].remove(item)
-                    update_stats(character, item)
-                    print("Equipped " + item)
+            if item in items["items"]:
+                if items["items"][item]["type"] == "equipment":
+                    if character["class"] or "any" in items["items"][item]["classes"]:
+                        slot = items["items"][item]["slot"]
+                        character["equipment"][slot] = item
+                        character["inventory"].remove(item)
+                        update_stats(character, item)
+                        print("Equipped " + item)
+                    else:
+                        print("Your class can't equip this " + item)
                 else:
-                    print("Your class can't equip " + item + " or item not in inventory")
+                    print("This item can not be equipped.")
             else:
-                print("The item is unequipable")
+                print("This item does not exist.")
         elif entry.startswith("dequip"):
-            slot = remove_prefix(entry, "dequip ")
-            if slot in ["head", "chest", "legs", "feet", "left hand", "right hand", "necklace", "ring"]:
-                if character["equipment"][slot] != "empty":
-                    item = character["equipment"][slot]
-                    character["equipment"][slot] = "empty"
-                    character["inventory"].append(item)
-                    update_stats(character, item)
-                    print("Dequiped " + item)
-                else:
-                    print("Your slot is empty")
+            dequip = "fail"
+            item = remove_prefix(entry, "dequip ")
+            if item in items["items"]:
+                for slot in character["equipment"]:
+                    if character["equipment"][slot] == item:
+                        character["equipment"][slot] = "empty"
+                        character["inventory"].append(item)
+                        update_stats(character, item)
+                        dequip = "success"
+                        print("Dequiped " + item)
+                if dequip == "fail":
+                    print("You do not have that item equipped.")
             else:
-                print("Invalid slot")
+                print("Item does not exist.")
         elif entry.startswith("look"):
             look = remove_prefix(entry, "look ")
             if look in character["inventory"]:
-                for key in items["items"][look]:
-                    print(key + ": " + str(items["items"][look][key]))
-                exit = input("press anything to go back to inventory: ")
+                if items["items"][look]["type"] == "equipment":
+                    print("Name: " + look)
+                    print("Description: " + items["items"][look]["description"])
+                    print("Rarity: " + items["items"][look]["rarity"])
+                    print("Buy Price: " + str(items["items"][look]["buy_price"]))
+                    print("Sell Price: " + str(items["items"][look]["sell_price"]))
+                    print("Type: " + items["items"][look]["type"])
+                    print("Slot: " + items["items"][look]["slot"])
+                    print("Required Classes: " + ', '.join(items["items"][look]["classes"]))
+                    print("Properties: ")
+                    print("     HP: +" + str(items["items"][look]["buffs"]["hp"]))
+                    print("     MP: +" + str(items["items"][look]["buffs"]["mp"]))
+                    print("     Attack: +" + str(items["items"][look]["buffs"]["att"]))
+                    print("     Defense: +" + str(items["items"][look]["buffs"]["def"]))
+                    print("     Evasion: +" + str(items["items"][look]["buffs"]["evd"]))
+                    print("     Critical: +" + str(items["items"][look]["buffs"]["crt"]))
+                    input("press anything to go back to inventory: ")
+                if items["items"][look]["type"] == "misc":
+                    print("Name: " + look)
+                    print("Description: " + items["items"][look]["description"])
+                    print("Rarity: " + items["items"][look]["rarity"])
+                    print("Buy Price: " + str(items["items"][look]["buy_price"]))
+                    print("Sell Price: " + str(items["items"][look]["sell_price"]))
+                    print("Type: " + items["items"][look]["type"])
+                    input("press anything to go back to inventory: ")
             else:
                 print("Invalid Item")
         elif entry == "q":
@@ -269,11 +297,11 @@ def rest(character):
     location = character["location"]
     if location in locations["xref"]:
         if locations["locations"][location]:
-            character["hp"] = character["max_hp"]
-            character["mp"] = character["max_mp"]
             print("You feel well rested.")
             print("+" + str(character["max_hp"] - character["hp"]) + " hp")
             print("+" + str(character["max_mp"] - character["mp"]) + " mp")
+            character["hp"] = character["max_hp"]
+            character["mp"] = character["max_mp"]
 
         else:
             print("You can't rest in this location.")
@@ -289,15 +317,31 @@ def go_to(character):
     old_location = character["location"]
     loc_list = locations["locations"][old_location]["adjacent"]
     while True:
-        print(loc_list)
+        print(', '.join(loc_list))
         new_location = input("Choose a location (q to quit): ")
+        for loc in loc_list:
+            if loc.startswith(new_location):
+                new_location = loc
+                break
+
         if new_location in loc_list:
             if old_location in locations["locations"][new_location]["adjacent"]:
                 character["location"] = new_location
                 print("You are now in " + new_location)
                 break
             else:
-                print("This area is one way")
+                print("You can not go back the same way!")
+                while True:
+                    cont = input("Continue?(y/n): ")
+                    if cont == "y":
+                        character["location"] = new_location
+                        print("You are now in " + new_location)
+                        break
+                    elif cont == "n":
+                        break
+                    else:
+                        print("Invalid option!")
+                    break
         elif new_location == "q":
             break
         else:
@@ -317,7 +361,7 @@ def shop(character):
         print("There are no shops in this area")
     else:
         while True:
-            print(locations["locations"][location]["shops"])
+            print(', '.join(locations["locations"][location]["shops"]))
             store = input("Select a shop (q to quit): ")
             if store in locations["locations"][location]["shops"] and store in shops["xref"]:  # Shop loop
                 shop_interaction(character, shops, store)
@@ -333,6 +377,7 @@ def shop_interaction(character, shops, store):
     :return:
     """
     items = process_json("items.json")
+    saves = process_json("saves.json")
     while True:
         option = input("buy(b) or sell(s)? (q for quit): ")
         if option == "b" or option == "buy":
@@ -344,12 +389,24 @@ def shop_interaction(character, shops, store):
             for item in shops["shops"][store]["inventory"]:
                 count += 1
                 print(str(count) + ". " + item)
-
+            print("")
             while True:
                 entry = input("What are you interested in buying? (q to quit): ")
+                if entry == "q":
+                    break
+                try:
+                    entry = int(entry)
+                    if entry <= len(shops["shops"][store]["inventory"]):
+                        entry = shops["shops"][store]["inventory"][entry-1]
+                        print(entry)
+                except ValueError:
+                    for item in shops["shops"][store]["inventory"]:
+                        if item.startswith(entry):
+                            entry = item
+
                 if entry in shops["shops"][store]["inventory"]:
                     while True:
-                        match = items["items"][item]
+                        match = items["items"][entry]
                         price = match["buy_price"]
                         rarity = match["rarity"]
                         if match["type"] == "equipment":
@@ -358,30 +415,49 @@ def shop_interaction(character, shops, store):
                             damage = match["damage"]
                             buffs = match["buffs"]
                         print("----------------------------------------")
-                        print(item)
+                        print(entry)
                         print("price: " + str(price))
                         print("rarity: " + rarity)
                         if match["type"] == "equipment":
-                            print("classes: " + str(classes))
+                            print("classes: " + str(', '.join(classes)))
                             print("slot: " + slot)
                             print("damage: " + str(damage))
                             for k in buffs:
                                 print(k + ": " + str(buffs[k]))
                         print("----------------------------------------")
                         cost = items["items"][entry]["buy_price"]
-                        resp = input("Would you like to buy " + entry + " for " + str(cost) + "? (y/n): ")
-                        if resp == "y":
-                            if character["gold"] > cost:
-                                character["gold"] -= cost
-                                character["inventory"].append(entry)
-                                print(entry + " purchased for " + str(cost) + " gold")
-                            else:
-                                print("You dont have enough gold")
-                            break
-                        elif resp == "n":
-                            break
+                        while True:
+                            number = input("How many " + entry + " would you like to buy?: ")
+                            try:
+                                int(number)
+                                break
+                            except ValueError:
+                                print("Please input a number!")
+                        price = int(number) * cost
+                        if price > character["gold"]:
+                            print("You do not have enough gold!")
                         else:
-                            print("Invalid response")
+                            if int(number) == 1:
+                                resp = input("Would you like to buy " + entry + " for " + str(price) + "? (y/n): ")
+                            elif int(number) == 0:
+                                break
+                            else:
+                                resp = input("Would you like to buy " + str(number) + " " + entry + " for " + str(price) + "? (y/n): ")
+                            if resp == "y":
+                                if character["gold"] > price:
+                                    character["gold"] -= price
+                                    for x in range(0, int(number)):
+                                        character["inventory"].append(entry)
+                                    print(str(number) + " " + entry + " purchased for " + str(price) + " gold")
+                                    saves["saves"][character["name"]] = character
+                                    write_json("saves.json", saves)
+                                else:
+                                    print("You do not have enough gold")
+                                break
+                            elif resp == "n":
+                                break
+                            else:
+                                print("Invalid response")
                     break
                 elif entry == "q":
                     break
@@ -391,21 +467,47 @@ def shop_interaction(character, shops, store):
             show_inventory(character)
             while True:
                 sell = input("What would you like to sell? (q to quit): ")
-                if sell in character["inventory"]:
-                    price = items["items"][sell]["sell_price"]
-                    confirm = input("Are you sure you want to sell " + sell + " for " + str(price) + " gold? (y/n): ")
-                    if confirm == "y":
-                        character["gold"] += price
-                        character["inventory"].remove(sell)
-                        print(sell + " sold for " + str(price) + " gold")
-                    elif confirm == "n":
+                for item in character["inventory"]:
+                    if item.startswith(sell):
+                        sell = item
                         break
+
+                if sell in character["inventory"]:
+                    print("You have " + str(character["inventory"].count(sell)) + " " + sell + " in your inventory.")
+                    while True:
+                        number = input("How many would you like to sell?: ")
+                        try:
+                            int(number)
+                            break
+                        except ValueError:
+                            print("Please input a number!")
+                    if int(number) <= character["inventory"].count(sell):
+                        price = items["items"][sell]["sell_price"]
+                        price = price * int(number)
+                        if number == 1:
+                            confirm = input("Are you sure you want to sell " + sell + " for " + str(
+                                price) + " gold? (y/n): ")
+                        elif number == 0:
+                            break
+                        else:
+                            confirm = input("Are you sure you want to sell " + str(number) + " " + sell + " for " + str(price) + " gold? (y/n): ")
+                        if confirm == "y":
+                            for x in range(0, int(number)):
+                                character["inventory"].remove(sell)
+                            character["gold"] += price
+                            print(str(number) + " " + sell + " sold for " + str(price) + " gold")
+                            saves["saves"][character["name"]] = character
+                            write_json("saves.json", saves)
+                        elif confirm == "n":
+                            break
+                        else:
+                            print("Invalid input")
                     else:
-                        print("Invalid input")
+                        print("You do not have that many " + sell + " in your inventory.")
                 elif sell == "q":
                     break
                 else:
-                    print("Invalid Selection")
+                    print("You do not have " + sell + " in your inventory.")
 
         elif option == "q":
             break
@@ -437,20 +539,16 @@ def encounter(character):
         location_enemies.append("none")
 
     if len(location_enemies) > 0:
+        print("You look around for enemies...")
         choice = numpy.random.choice(location_enemies, 1, location_rates)
         if choice[0] != "none":
+            print("###########################")
+            print("##########BATTLE###########")
+            print("###########################")
             print(choice[0] + " wants to fight")
             enemy = enemies["enemies"][choice[0]]
             battle(character, enemy)
         else:
-            print("No enemies found")
+            print("No enemies were found")
     else:
-        print("There are no enemies in this area")
-
-
-
-
-
-
-
-
+        print("There are no enemies in this area.")
