@@ -1,10 +1,8 @@
 from game import launch
 from edit import edit_game
-from colorama import init
 
 
 def main():
-    init()
     status = True
     while status:
         print("Welcome to the TextRPG created by ChresSSB")

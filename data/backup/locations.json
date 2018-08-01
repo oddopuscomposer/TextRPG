@@ -5,7 +5,7 @@
                 "Testland"
             ],
             "enemies": {
-                "goblin": 0.5
+                "Goblin": 0.5
             },
             "npcs": [],
             "rest": false,
@@ -30,13 +30,14 @@
                 "IRL"
             ],
             "enemies": {
-                "diddy kong": 0.2,
-                "goblin": 0.5
+                "Diddy Kong": 0.2,
+                "Goblin": 0.5
             },
             "npcs": [],
             "rest": true,
             "shops": [
-                "There's nothing here Shop"
+                "There's nothing here Shop",
+                "lol"
             ]
         }
     },
