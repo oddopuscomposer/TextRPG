@@ -95,7 +95,7 @@ def start_game(character):
             manage_equipment(character)
         elif selection.startswith("res") or selection == "3":
             rest(character)
-        elif selection.startswith("trav") or selection.startswith("goto") or selection == "4":
+        elif selection.startswith("tr") or selection.startswith("goto") or selection == "4":
             go_to(character)
         elif selection.startswith("sho") or selection == "5":
             shop(character)
@@ -117,9 +117,9 @@ def show_stats(character):
     print("Stats:")
     print("#######################")
     print("Name: " + colored(character["name"], 'blue'))
-    print("Level: " + colored(str(character["level"]), 'magenta', attrs=['bold', 'dark']))
+    print("Level: " + colored(str(character["level"]), 'magenta'))
     print("Class: " + character["class"])
-    print("Deaths: " + colored(str(character["deaths"]), 'white'))
+    print("Deaths: " + str(character["deaths"]))
     print("HP: " + colored(str(character["hp"]) + "/" + str(character["max_hp"]), 'red'))
     print("MP: " + colored(str(character["mp"]) + "/" + str(character["max_mp"]), 'blue'))
     print("Attack: " + str(character["stats"]["att"]))
@@ -315,7 +315,9 @@ def go_to(character):
     """
     locations = process_json("locations.json")
     old_location = character["location"]
+    accesses = character["access"]
     loc_list = locations["locations"][old_location]["adjacent"]
+    enemies = process_json("enemies.json")
     while True:
         print(', '.join(loc_list))
         new_location = input("Choose a location (q to quit): ")
@@ -325,10 +327,35 @@ def go_to(character):
                 break
 
         if new_location in loc_list:
+            if new_location not in accesses and len(list(locations["locations"][new_location]["enemies"].keys())) > 0:
+                print("You do not have access to this location!")
+                while True:
+                    challenge = input("Would you like to attempt clear this location?(y/n): ")
+                    if challenge == "y":
+                        location_enemies = list(locations["locations"][new_location]["enemies"].keys())
+                        if len(location_enemies) > 0:
+                            for i in range(0, 5):
+                                random = numpy.random.randint(0, len(location_enemies)-1)
+                                enemy = enemies["enemies"][location_enemies[random]]
+
+                                if character["hp"] > 0:
+                                    battle(character, enemy)
+                                else:
+                                    print("You were defeated!")
+                                    break
+                            if character["hp"] > 0:
+                                print("You defeated the gauntlet")
+                                print("You now have access to this location!")
+                                accesses.append(new_location)
+                                break
+                    elif challenge == "n":
+                        break
+
             if old_location in locations["locations"][new_location]["adjacent"]:
-                character["location"] = new_location
-                print("You are now in " + new_location)
-                break
+                if new_location in accesses or len(list(locations["locations"][new_location]["enemies"].keys())) == 0:
+                    character["location"] = new_location
+                    print("You are now in " + new_location)
+                    break
             else:
                 print("You can not go back the same way!")
                 while True:

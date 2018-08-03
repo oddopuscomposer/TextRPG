@@ -10,6 +10,7 @@ def battle(character, enemy):
     :param enemy:
     :return:
     """
+    saves = process_json("saves.json")
     character_stats = character["stats"]
     max_hp = enemy["hp"]
     enemy_name = colored(enemy["name"], "red")
@@ -109,7 +110,8 @@ def battle(character, enemy):
             break
         turn += 1
 
-    enemy["hp"] = max_hp
+    saves["saves"][character["name"]] = character
+    write_json("saves.json", saves)
 
 
 def run_check(character_level, enemy_level):

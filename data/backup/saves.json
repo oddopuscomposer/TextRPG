@@ -1,6 +1,7 @@
 {
     "saves": {
         "Chres": {
+            "access": [],
             "class": "Knight",
             "deaths": 0,
             "equipment": {
@@ -16,28 +17,29 @@
             "exp": 93,
             "exp_req": 200,
             "gold": 2760,
-            "hp": 53,
+            "hp": 52,
             "inventory": [
                 "Wood Block",
                 "Wooden Stick",
                 "Wooden Stick"
             ],
             "level": 5,
-            "location": "Testland",
+            "location": "Starterville",
             "max_hp": 53,
             "max_mp": 52,
             "mp": 52,
             "name": "Chres",
             "skills": [],
             "stats": {
-                "att": 35,
+                "att": 100,
                 "crt": 1,
                 "def": 20,
-                "evd": 8
+                "evd": 100
             },
             "training_points": 0
         },
         "start_template": {
+            "access": [],
             "class": "Knight",
             "deaths": 0,
             "equipment": {
