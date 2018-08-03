@@ -38,6 +38,40 @@
             },
             "training_points": 0
         },
+        "Test": {
+            "access": [],
+            "class": "Mage",
+            "deaths": 1,
+            "equipment": {
+                "chest": "empty",
+                "feet": "empty",
+                "head": "empty",
+                "left hand": "empty",
+                "legs": "empty",
+                "necklace": "empty",
+                "right hand": "empty",
+                "ring": "empty"
+            },
+            "exp": 0,
+            "exp_req": 100,
+            "gold": 1000,
+            "hp": 0,
+            "inventory": [],
+            "level": 0,
+            "location": "Starterville",
+            "max_hp": 50,
+            "max_mp": 50,
+            "mp": 50,
+            "name": "Test",
+            "skills": [],
+            "stats": {
+                "att": 10,
+                "crt": 10,
+                "def": 10,
+                "evd": 10
+            },
+            "training_points": 0
+        },
         "start_template": {
             "access": [],
             "class": "Knight",
@@ -46,10 +80,10 @@
                 "chest": "empty",
                 "feet": "empty",
                 "head": "empty",
-                "left_hand": "empty",
+                "left hand": "empty",
                 "legs": "empty",
                 "necklace": "empty",
-                "right_hand": "empty",
+                "right hand": "empty",
                 "ring": "empty"
             },
             "exp": 0,
@@ -74,6 +108,7 @@
         }
     },
     "xref": [
-        "Chres"
+        "Chres",
+        "Test"
     ]
 }

@@ -79,6 +79,9 @@ def start_game(character):
     # print(character)
     save_file = process_json("saves.json")
     while game_status:
+        if character["hp"] == 0:
+            print("You will be healed back up to full health!")
+            rest(character)
         print("#######################")
         print("1. Stats")
         print("2. Inventory")
@@ -335,8 +338,11 @@ def go_to(character):
                         location_enemies = list(locations["locations"][new_location]["enemies"].keys())
                         if len(location_enemies) > 0:
                             for i in range(0, 5):
-                                random = numpy.random.randint(0, len(location_enemies)-1)
-                                enemy = enemies["enemies"][location_enemies[random]]
+                                if len(location_enemies) != 1:
+                                    random = numpy.random.randint(0, len(location_enemies)-1)
+                                    enemy = enemies["enemies"][location_enemies[random]]
+                                else:
+                                    enemy = enemies["enemies"][location_enemies[0]]
 
                                 if character["hp"] > 0:
                                     battle(character, enemy)

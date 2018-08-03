@@ -9,11 +9,18 @@
             "passives": [],
             "start_hp": 50,
             "start_mp": 50
-        }
+        },
+        "Mage": {
+            "passives": ["Recall"],
+            "start_hp": 50,
+            "start_mp": 50
+            }
+
     },
     "xref": [
         "Archer",
         "Knight",
+        "Mage",
         "Any"
     ]
 }

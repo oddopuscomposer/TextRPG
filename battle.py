@@ -103,6 +103,7 @@ def battle(character, enemy):
         if character["hp"] <= 0:
             print("You were " + colored("defeated!", "blue"))
             character["deaths"] += 1
+            character["hp"] = 0
             break
         if enemy["hp"] <= 0:
             print("The enemy was " + colored("defeated!", "red"))
@@ -111,6 +112,7 @@ def battle(character, enemy):
         turn += 1
 
     saves["saves"][character["name"]] = character
+    print(saves)
     write_json("saves.json", saves)
 
 

@@ -118,6 +118,7 @@ def add_equipable():
 
     print("Options: ")
     print(','.join(process_json("classes.json")["xref"]))
+    print("For example: Enter required classes([class1],[class2]): Archer,Knight,Any")
     cls = input("Enter required classes([class1],[class2]): ")
     words = cls.split(",")
     words = class_validation(words)
@@ -240,6 +241,9 @@ def add_skill():
     mana = numeric_validation(entry)
     skill["mana"] = int(mana)
 
+    print("Options: ")
+    print(','.join(process_json("classes.json")["xref"]))
+    print("For example: Enter required classes([class1],[class2]): Archer,Knight,Any")
     entry = input("Enter class requirement([class1],[class2]): ")
     entry = entry.split(",")
     words = class_validation(entry)
