@@ -329,6 +329,17 @@ def go_to(character):
                 new_location = loc
                 break
 
+        if "Recall" in character["skills"]:
+            if character["mp"] > 10:
+                character["location"] = new_location
+                character["mana"] -= 10
+                print("You are now in " + new_location)
+                print("You used 10 mana")
+                break
+            else:
+                print("You do not have enough mana for Recall!")
+                break
+
         if new_location in loc_list:
             if new_location not in accesses and len(list(locations["locations"][new_location]["enemies"].keys())) > 0:
                 print("You do not have access to this location!")

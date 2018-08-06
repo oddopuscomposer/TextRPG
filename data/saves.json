@@ -55,7 +55,7 @@
             "exp": 0,
             "exp_req": 100,
             "gold": 1000,
-            "hp": 0,
+            "hp": 50,
             "inventory": [],
             "level": 0,
             "location": "Starterville",

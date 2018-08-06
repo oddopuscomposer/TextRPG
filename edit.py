@@ -233,9 +233,14 @@ def add_skill():
     skills["skills"][name] = {}
     skill = skills["skills"][name]
 
-    entry = input("Enter damage: ")
-    dmg = numeric_validation(entry)
-    skill["dmg"] = int(dmg)
+    skill_type = input("What kind of skill? (field or battle): ")
+
+    if skill_type == "battle":
+        skill["type"] = "battle"
+        entry = input("Enter damage: ")
+        dmg = numeric_validation(entry)
+        skill["dmg"] = int(dmg)
+
 
     entry = input("Enter mana cost: ")
     mana = numeric_validation(entry)
@@ -252,6 +257,8 @@ def add_skill():
     entry = input("Enter level requirement: ")
     level = numeric_validation(entry)
     skill["level"] = int(level)
+
+    entry = input("")
 
     write_json("skills.json", skills)
 
