@@ -29,7 +29,7 @@
             "max_mp": 52,
             "mp": 52,
             "name": "Chres",
-            "skills": [],
+            "skills": ["Recall", "Lunge", "Arrow Storm"],
             "stats": {
                 "att": 100,
                 "crt": 1,

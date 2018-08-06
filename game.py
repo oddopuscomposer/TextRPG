@@ -329,7 +329,7 @@ def go_to(character):
                 new_location = loc
                 break
 
-        if "Recall" in character["skills"]:
+        if "Recall" in character["skills"] and new_location == "Starterville":
             if character["mp"] > 10:
                 character["location"] = new_location
                 character["mana"] -= 10

@@ -4,14 +4,12 @@
       "dmg": 20,
       "property": "",
       "mana": 10,
-      "class": "Archer",
       "level": 1,
       "type": "battle"
    },
     "Recall":
     {
       "mana": 10,
-      "class": "Mage",
       "level": 1,
       "type": "field"
     },
@@ -20,7 +18,6 @@
       "damage": 15,
       "property": "pierce",
       "mana": 5,
-      "class": "Knight",
       "level": 1,
       "type": "battle"
     }
