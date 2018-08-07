@@ -233,14 +233,26 @@ def add_skill():
     skills["skills"][name] = {}
     skill = skills["skills"][name]
 
-    skill_type = input("What kind of skill? (field or battle): ")
+    while True:
+        skill_type = input("What kind of skill? (field or battle): ")
+        if skill_type == "battle":
+            skill["type"] = "battle"
+            break
+        elif skill_type == "field":
+            skill["type"] = "field"
+            break
+        else:
+            print("Invalid Input!")
 
     if skill_type == "battle":
-        skill["type"] = "battle"
         entry = input("Enter damage: ")
         dmg = numeric_validation(entry)
         skill["dmg"] = int(dmg)
 
+
+    entry = input("Enter level requirement: ")
+    level = numeric_validation(entry)
+    skill["level"] = int(level)
 
     entry = input("Enter mana cost: ")
     mana = numeric_validation(entry)
@@ -254,12 +266,13 @@ def add_skill():
     words = class_validation(entry)
     skill["class"] = words
 
-    entry = input("Enter level requirement: ")
-    level = numeric_validation(entry)
+    entry = input("Enter property/properties([property1],[property2]): ")
+    entry = entry.split(",")
+    checked = process_json("properties.json")["xref"]
+    level = array_validation(entry, checked)
     skill["level"] = int(level)
 
-    entry = input("")
-
+    skills["xref"].append(name)
     write_json("skills.json", skills)
 
 

@@ -5,13 +5,15 @@
       "property": "",
       "mana": 10,
       "level": 1,
-      "type": "battle"
+      "type": "battle",
+      "class": ["Archer"]
    },
     "Recall":
     {
       "mana": 10,
       "level": 1,
-      "type": "field"
+      "type": "field",
+      "class": ["Mage"]
     },
     "Lunge":
     {
@@ -19,8 +21,10 @@
       "property": "pierce",
       "mana": 5,
       "level": 1,
-      "type": "battle"
+      "type": "battle",
+      "class": ["Knight"]
     }
 
-  }
+  },
+  "xref": []
 }
