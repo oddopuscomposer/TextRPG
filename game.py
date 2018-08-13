@@ -324,15 +324,15 @@ def go_to(character):
     while True:
         print(', '.join(loc_list))
         new_location = input("Choose a location (q to quit): ")
-        for loc in loc_list:
+        for loc in locations["xref"]:
             if loc.startswith(new_location):
                 new_location = loc
                 break
 
-        if "Recall" in character["skills"] and new_location == "Starterville":
+        if "Recall" in character["skills"] and new_location not in loc_list and new_location == "Starterville":
             if character["mp"] > 10:
                 character["location"] = new_location
-                character["mana"] -= 10
+                character["mp"] -= 10
                 print("You are now in " + new_location)
                 print("You used 10 mana")
                 break

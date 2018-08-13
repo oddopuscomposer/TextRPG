@@ -1,7 +1,10 @@
 {
     "saves": {
         "Chres": {
-            "access": [],
+            "access": [
+                "Testland",
+                "IRL"
+            ],
             "class": "Knight",
             "deaths": 0,
             "equipment": {
@@ -27,9 +30,13 @@
             "location": "Starterville",
             "max_hp": 53,
             "max_mp": 52,
-            "mp": 52,
+            "mp": 42,
             "name": "Chres",
-            "skills": ["Recall", "Lunge", "Arrow Storm"],
+            "skills": [
+                "Recall",
+                "Lunge",
+                "Arrow Storm"
+            ],
             "stats": {
                 "att": 100,
                 "crt": 1,
